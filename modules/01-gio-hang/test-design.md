@@ -1,0 +1,236 @@
+# Giỏ hàng
+
+- Function
+  - Quản lí giỏ hàng
+    - Xem giỏ hàng
+      - Danh sách hiển thị
+        - Giỏ hàng trống
+        - Giỏ hàng có sản phẩm
+          - Giỏ hàng có 1 sản phẩm
+          - Giỏ hàng có nhiều sản phẩm
+            - ≤ 10 sản phẩm (1 trang)
+            - 11 – 20 sản phẩm (phân trang 10 sản phẩm / trang)
+      - Phân trang
+        - Chuyển trang 1 ↔ trang 2, dữ liệu và số lượng giữ đúng
+        - Xoá sản phẩm duy nhất ở trang 2 → quay về trang 1 [Cần xác nhận BA/PO]
+      - Kiểm tra thành tiền của từng sản phẩm
+        - Thành tiền = Đơn giá × Số lượng
+      - Kiểm tra tổng tiền của toàn bộ sản phẩm trong giỏ
+        - Tính trên toàn bộ giỏ (cả trang 1 và trang 2)
+      - Bấm tên / hình ảnh sản phẩm → không điều hướng tới chi tiết sản phẩm
+    - Cập nhật số lượng
+      - (+) Tăng
+        - Tăng từ 1 lên 2
+        - Tăng số lượng liên tiếp nhiều lần
+        - Tăng từ 98 lên 99 (max) → nút + disable
+        - Đang là 99 → bấm + không tăng
+        - Spam nút + → tăng tới 99 thì dừng
+        - Tăng số lượng của một sản phẩm khi giỏ hàng có nhiều sản phẩm
+        - Tính lại tiền của sản phẩm sau khi tăng
+      - (−) Giảm
+        - Giảm từ 99 xuống 98 → nút + enable lại
+        - Giảm khi số lượng đang là 1
+          - Số lượng về 0 → tự động xoá sản phẩm ra khỏi giỏ hàng
+          - Giỏ chỉ có 1 sản phẩm → giỏ hàng trống
+        - Giảm số lượng liên tiếp nhiều lần
+        - Spam nút - → không xuất hiện số lượng âm (đối chiếu lỗi cố ý số 1)
+        - Giảm số lượng một sản phẩm khi giỏ có nhiều sản phẩm
+        - Tính lại tiền sản phẩm sau khi giảm
+      - Nhập giá trị số lượng hợp lệ vào ô input
+    - Xoá sản phẩm trong giỏ
+      - Danh sách đang có 1 sản phẩm
+      - Danh sách đang có nhiều sản phẩm
+      - Xoá lần lượt tất cả các sản phẩm
+      - Xoá sản phẩm sau khi tăng hoặc giảm số lượng
+      - Không có popup confirm → xoá ngay
+      - Tải lại trang sau khi xoá → sản phẩm không xuất hiện lại
+    - Cập nhật giỏ hàng
+      - Giá sản phẩm không đổi → dữ liệu giữ nguyên
+      - Giá sản phẩm tăng → cập nhật đơn giá, thành tiền, tổng tiền
+      - Giá sản phẩm giảm (khuyến mãi) → cập nhật đơn giá, thành tiền, tổng tiền
+      - Chưa bấm cập nhật → hiển thị giá cũ hay giá mới [Cần xác nhận BA/PO]
+    - Tiền
+      - Tính tổng tiền khi giỏ hàng đang có 1 sản phẩm
+      - Tổng tiền khi đang có nhiều sản phẩm
+      - Tính lại tổng tiền sau khi xoá sản phẩm
+      - Tính lại tổng tiền sau khi tăng số lượng
+      - Tính lại tổng tiền sau khi giảm số lượng
+      - Tổng tiền không tính sản phẩm bị ẩn
+  - Điều hướng
+    - Truy cập giỏ hàng từ trang chủ
+    - Truy cập giỏ hàng từ trang chi tiết sản phẩm
+    - Truy cập trực tiếp bằng URL /gio-hang
+    - Từ trang giỏ hàng chuyển sang trang khác → quay lại
+    - Bấm "Thực hiện thanh toán"
+      - Đã đăng nhập → /thanh-toan
+      - Chưa đăng nhập → /dang-nhap
+        - Đăng nhập xong quay về /gio-hang hay /thanh-toan [Cần xác nhận BA/PO]
+      - Giỏ hàng trống → ẩn / disable nút [Cần xác nhận BA/PO]
+  - Lưu giỏ hàng theo tài khoản
+    - Kiểm tra dữ liệu giỏ hàng sau khi đóng và mở lại trình duyệt
+    - Đăng xuất rồi đăng nhập lại cùng tài khoản → giữ nguyên giỏ
+    - Đăng nhập cùng tài khoản trên trình duyệt khác → thấy cùng giỏ
+    - Tài khoản A đăng xuất, tài khoản B đăng nhập cùng trình duyệt → không thấy giỏ của A
+    - Guest thêm sản phẩm rồi đăng nhập → gộp / bỏ / thay giỏ [Cần xác nhận BA/PO]
+    - Guest đăng nhập khi đang ở giỏ hàng → giữ nguyên ở trang giỏ hàng
+    - Mở 2 tab, thay đổi ở 1 tab → tab còn lại đồng bộ [Cần xác nhận BA/PO]
+- Validation
+  - Số lượng
+    - = 0 → xoá sản phẩm hay báo lỗi [Cần xác nhận BA/PO]
+    - = 1
+    - = 2
+    - -1
+    - = 98 (max - 1)
+    - = 99 (max)
+    - = 100 (max + 1) → chặn / tự về 99 / báo lỗi [Cần xác nhận BA/PO]
+    - Số lượng là số thập phân
+    - Số lượng giá trị rất lớn
+    - Không phải là number
+      - Chữ cái
+      - Ký tự đặc biệt (@#$, e, +, -)
+    - Để trống / chỉ nhập khoảng trắng [Cần xác nhận BA/PO]
+    - Khoảng trắng đầu / cuối [Cần xác nhận BA/PO]
+    - Số 0 đứng đầu ("07")
+    - Paste dữ liệu vào ô input
+    - Thời điểm tính lại tiền (onChange / onBlur / Enter) [Cần xác nhận BA/PO]
+  - Số sản phẩm khác nhau trong giỏ
+    - = 10 (đủ 1 trang)
+    - = 11 (sang trang 2)
+    - = 19 (max - 1)
+    - = 20 (max)
+    - = 21 (max + 1) → không thêm được, thông báo [Cần xác nhận BA/PO]
+  - Tổng tiền
+    - Không âm
+    - Giá trị lớn nhất (20 sản phẩm × 99 × 7.000.000đ) hiển thị đúng, không tràn
+- UI
+  - Giao diện mặc định
+    - Hiển thị trang giỏ hàng khi chưa có sản phẩm
+      - Khung giỏ hàng trống
+        - Icon: Giỏ hàng
+        - Text: Giỏ hàng của bạn đang trống...
+        - Button: THÊM SẢN PHẨM VÀO GIỎ
+      - Nút thêm sản phẩm vào giỏ hàng / link quay lại mua hàng
+    - Hiển thị trang giỏ hàng khi có sản phẩm
+      - Khung danh sách sản phẩm
+      - Khung tổng giá trị đơn hàng và Thanh toán
+    - Thông tin đăng nhập
+      - Đã đăng nhập
+        - Khung thông tin tài khoản
+          - Quản lí tài khoản
+          - Đăng xuất
+        - Hiển thị giỏ hàng của + Tên tài khoản
+      - Chưa đăng nhập
+        - Khung đăng nhập
+    - Hiển thị của danh sách gợi ý Hoa đặc biệt
+    - Hiển thị của các danh mục
+      - Loại Hoa
+      - Lọc giá
+    - Thống kê
+    - Hiển thị của 2 hình ảnh giới thiệu
+  - Header
+    - Biểu tượng giỏ hàng
+    - Badge số lượng
+      - Hiển thị số sản phẩm khác nhau trong giỏ
+  - Thông tin sản phẩm
+    - STT
+    - Hình ảnh sản phẩm (chỉ đọc, không có link)
+      - Sản phẩm không có ảnh / đường dẫn ảnh lỗi
+    - Tên sản phẩm (chỉ đọc, không có link)
+      - Tên tiếng Việt có dấu, tên dài tối đa
+    - Đơn giá (chỉ đọc)
+    - Số lượng (ô input, cho nhập từ bàn phím)
+    - Thành tiền (chỉ đọc, tự tính)
+  - Nút chức năng
+    - Nút (+)
+      - Enable khi < 99
+      - Disable khi = 99
+    - Nút −
+    - Nút Xoá
+    - Nút "Thực hiện thanh toán"
+      - Tên nút theo SRS (màn hình đang ghi "Tiến hành thanh toán" → lệch SRS)
+    - Nút "Cập nhật giỏ hàng"
+    - Thêm sản phẩm vào giỏ
+    - Tìm
+  - Phân trang
+    - 10 sản phẩm / trang
+    - Nút số trang, trang trước / sau [Cần xác nhận BA/PO]
+    - Trang hiện tại được đánh dấu active
+  - Tổng tiền thanh toán (chỉ đọc) và format theo định dạng VNĐ (150.000đ)
+  - Thông báo
+    - Không có popup xác nhận khi xoá
+    - Thông báo khi sản phẩm bị loại khỏi giỏ do bị ẩn [Cần xác nhận BA/PO]
+  - Layout
+    - Header
+    - Sidebar trái
+    - Main
+    - Sidebar phải
+    - Footer
+  - Behavior
+    - Tab
+      - Chuyển đúng thứ tự cho từng nút
+    - Hover
+      - Phóng to, chuyển động mượt mà
+        - Hover từng sản phẩm
+        - Thực hiện thanh toán
+        - Sản phẩm hoa đặc biệt
+        - Hình ảnh giới thiệu
+      - Chuyển màu chữ mượt mà
+        - Từng loài hoa
+        - Quản lí tài khoản
+        - Từng thành phần lọc theo giá
+      - Chuyển thành bàn tay (pointer) ở các nút
+      - Nút + đang disable không có hiệu ứng hover
+    - Scroll
+      - Cuộn mượt mà khi danh sách sản phẩm trong giỏ hàng quá dài, hiển thị đầy đủ, không giật lag
+    - Tắt và bật lại trình duyệt
+      - Vẫn lưu đúng và hiển thị được danh sách sản phẩm trong giỏ
+  - Responsive
+    - Tablet
+    - Mobile
+- Phân quyền
+  - Guest
+    - Thêm sản phẩm vào giỏ
+    - Xem giỏ hàng
+    - Cập nhật giỏ hàng
+    - Chặn truy cập trang Thanh toán → chuyển /dang-nhap
+  - Member
+    - Thêm sản phẩm vào giỏ
+    - Xem giỏ hàng
+    - Cập nhật giỏ hàng
+    - Thanh toán
+    - Đặt hàng thành công → xoá giỏ hàng
+    - Phiên đăng nhập hết hạn khi đang ở giỏ → chặn thanh toán (đối chiếu lỗi cố ý số 6)
+    - Không xem / sửa được giỏ của Member khác (giao diện và API)
+  - Admin
+    - Thêm sản phẩm vào giỏ
+    - Xem giỏ hàng
+    - Cập nhật giỏ hàng
+    - Chặn thanh toán [Cần xác nhận BA/PO: ẩn nút / chuyển hướng / thông báo]
+    - Chặn đặt hàng
+- Ảnh hưởng
+  - Danh sách hoa / Tìm kiếm hoa
+    - Sản phẩm được thêm từ trang danh sách hoa / Tìm kiếm
+    - Thông tin sản phẩm khi lưu vào giỏ
+  - Chi tiết sản phẩm
+    - Số lượng và thông tin sản phẩm khớp với thông tin trong giỏ
+    - Thiếu ô chọn số lượng, mỗi lần thêm 1 (bug màn hình chi tiết)
+    - Popup thêm sản phẩm vào giỏ thành công
+      - Nội dung, vị trí, màu sắc
+      - Thời gian mất
+    - Cộng dồn vượt 99 → báo thành công nhưng số lượng không tăng
+    - Spam "Thêm vào giỏ hàng" → tăng tới 99 thì dừng
+  - Giỏ hàng
+    - Sản phẩm bị ẩn trước khi thêm vào giỏ
+    - Thông tin sản phẩm bị thay đổi sau khi thêm vào giỏ
+      - Giá → xem "Cập nhật giỏ hàng"
+      - Tên / hình ảnh [Cần xác nhận BA/PO]
+    - Ẩn sản phẩm sau khi thêm vào giỏ → ẩn khỏi giỏ, không tính tiền
+      - Hiện lại sản phẩm → có xuất hiện lại trong giỏ không [Cần xác nhận BA/PO]
+    - Xoá sản phẩm (Admin) sau khi thêm vào giỏ [Cần xác nhận BA/PO]
+    - Sản phẩm trùng → cộng dồn, không tạo dòng mới
+      - Giỏ đủ 20 sản phẩm, thêm sản phẩm đã có → vẫn cộng dồn
+  - Header / Số lượng sản phẩm trên icon giỏ hàng
+  - Thanh toán / Đặt hàng
+    - Dữ liệu sang trang thanh toán khớp giỏ hàng
+    - Sản phẩm bị ẩn ngay trước khi thanh toán → không có trong đơn
+    - Đặt hàng thành công → giỏ hàng trống
