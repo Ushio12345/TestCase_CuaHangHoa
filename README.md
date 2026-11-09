@@ -56,7 +56,7 @@
 | 09  | Đăng nhập quản trị   | –           | –         | –     | ⬜         |
 | 10  | Thống kê tổng quan   | –           | –         | –     | ⬜         |
 | 11  | Quản lý loại hoa     | –           | –         | –     | ⬜         |
-| 12  | Quản lý sản phẩm hoa | –           | –         | –     | ⬜         |
+| 12  | [Quản lý sản phẩm hoa](modules/12-quan-ly-san-pham-hoa/README.md) (`/quan-tri/hoa`) | –           | –         | –     | 🟡         |
 | 13  | Quản lý đơn đặt hàng | –           | –         | –     | ⬜         |
 | 14  | Quản lý thành viên   | –           | –         | –     | ⬜         |
 | 15  | Quản lý tin tức      | –           | –         | –     | ⬜         |

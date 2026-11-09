@@ -2,3 +2,11 @@
 ~$*.xlsx
 ~$*.docx
 *.tmp
+
+# Claude Code
+.claude/review/
+.claude/settings.local.json
+.claude/templates/
+
+# Tài liệu đào tạo (không đính kèm trong repo)
+docs/SRS_Web_ban_hoa_v2.docx

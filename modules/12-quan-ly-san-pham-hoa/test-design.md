@@ -1,0 +1,173 @@
+# Quản lý sản phẩm hoa
+
+- Function
+  - Thêm hoa mới
+    - Thêm thành công
+      - Nhập đủ các trường hợp lệ, có đường dẫn ảnh → lưu, chuyển về danh sách hoa
+      - Hoa vừa thêm xuất hiện trong danh sách quản trị [Cần xác nhận BA/PO: vị trí hiển thị]
+      - Không nhập đường dẫn ảnh → lưu, hiển thị ảnh mặc định
+      - Trạng thái
+        - Chọn "Hiển thị" → lưu trang_thai = 1
+        - Chọn "Ẩn" → lưu trang_thai = 0
+      - Chọn loại hoa khác giá trị mặc định → lưu đúng ma_loai
+      - Dữ liệu lưu trong bảng hoa
+        - ten_hoa đã cắt khoảng trắng đầu / cuối
+        - gia, mo_ta, hinh_anh đúng giá trị đã nhập
+        - ngay_d = thời điểm thêm
+      - Bấm Thêm mới nhiều lần liên tiếp → 1 hay nhiều bản ghi [Cần xác nhận BA/PO]
+    - Thêm thất bại
+      - 1 trường không hợp lệ → không lưu, ở lại form, hiện lỗi của trường đó
+      - Gửi form có lỗi → cuộn đến ô lỗi đầu tiên
+      - Nhiều trường không hợp lệ → hiện lỗi của tất cả các trường
+      - Để trống toàn bộ form → hiện lỗi của tất cả trường bắt buộc
+    - Tải lên ảnh
+      - Nhập URL ảnh JPG / PNG, bấm Tải lên → lấy được ảnh, tự điền ô Đường dẫn hình ảnh
+      - Ô đã có đường dẫn, tải lên ảnh khác → hỏi có thay thế không
+        - Chọn Đồng ý → thay bằng đường dẫn mới
+        - Chọn Không → giữ đường dẫn cũ
+      - URL không lấy được ảnh → thông báo lỗi [Cần xác nhận BA/PO]
+      - File không phải JPG / PNG → thông báo lỗi [Cần xác nhận BA/PO]
+      - Tải lên là chọn file từ máy hay kiểm tra URL [Cần xác nhận BA/PO]
+    - Làm lại
+      - Loại hoa về "Hoa chia buồn"
+      - Trạng thái về "Hiển thị"
+      - Các ô nhập và thông báo lỗi đang hiển thị được xóa [Cần xác nhận BA/PO]
+    - Điều hướng
+      - Từ danh sách hoa bấm "Thêm hoa mới" → mở /quan-tri/hoa/them
+      - Nhập trực tiếp URL /quan-tri/hoa/them (đã đăng nhập quản trị) → mở form
+      - Bấm Quay lại khi chưa nhập dữ liệu → về danh sách hoa
+      - Bấm Quay lại khi đã nhập dữ liệu → popup hỏi lưu thông tin
+        - Chọn Có → lưu thông tin
+        - Chọn Không → không lưu, về danh sách hoa
+        - Nội dung popup [Cần xác nhận BA/PO]
+      - Tải lại trang khi đang nhập → popup hỏi lưu, chọn Không → không lưu
+      - Đóng tab khi đang nhập → popup hỏi lưu, chọn Không → không lưu
+      - Phiên quản trị hết hạn rồi bấm Thêm mới [Cần xác nhận BA/PO]
+- Validation
+  - Tên hoa
+    - Để trống → FC_16 hoặc FC_17 [Cần xác nhận BA/PO]
+    - Chỉ nhập khoảng trắng [Cần xác nhận BA/PO]
+    - = 4 ký tự (min − 1) → FC_17 "Tên hoa phải từ 5 đến 20 ký tự"
+    - = 5 ký tự (min) → hợp lệ
+    - = 6 ký tự (min + 1) → hợp lệ
+    - = 19 ký tự (max − 1) → hợp lệ
+    - = 20 ký tự (max) → hợp lệ
+    - Gõ ký tự thứ 21 (max + 1) → bị chặn, ô giữ 20 ký tự
+    - Paste chuỗi > 20 ký tự [Cần xác nhận BA/PO]
+    - Khoảng trắng đầu / cuối → tự cắt
+    - Độ dài tính trước hay sau khi cắt khoảng trắng [Cần xác nhận BA/PO]
+    - Ký tự đặc biệt
+      - . _ ; → chấp nhận
+      - Ký tự đặc biệt khác (@ # $ % & * …) → chặn gõ hay báo lỗi [Cần xác nhận BA/PO]
+    - Chữ tiếng Việt có dấu [Cần xác nhận BA/PO]
+    - Chữ số [Cần xác nhận BA/PO]
+    - Emoji → không chấp nhận
+    - Trùng tên với hoa đã có [Cần xác nhận BA/PO]
+  - Loại hoa
+    - Danh sách lấy từ bảng loai_hoa, thứ tự sắp xếp [Cần xác nhận BA/PO]
+    - Bắt buộc / có bỏ chọn được không [Cần xác nhận BA/PO]
+    - Giá trị không hợp lệ (sửa qua DevTools) → FC_19 "Loại hoa không hợp lệ"
+  - Giá bán
+    - Để trống → FC_20 hoặc FC_21 [Cần xác nhận BA/PO]
+    - = 4.999 (min − 1) → FC_21 "Giá bán phải từ 5.000đ đến 7.000.000đ"
+    - = 5.000 (min) → hợp lệ [Cần xác nhận BA/PO]
+    - = 5.001 (min + 1) → hợp lệ
+    - = 6.999.999 (max − 1) → hợp lệ
+    - = 7.000.000 (max) → hợp lệ [Cần xác nhận BA/PO]
+    - = 7.000.001 (max + 1) → FC_21
+    - = 0 → FC_21
+    - Số âm (−5000) [Cần xác nhận BA/PO]
+    - Số thập phân (5000.5) [Cần xác nhận BA/PO]
+    - Dấu phẩy (5,000) → không hỗ trợ [Cần xác nhận BA/PO: chặn gõ hay báo lỗi]
+    - Chữ, ký tự đặc biệt, chữ "e" [Cần xác nhận BA/PO]
+    - Số 0 đứng đầu (05000) [Cần xác nhận BA/PO]
+    - Khoảng trắng đầu / cuối [Cần xác nhận BA/PO]
+    - Paste giá trị hợp lệ → nhận
+    - Ô nhập giữ nguyên số, không tự định dạng tiền
+  - Trạng thái hiển thị
+    - Mặc định chọn "Hiển thị"
+    - Chọn "Ẩn" → hợp lệ
+    - Giá trị không hợp lệ (sửa qua DevTools) → FC_22 "Trạng thái không hợp lệ"
+    - Danh sách trạng thái lấy từ đâu [Cần xác nhận BA/PO]
+  - Mô tả
+    - Để trống → FC_23 hoặc FC_24 [Cần xác nhận BA/PO]
+    - Chỉ nhập khoảng trắng / xuống dòng [Cần xác nhận BA/PO]
+    - = 1 ký tự → hợp lệ
+    - = 249 ký tự (max − 1) → hợp lệ
+    - = 250 ký tự (max) → hợp lệ
+    - Gõ ký tự thứ 251 (max + 1) → bị chặn, ô giữ 250 ký tự
+    - Paste chuỗi > 250 ký tự [Cần xác nhận BA/PO]
+    - Ký tự xuống dòng được tính vào 250
+    - Ký tự đặc biệt → chấp nhận
+    - Emoji → chấp nhận
+    - Bộ đếm tăng / giảm đúng khi gõ và xóa
+  - Đường dẫn hình ảnh
+    - Để trống → hiển thị ảnh mặc định
+    - Link có ký tự : / ? & = % # _ - . → chấp nhận
+    - Link không có đuôi file ảnh → chấp nhận
+    - Chuỗi không phải link → thông báo lỗi [Cần xác nhận BA/PO]
+    - Link ảnh không tải được → hiển thị ảnh mặc định
+    - Độ dài > 500 ký tự [Cần xác nhận BA/PO]
+- UI
+  - Giao diện mặc định
+    - Nhãn và dấu * theo SRS (Tên hoa, Loại hoa, Giá bán, Trạng thái, Mô tả)
+    - Texthint theo SRS
+      - Tên hoa: "Nhập tên hoa..."
+      - Giá bán: "150000"
+      - Mô tả: "Nhập mô tả..."
+    - Loại hoa hiển thị giá trị mặc định [Cần xác nhận BA/PO]
+    - Trạng thái mặc định chọn "Hiển thị"
+    - Bộ đếm Mô tả hiển thị 0/250 (màn hình đang thiếu – srs-review #22)
+  - Nút chức năng
+    - Tên nút lưu "Lưu sản phẩm" / "Thêm mới" [Cần xác nhận BA/PO]
+    - Nút Làm lại
+    - Nút Quay lại
+    - Nút Tải lên – trạng thái mặc định (chữ mờ) [Cần xác nhận BA/PO]
+  - Thông báo
+    - Thông báo lỗi hiển thị dưới từng trường, nội dung theo Danh sách thông báo
+    - Thông báo thêm thành công – nội dung, vị trí, thời gian tự ẩn [Cần xác nhận BA/PO]
+    - Popup hỏi lưu thông tin
+    - Popup hỏi thay thế đường dẫn ảnh
+  - Layout
+    - Sidebar quản trị bên trái, mục "Quản lý sản phẩm hoa" được đánh dấu
+    - Form nhập liệu
+  - Behavior
+    - Tab chuyển đúng thứ tự các trường và nút
+    - Hover đổi con trỏ thành bàn tay ở các nút
+    - Nhấn Enter trong ô nhập
+  - Responsive
+    - Tablet 768px
+    - Mobile 375px
+- Phân quyền
+  - Admin
+    - Truy cập form Thêm hoa mới
+    - Thêm hoa thành công
+  - Guest
+    - Truy cập /quan-tri/hoa/them → chuyển về /quan-tri/dang-nhap
+    - Gọi trực tiếp chức năng thêm hoa → lỗi 401 (đối chiếu lỗi cố ý số 7)
+  - Member
+    - Truy cập /quan-tri/hoa/them → chuyển về /quan-tri/dang-nhap
+    - Gọi chức năng thêm hoa bằng mã xác thực Member → lỗi 401 (đối chiếu lỗi cố ý số 7)
+- Ảnh hưởng
+  - Danh sách sản phẩm quản trị
+    - Hoa mới hiển thị đủ tên, loại, giá, ảnh, trạng thái [Cần xác nhận BA/PO: vị trí hiển thị]
+  - Trang khách
+    - Hoa "Hiển thị" xuất hiện ở /hoa
+    - Hoa "Hiển thị" xuất hiện ở /hoa?loai=N đúng loại đã chọn
+    - Giá hiển thị dạng 150.000đ
+    - Hoa không có ảnh → hiển thị ảnh mặc định
+    - Hoa "Ẩn" không xuất hiện ở /hoa
+    - Hoa "Ẩn" mở trang chi tiết → lỗi 404
+    - Hoa mới nằm ở trang 2 trở đi của /hoa (đối chiếu lỗi cố ý số 2)
+  - Tìm kiếm
+    - Tìm theo tên hoa mới ("Hiển thị") → có trong kết quả
+    - Tìm theo tên hoa "Ẩn" [Cần xác nhận BA/PO]
+  - Chi tiết sản phẩm và Giỏ hàng
+    - Trang chi tiết hiển thị đúng thông tin hoa mới
+    - Thêm hoa mới vào giỏ → giá đúng
+  - Quản lý loại hoa
+    - Xóa loại hoa vừa được gán cho hoa mới → chặn, FC_29
+  - Thống kê tổng quan
+    - Tổng số hoa tăng 1 [Cần xác nhận BA/PO: có đếm hoa Ẩn không]
+  - Sửa sản phẩm hoa
+    - Mở sửa hoa vừa thêm → dữ liệu khớp với lúc thêm
