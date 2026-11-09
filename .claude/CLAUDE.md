@@ -100,7 +100,7 @@ Reference: `modules/01-gio-hang/test-design.md`.
 | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------- |
 | Function   | Main flows per sub-feature (view, add, update, delete…), navigation in/out, data persistence                                                                                                     | State Transition, Decision Table               |
 | Validation | Every input / limit: valid, invalid, empty, whitespace, type, format, paste                                                                                                                      | EP + BVA: min−1, min, min+1, max−1, max, max+1 |
-| UI         | Default state (empty / with data), each field (read-only / editable, format), buttons (enable/disable), messages, layout, behavior (tab, hover, scroll), responsive (tablet 768px, mobile 375px) | Checklist                                      |
+| UI         | Giao diện mặc định: default state (empty / with data), each field (read-only / editable, format), buttons (enable/disable), messages, layout · Behavior: global checklist · Responsive: tablet 768px, mobile 375px | Checklist                                      |
 | Phân quyền | Per actor: allowed actions, blocked actions + how blocked (hide / redirect / message), access to other users' data (UI and API)                                                                  | Decision Table                                 |
 | Ảnh hưởng  | Upstream / downstream functions, data changed by Admin (hide, delete, edit price/name), duplicates, post-action state                                                                            | Error Guessing                                 |
 
@@ -173,7 +173,9 @@ Counts are formulas (COUNTIFS on Priority × R1 Results), not typed numbers.
 
 **Rows**
 
-- Group row = Test Design group (`Function`, `Validation`, `UI`, `Phân quyền`, `Ảnh hưởng`).
+- Group row = Test Design group, in CAPS: `FUNCTION`, `VALIDATION`, `UI`, `PHÂN QUYỀN`, `ẢNH HƯỞNG`.
+  The template already has all 5 group rows (from row 13); insert TCs under the right group, delete a group with no TC.
+- `UI` always has 3 scenario rows: `Giao diện mặc định`, `Behavior`, `Responsive`.
 - Scenario row = sentence describing the main scenario under the group
   (e.g. `Update Account nhóm tài khoản thành công khi thực hiện thêm thành viên vào nhóm`).
 - TC rows under each scenario.
