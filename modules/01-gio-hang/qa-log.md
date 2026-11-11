@@ -53,3 +53,9 @@ Câu hỏi làm rõ yêu cầu gửi BA/PO trong quá trình phân tích SRS và
 | 23 | Popup "đã thêm vào giỏ hàng" có thuộc phạm vi giỏ hàng không? | Không, thuộc chức năng thêm vào giỏ | ✅ |
 | 24 | Badge trên icon giỏ hàng đếm tổng số lượng hay số sản phẩm khác nhau? | Số sản phẩm khác nhau (VD: SP1 SL 5 + SP2 SL 2 → badge 2) | ✅ |
 | 25 | Nội dung khung giỏ hàng trống? | Icon giỏ hàng, text "Giỏ hàng của bạn đang trống...", nút "THÊM SẢN PHẨM VÀO GIỎ" | ✅ |
+
+## Bổ sung (11/11) – Behavior
+
+| # | Câu hỏi | Trả lời | Trạng thái |
+|---|---|---|---|
+| 26 | Đang nhập số lượng (chưa rời ô, chưa nhấn Enter) mà nhấn F5 thì số lượng sau khi tải lại là giá trị cũ hay giá trị đang nhập? | – | ❓ |

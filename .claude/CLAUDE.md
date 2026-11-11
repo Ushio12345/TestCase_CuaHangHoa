@@ -12,7 +12,6 @@ General rules (Planning, Sync, Constraints) live in `~/.claude/CLAUDE.md`; below
 | `.claude/templates/` | Empty templates for a new module |
 
 - Ask the user only for BA/PO answers.
-- `modules/01-gio-hang/test-cases.xlsx` is the **old format**: do not use it as a template.
 
 ## New module workflow
 
@@ -120,7 +119,7 @@ Reference: `modules/01-gio-hang/test-design.md`.
 
 ## Test Case
 
-Reference: `.claude/templates/test-cases.xlsx` (not module 01 – old format). One TC per Test Design node (or a small group of related nodes).
+Reference: `.claude/templates/test-cases.xlsx`. One TC per Test Design node (or a small group of related nodes).
 How to write each field (ID, Title, Pre-conditions, Steps, Expected, Test Datas), Impact, Priority:
 see "Manual QA" in `~/.claude/CLAUDE.md`. Below is this project's template only.
 

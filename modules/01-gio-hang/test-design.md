@@ -168,6 +168,8 @@
   - Behavior
     - Tab
       - Chuyển đúng thứ tự cho từng nút
+      - Viền focus hiển thị; Shift+Tab đi ngược lại
+      - Enter / Space tại nút đang focus → giống click
     - Hover
       - Phóng to, chuyển động mượt mà
         - Hover từng sản phẩm
@@ -180,10 +182,24 @@
         - Từng thành phần lọc theo giá
       - Chuyển thành bàn tay (pointer) ở các nút
       - Nút + đang disable không có hiệu ứng hover
+    - Click nhiều lần
+      - Double click / spam "Xóa" → chỉ xóa 1 sản phẩm
+      - Spam "Cập nhật giỏ hàng" → xử lý 1 lần
+      - Spam "Thực hiện thanh toán" → chuyển trang 1 lần
     - Scroll
       - Cuộn mượt mà khi danh sách sản phẩm trong giỏ hàng quá dài, hiển thị đầy đủ, không giật lag
+    - Kéo thả
+      - Bôi chọn / copy tên, đơn giá; kéo hình ảnh không mở chi tiết
+    - Trình duyệt
+      - Back / Forward → giỏ hiển thị dữ liệu mới nhất
+      - Mở giỏ hàng trong tab mới → đúng giỏ của tài khoản
+      - F5 khi đang nhập số lượng (chưa rời ô) → giữ giá trị cũ hay giá trị đang nhập [Cần xác nhận BA/PO]
     - Tắt và bật lại trình duyệt
       - Vẫn lưu đúng và hiển thị được danh sách sản phẩm trong giỏ
+    - Cửa sổ
+      - Zoom 50–200%, thu nhỏ cửa sổ → bố cục không vỡ
+    - Chờ xử lý
+      - Bấm (+) rồi bấm ngay "Xóa" → không lỗi, dữ liệu đúng
   - Responsive
     - Tablet
     - Mobile

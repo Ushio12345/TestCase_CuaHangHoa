@@ -36,28 +36,32 @@ Chi tiết câu hỏi và trả lời: [qa-log.md](qa-log.md)
 
 ## Thống kê Test Case
 
-| Kịch bản chính | Số TC |
-|---|---|
-| 01. Truy cập và hiển thị trang giỏ hàng | 6 |
-| 02. Tăng số lượng bằng nút (+) | 7 |
-| 03. Giảm số lượng bằng nút (−) | 6 |
-| 04. Nhập trực tiếp số lượng (validation) | 19 |
-| 05. Xóa sản phẩm | 4 |
-| 06. Giới hạn số sản phẩm và phân trang | 10 |
-| 07. Tính tiền và nút "Cập nhật giỏ hàng" | 6 |
-| 08. Sản phẩm bị ẩn / bị xóa | 6 |
-| 09. Lưu giỏ hàng theo tài khoản | 8 |
-| 10. Thực hiện thanh toán | 5 |
-| 11. Phân quyền | 4 |
-| 12. Ảnh hưởng và hồi quy | 5 |
-| 13. Giao diện | 8 |
-| **Tổng** | **94** (HIGH 66 · MEDIUM 20 · LOW 8) |
+| Nhóm | Kịch bản | Số TC |
+|---|---|---|
+| FUNCTION | Truy cập và hiển thị trang giỏ hàng | 6 |
+| FUNCTION | Tăng số lượng bằng nút (+) | 7 |
+| FUNCTION | Giảm số lượng bằng nút (−) | 6 |
+| VALIDATION | Nhập trực tiếp số lượng từ bàn phím | 19 |
+| FUNCTION | Xóa sản phẩm khỏi giỏ hàng | 4 |
+| FUNCTION | Giới hạn số sản phẩm và phân trang | 10 |
+| FUNCTION | Tính tiền và nút "Cập nhật giỏ hàng" | 6 |
+| ẢNH HƯỞNG | Sản phẩm bị ẩn / bị xóa sau khi vào giỏ | 6 |
+| FUNCTION | Lưu giỏ hàng theo tài khoản | 8 |
+| FUNCTION | Thực hiện thanh toán từ giỏ hàng | 5 |
+| PHÂN QUYỀN | Phân quyền truy cập giỏ hàng | 4 |
+| ẢNH HƯỞNG | Ảnh hưởng và hồi quy các chức năng liên quan | 5 |
+| UI | Giao diện mặc định | 7 |
+| UI | Responsive | 1 |
+| UI | Behavior | 15 |
+| **Tổng** | | **109** (HIGH 66 · MEDIUM 20 · LOW 23) |
+
+Theo nhóm: FUNCTION 52 · VALIDATION 19 · UI 23 · PHÂN QUYỀN 4 · ẢNH HƯỞNG 11. File theo template mới (giữ thứ tự kịch bản cũ, nên một nhóm có thể xuất hiện nhiều lần).
 
 ## Kết quả thực thi
 
 | Lần chạy | Ngày | Pass | Fail | Untested | Ghi chú |
 |---|---|---|---|---|---|
-| R1 | – | – | – | – | Chưa thực thi |
+| R1 | – | – | – | 109 | Chưa thực thi |
 
 ## Bug phát hiện
 
