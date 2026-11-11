@@ -2,7 +2,7 @@
 
 > Dự án thực hành kiểm thử phần mềm thủ công trên hệ thống bán hoa trực tuyến **Floral Charm**: phân tích SRS, đặt câu hỏi làm rõ yêu cầu, thiết kế Test Design (mindmap), viết Test Case, thực thi và báo cáo lỗi.
 
-![Status](https://img.shields.io/badge/status-in%20progress-yellow) ![Type](https://img.shields.io/badge/testing-manual-blue) ![Modules](https://img.shields.io/badge/modules-1%2F15%20done-green) ![Test Cases](https://img.shields.io/badge/test%20cases-241-blue)
+![Status](https://img.shields.io/badge/status-in%20progress-yellow) ![Type](https://img.shields.io/badge/testing-manual-blue) ![Modules](https://img.shields.io/badge/modules-1%2F15%20done-green) ![Test Cases](https://img.shields.io/badge/test%20cases-256-blue)
 
 ---
 
@@ -38,28 +38,28 @@
 
 ### Phân hệ Khách hàng
 
-| #   | Chức năng                                               | Test Design                                   | Test Case                                                                                                                               | Số TC | Trạng thái |
-| --- | ------------------------------------------------------- | --------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | ----- | ---------- |
-| 01  | [Giỏ hàng](modules/01-gio-hang/README.md) (`/gio-hang`) | [Mindmap](modules/01-gio-hang/test-design.md) | [Google Sheets](https://docs.google.com/spreadsheets/d/1KgZI0jVNESa4P1WYLJnznRT4CGR7Mzlww-tiGYN7k_E/edit?gid=1373814062#gid=1373814062) | 94    | ✅         |
-| 02  | Xem trang chủ & lọc hoa (`/`, `/hoa`)                   | –                                             | –                                                                                                                                       | –     | ⬜         |
-| 03  | Tìm kiếm sản phẩm (`/tim-kiem`)                         | –                                             | –                                                                                                                                       | –     | ⬜         |
-| 04  | Chi tiết sản phẩm & thêm vào giỏ (`/hoa/[id]`)          | –                                             | –                                                                                                                                       | –     | ⬜         |
-| 05  | Đăng ký tài khoản (`/dang-ky`)                          | –                                             | –                                                                                                                                       | –     | ⬜         |
-| 06  | Đăng nhập khách hàng (`/dang-nhap`)                     | –                                             | –                                                                                                                                       | –     | ⬜         |
-| 07  | Thanh toán & đặt hàng (`/thanh-toan`)                   | –                                             | –                                                                                                                                       | –     | ⬜         |
-| 08  | Cập nhật thông tin cá nhân (`/tai-khoan`)               | –                                             | –                                                                                                                                       | –     | ⬜         |
+| #   | Chức năng                                               | Test Design                                   | Test Case                                                                                                                             | Số TC | Trạng thái |
+| --- | ------------------------------------------------------- | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ----- | ---------- |
+| 01  | [Giỏ hàng](modules/01-gio-hang/README.md) (`/gio-hang`) | [Mindmap](modules/01-gio-hang/test-design.md) | [Google Sheets](https://docs.google.com/spreadsheets/d/1KgZI0jVNESa4P1WYLJnznRT4CGR7Mzlww-tiGYN7k_E/edit?gid=746828903#gid=746828903) | 109   | ✅         |
+| 02  | Xem trang chủ & lọc hoa (`/`, `/hoa`)                   | –                                             | –                                                                                                                                     | –     | ⬜         |
+| 03  | Tìm kiếm sản phẩm (`/tim-kiem`)                         | –                                             | –                                                                                                                                     | –     | ⬜         |
+| 04  | Chi tiết sản phẩm & thêm vào giỏ (`/hoa/[id]`)          | –                                             | –                                                                                                                                     | –     | ⬜         |
+| 05  | Đăng ký tài khoản (`/dang-ky`)                          | –                                             | –                                                                                                                                     | –     | ⬜         |
+| 06  | Đăng nhập khách hàng (`/dang-nhap`)                     | –                                             | –                                                                                                                                     | –     | ⬜         |
+| 07  | Thanh toán & đặt hàng (`/thanh-toan`)                   | –                                             | –                                                                                                                                     | –     | ⬜         |
+| 08  | Cập nhật thông tin cá nhân (`/tai-khoan`)               | –                                             | –                                                                                                                                     | –     | ⬜         |
 
 ### Phân hệ Quản trị
 
-| #   | Chức năng            | Test Design | Test Case | Số TC | Trạng thái |
-| --- | -------------------- | ----------- | --------- | ----- | ---------- |
-| 09  | Đăng nhập quản trị   | –           | –         | –     | ⬜         |
-| 10  | Thống kê tổng quan   | –           | –         | –     | ⬜         |
-| 11  | Quản lý loại hoa     | –           | –         | –     | ⬜         |
-| 12  | [Quản lý sản phẩm hoa](modules/12-quan-ly-san-pham-hoa/README.md) (`/quan-tri/hoa`) – Thêm hoa mới | [Mindmap](modules/12-quan-ly-san-pham-hoa/test-design.md) | [Excel](modules/12-quan-ly-san-pham-hoa/test-cases.xlsx) | 147 | 🟡 |
-| 13  | Quản lý đơn đặt hàng | –           | –         | –     | ⬜         |
-| 14  | Quản lý thành viên   | –           | –         | –     | ⬜         |
-| 15  | Quản lý tin tức      | –           | –         | –     | ⬜         |
+| #   | Chức năng                                                                                          | Test Design                                               | Test Case                                                                                                                       | Số TC | Trạng thái |
+| --- | -------------------------------------------------------------------------------------------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ----- | ---------- |
+| 09  | Đăng nhập quản trị                                                                                 | –                                                         | –                                                                                                                               | –     | ⬜         |
+| 10  | Thống kê tổng quan                                                                                 | –                                                         | –                                                                                                                               | –     | ⬜         |
+| 11  | Quản lý loại hoa                                                                                   | –                                                         | –                                                                                                                               | –     | ⬜         |
+| 12  | [Quản lý sản phẩm hoa](modules/12-quan-ly-san-pham-hoa/README.md) (`/quan-tri/hoa`) – Thêm hoa mới | [Mindmap](modules/12-quan-ly-san-pham-hoa/test-design.md) | [Excel](https://docs.google.com/spreadsheets/d/1KgZI0jVNESa4P1WYLJnznRT4CGR7Mzlww-tiGYN7k_E/edit?gid=1191588559#gid=1191588559) | 147   | 🟡         |
+| 13  | Quản lý đơn đặt hàng                                                                               | –                                                         | –                                                                                                                               | –     | ⬜         |
+| 14  | Quản lý thành viên                                                                                 | –                                                         | –                                                                                                                               | –     | ⬜         |
+| 15  | Quản lý tin tức                                                                                    | –                                                         | –                                                                                                                               | –     | ⬜         |
 
 ---
 
@@ -82,6 +82,7 @@ SRS  →  Phân tích & Q&A với BA/PO  →  Test Design (mindmap: XMind / Mark
 - [Test Plan](docs/test-plan.md) – phạm vi, phương pháp, môi trường, tiêu chí
 - [SRS Review](docs/srs-review.md) – các điểm mâu thuẫn / thiếu phát hiện trong SRS
 - [Bug List](bug-reports/bug-list.xlsx) – danh sách lỗi phát hiện
+- [Test Summary](reports/test-summary.xlsx) – dashboard tổng hợp kết quả toàn dự án (tự lấy số từ tab từng chức năng qua cột "Sheet nguồn"; dùng trên Google Sheets / Excel Online)
 
 ---
 
@@ -108,24 +109,26 @@ floral-charm-qa/
 │   │   ├── test-design.xmind   # Riêng 01 và 12 còn giữ file XMind
 │   │   └── test-cases.xlsx
 │   └── ...
-└── bug-reports/
-    └── bug-list.xlsx
+├── bug-reports/
+│   └── bug-list.xlsx
+└── reports/
+    └── test-summary.xlsx       # Dashboard tổng hợp toàn dự án
 ```
 
 ---
 
 ## Tổng hợp kết quả
 
-| Chỉ số            | Giá trị |
-| ----------------- | ------- |
-| Module            | 1 hoàn thành · 1 đang làm / 15 |
-| Tổng số Test Case | 241 (01: 94 · 12: 147) |
-| Theo Priority     | HIGH 115 · MEDIUM 74 · LOW 52 (01: 66 / 20 / 8 · 12: 49 / 54 / 44) |
-| Câu hỏi Q&A       | 78 (01: 25 – 18 ✅ · 7 ❓ · 12: 53 ✅) |
-| Điểm SRS review   | 53 ([SRS Review](docs/srs-review.md)) |
-| Đã thực thi       | –       |
-| Pass / Fail       | – / –   |
-| Số bug phát hiện  | –       |
+| Chỉ số            | Giá trị                                                             |
+| ----------------- | ------------------------------------------------------------------- |
+| Module            | 1 hoàn thành · 1 đang làm / 15                                      |
+| Tổng số Test Case | 256 (01: 109 · 12: 147)                                             |
+| Theo Priority     | HIGH 115 · MEDIUM 74 · LOW 67 (01: 66 / 20 / 23 · 12: 49 / 54 / 44) |
+| Câu hỏi Q&A       | 79 (01: 26 – 18 ✅ · 8 ❓ · 12: 53 ✅)                              |
+| Điểm SRS review   | 53 ([SRS Review](docs/srs-review.md))                               |
+| Đã thực thi       | –                                                                   |
+| Pass / Fail       | – / –                                                               |
+| Số bug phát hiện  | –                                                                   |
 
 _(Cập nhật sau mỗi đợt chạy test)_
 
