@@ -2,7 +2,7 @@
 
 > Dự án thực hành kiểm thử phần mềm thủ công trên hệ thống bán hoa trực tuyến **Floral Charm**: phân tích SRS, đặt câu hỏi làm rõ yêu cầu, thiết kế Test Design (mindmap), viết Test Case, thực thi và báo cáo lỗi.
 
-![Status](https://img.shields.io/badge/status-in%20progress-yellow) ![Type](https://img.shields.io/badge/testing-manual-blue) ![Modules](https://img.shields.io/badge/modules-1%2F15%20done-green)
+![Status](https://img.shields.io/badge/status-in%20progress-yellow) ![Type](https://img.shields.io/badge/testing-manual-blue) ![Modules](https://img.shields.io/badge/modules-1%2F15%20done-green) ![Test Cases](https://img.shields.io/badge/test%20cases-241-blue)
 
 ---
 
@@ -24,7 +24,7 @@
 ## Kỹ năng thể hiện
 
 - **Phân tích yêu cầu:** đọc SRS, phát hiện điểm mâu thuẫn / thiếu, lập danh sách câu hỏi Q&A gửi BA/PO
-- **Test Design:** mindmap theo nhóm Function · Validation · UI · Phân quyền · Ảnh hưởng (XMind)
+- **Test Design:** mindmap theo nhóm Function · Validation · UI · Phân quyền · Ảnh hưởng (XMind / Markdown)
 - **Kỹ thuật thiết kế test:** Equivalence Partitioning, Boundary Value Analysis, State Transition, Decision Table, Error Guessing
 - **Viết Test Case:** Pre-conditions, Test Steps, Test Data, Expected Result theo từng step, Priority
 - **Kiểm tra dữ liệu:** câu lệnh SQL (PostgreSQL) verify dữ liệu sau thao tác
@@ -56,7 +56,7 @@
 | 09  | Đăng nhập quản trị   | –           | –         | –     | ⬜         |
 | 10  | Thống kê tổng quan   | –           | –         | –     | ⬜         |
 | 11  | Quản lý loại hoa     | –           | –         | –     | ⬜         |
-| 12  | [Quản lý sản phẩm hoa](modules/12-quan-ly-san-pham-hoa/README.md) (`/quan-tri/hoa`) | –           | –         | –     | 🟡         |
+| 12  | [Quản lý sản phẩm hoa](modules/12-quan-ly-san-pham-hoa/README.md) (`/quan-tri/hoa`) – Thêm hoa mới | [Mindmap](modules/12-quan-ly-san-pham-hoa/test-design.md) | [Excel](modules/12-quan-ly-san-pham-hoa/test-cases.xlsx) | 147 | 🟡 |
 | 13  | Quản lý đơn đặt hàng | –           | –         | –     | ⬜         |
 | 14  | Quản lý thành viên   | –           | –         | –     | ⬜         |
 | 15  | Quản lý tin tức      | –           | –         | –     | ⬜         |
@@ -66,7 +66,7 @@
 ## Quy trình làm việc
 
 ```
-SRS  →  Phân tích & Q&A với BA/PO  →  Test Design (XMind)  →  Test Case (Excel)  →  Thực thi  →  Bug Report
+SRS  →  Phân tích & Q&A với BA/PO  →  Test Design (mindmap: XMind / Markdown)  →  Test Case (Excel)  →  Thực thi  →  Bug Report
 ```
 
 1. **Phân tích SRS:** xác định luồng nghiệp vụ, quy tắc dữ liệu, phân quyền, điểm chưa rõ
@@ -101,7 +101,12 @@ floral-charm-qa/
 │   │   ├── test-design.png     # Ảnh xem nhanh trên GitHub
 │   │   ├── test-design.md      # Outline dạng text
 │   │   └── test-cases.xlsx     # Bản tải về (bản xem online: Google Sheets)
-│   ├── 02-trang-chu-loc-hoa/
+│   ├── 12-quan-ly-san-pham-hoa/
+│   │   ├── README.md
+│   │   ├── qa-log.md
+│   │   ├── test-design.md      # Mindmap dạng text (module mới chỉ dùng file này)
+│   │   ├── test-design.xmind   # Riêng 01 và 12 còn giữ file XMind
+│   │   └── test-cases.xlsx
 │   └── ...
 └── bug-reports/
     └── bug-list.xlsx
@@ -113,7 +118,11 @@ floral-charm-qa/
 
 | Chỉ số            | Giá trị |
 | ----------------- | ------- |
-| Tổng số Test Case | 94      |
+| Module            | 1 hoàn thành · 1 đang làm / 15 |
+| Tổng số Test Case | 241 (01: 94 · 12: 147) |
+| Theo Priority     | HIGH 115 · MEDIUM 74 · LOW 52 (01: 66 / 20 / 8 · 12: 49 / 54 / 44) |
+| Câu hỏi Q&A       | 78 (01: 25 – 18 ✅ · 7 ❓ · 12: 53 ✅) |
+| Điểm SRS review   | 53 ([SRS Review](docs/srs-review.md)) |
 | Đã thực thi       | –       |
 | Pass / Fail       | – / –   |
 | Số bug phát hiện  | –       |

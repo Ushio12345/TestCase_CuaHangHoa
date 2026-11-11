@@ -67,3 +67,7 @@ Các điểm mâu thuẫn hoặc còn thiếu phát hiện khi phân tích SRS. 
 | 47 | Thêm sản phẩm hoa – `ten_hoa` | SRS: trên 20 ký tự → FC_17; BA/PO: chặn gõ quá 20 → FC_17 chỉ còn cho trường hợp dưới 5 ký tự |
 | 48 | Thêm sản phẩm hoa – `mo_ta` | SRS: trên 250 ký tự → FC_25 (bảng trường FC_24); BA/PO: chặn gõ ở 250 → thông báo "quá dài" không bao giờ hiện |
 | 49 | Thêm sản phẩm hoa – sau khi lưu | SRS bước 5: "làm mới dữ liệu trang → hiển thị thông báo thành công"; BA/PO: chuyển về trang danh sách hoa |
+| 50 | Thêm sản phẩm hoa – `hinh_anh` | CSDL: VARCHAR(500); BA/PO: đường dẫn ảnh không giới hạn độ dài (qa-log 12 #42). **BA/PO chốt (10/11):** theo SRS, tối đa 500 ký tự |
+| 51 | Tìm kiếm sản phẩm hoa – bước 3 | SRS: tìm theo tên trong bảng `hoa`, không lọc `trang_thai`; BA/PO: hoa Ẩn không xuất hiện trong kết quả (qa-log 12 #45). **BA/PO chốt (10/11):** hoa Ẩn cũng không hiện trong danh sách hoa ở trang chủ của khách |
+| 52 | Thêm sản phẩm hoa – `ten_hoa` | Danh sách thông báo không có mã cho lỗi "ký tự không hợp lệ" của Tên hoa; BA/PO: báo "không hợp lệ" (qa-log 12 #5, #47). **BA/PO chốt (10/11):** coi như để trống, hoặc bổ sung thông báo "Tên hoa không hợp lệ" |
+| 53 | Thêm sản phẩm hoa – `hinh_anh` | Danh sách thông báo không có mã cho "đường dẫn ảnh quá dài" và "đường dẫn ảnh không hợp lệ"; BA/PO: "Đường dẫn ảnh vượt quá 500 ký tự", "Đường dẫn ảnh không hợp lệ" (qa-log 12 #22, #53) |
