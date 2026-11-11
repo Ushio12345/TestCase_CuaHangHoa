@@ -7,6 +7,7 @@
 .claude/review/
 .claude/settings.local.json
 .claude/templates/
+.claude/CLAUDE.md
 
 # Tài liệu đào tạo (không đính kèm trong repo)
 docs/SRS_Web_ban_hoa_v2.docx
