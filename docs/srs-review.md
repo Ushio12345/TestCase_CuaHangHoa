@@ -71,3 +71,14 @@ Các điểm mâu thuẫn hoặc còn thiếu phát hiện khi phân tích SRS. 
 | 51 | Tìm kiếm sản phẩm hoa – bước 3 | SRS: tìm theo tên trong bảng `hoa`, không lọc `trang_thai`; BA/PO: hoa Ẩn không xuất hiện trong kết quả (qa-log 12 #45). **BA/PO chốt (10/11):** hoa Ẩn cũng không hiện trong danh sách hoa ở trang chủ của khách |
 | 52 | Thêm sản phẩm hoa – `ten_hoa` | Danh sách thông báo không có mã cho lỗi "ký tự không hợp lệ" của Tên hoa; BA/PO: báo "không hợp lệ" (qa-log 12 #5, #47). **BA/PO chốt (10/11):** coi như để trống, hoặc bổ sung thông báo "Tên hoa không hợp lệ" |
 | 53 | Thêm sản phẩm hoa – `hinh_anh` | Danh sách thông báo không có mã cho "đường dẫn ảnh quá dài" và "đường dẫn ảnh không hợp lệ"; BA/PO: "Đường dẫn ảnh vượt quá 500 ký tự", "Đường dẫn ảnh không hợp lệ" (qa-log 12 #22, #53) |
+| 54 | Sửa sản phẩm hoa – màn hình | "Thiết kế màn hình: Không có", không có bảng trường; bước 2: "hộp thoại biểu mẫu", trong khi Thêm là trang riêng `/quan-tri/hoa/them` (qa-log 12 #54) |
+| 55 | Sửa sản phẩm hoa – bước 4 | `UPDATE hoa SET ten_hoa=..., gia=...` không nêu đủ cột được cập nhật (`ma_loai`, `mo_ta`, `hinh_anh`, `trang_thai`, `ngay_d`?) (qa-log 12 #54, #57) |
+| 56 | Sửa sản phẩm hoa – bước 5 | "Làm mới trang chi tiết và trang danh sách": phân hệ quản trị không có trang chi tiết sản phẩm |
+| 57 | Xóa sản phẩm hoa – bước 4, 5 | 2 lệnh `DELETE FROM ct_don_dat_hang` và `DELETE FROM hoa` không yêu cầu giao dịch CSDL → lỗi ở lệnh 2 làm mất chi tiết đơn hàng mà hoa vẫn còn |
+| 58 | Xóa sản phẩm hoa vs Xóa loại hoa / Xóa thành viên | Loại hoa đang có sản phẩm → chặn (FC_29); thành viên có đơn hàng → chặn (FC_34); hoa đã có trong đơn hàng → **xóa luôn** chi tiết đơn (xem #16) (qa-log 12 #64) |
+| 59 | Xóa sản phẩm hoa – thông báo | FC_26 chỉ ghi "Lỗi cơ sở dữ liệu"; nội dung hộp thoại xác nhận và nút hủy không định nghĩa (chỉ có "Đồng ý xóa") (qa-log 12 #62, #65) |
+| 60 | Danh sách sản phẩm hoa (`/quan-tri/hoa`) | Có ảnh màn hình "Trang quản lý sản phẩm hoa" nhưng không có mục chức năng: cột, sắp xếp, tìm kiếm, phân trang (qa-log 12 #67) |
+| 61 | Sửa sản phẩm hoa – màn hình | SRS: "hộp thoại biểu mẫu"; BA/PO: trang riêng `/quan-tri/hoa/sua/[ma_hoa]`; SRS nút "Lưu thay đổi", BA/PO: "Cập nhật thông tin" (qa-log 12 #54, #56) |
+| 62 | Xóa sản phẩm hoa – bước 4, 5 | SRS: `DELETE FROM ct_don_dat_hang` rồi `DELETE FROM hoa` (xóa cứng); BA/PO: hoa đã xóa vẫn hiển thị (làm mờ) trong đơn hàng → không thể xóa cứng chi tiết đơn (qa-log 12 #64, #74) |
+| 63 | Sửa / Xóa sản phẩm hoa – thông báo thành công | Không có mã trong Danh sách thông báo; BA/PO: popup "Tuyệt vời!" – "Thông tin hoa đã được cập nhật thành công!", "Đã xoá thành công" (bổ sung #44; qa-log 12 #57, #63) |
+| 64 | Danh sách sản phẩm hoa – giá | SRS Định dạng tiền tệ: "150.000đ"; ảnh màn hình quản trị: "450.000 đ" (có khoảng trắng) (qa-log 12 #73) |

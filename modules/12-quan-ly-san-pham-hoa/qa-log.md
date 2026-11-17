@@ -10,7 +10,7 @@ Câu hỏi làm rõ yêu cầu gửi BA/PO trong quá trình phân tích SRS và
 
 | # | Câu hỏi | Trả lời | Trạng thái |
 |---|---|---|---|
-| 1 | Ký tự đặc biệt nào được chấp nhận? | Chỉ `.` `_` `;` | ✅ |
+| 1 | Ký tự đặc biệt nào được chấp nhận? | `.` `_` `;` `-` `,` `:` `(` `)` `/` `'` (nháy đơn). BA chốt lại 17/11 – lần trước: chỉ `.` `_` `;` | ✅ |
 | 2 | Dấu cách ở đầu và cuối có được cắt bỏ không? | Có (chỉ áp dụng cho Tên hoa) | ✅ |
 | 3 | Nhập quá 20 ký tự thì chặn gõ hay báo lỗi? | Chặn, không cho nhập quá 20 ký tự | ✅ |
 | 4 | Có chấp nhận icon (emoji) không? | Không (emoji chỉ chấp nhận ở Mô tả) | ✅ |
@@ -98,3 +98,44 @@ Câu hỏi làm rõ yêu cầu gửi BA/PO trong quá trình phân tích SRS và
 | 51 | (#21 – #23) Không có upload file thì "JPG, PNG" (#21) nghĩa là đường dẫn phải trỏ tới ảnh JPG / PNG? Khác #16 "không kiểm tra đuôi file" | Chấp nhận mọi link ảnh hợp lệ, không giới hạn JPG / PNG (thay cho #21) | ✅ |
 | 52 | Khi mở form, Loại hoa mặc định chọn giá trị nào? (Làm lại đưa về "Hoa chia buồn" – #28) | Giá trị đầu tiên trong danh sách | ✅ |
 | 53 | (#42) Đường dẫn ảnh dài hơn 500 ký tự: chặn gõ / tự cắt hay báo lỗi (mã, nội dung)? | Báo lỗi "Đường dẫn ảnh vượt quá 500 ký tự" | ✅ |
+
+## B. Sửa sản phẩm hoa (SRS 4.3.4.2)
+
+| # | Câu hỏi | Trả lời | Trạng thái |
+|---|---|---|---|
+| 54 | Form sửa là hộp thoại (popup) hay trang riêng (URL nào)? Sửa được những trường nào (cả 6 trường như Thêm)? (srs-review #54, #55) | Trang riêng `/quan-tri/hoa/sua/[ma_hoa]` (VD `/quan-tri/hoa/sua/83`), đủ các trường như Thêm | ✅ |
+| 55 | Mọi quy tắc và câu trả lời của Thêm (#1–#53: chặn gõ, cắt khoảng trắng, mã lỗi, Tải lên, nhiều lỗi báo tất cả…) có áp dụng y hệt cho Sửa không? | Có | ✅ |
+| 56 | Form sửa có những nút nào (Lưu thay đổi, Hủy / Đóng, Làm lại, Tải lên)? "Làm lại" đưa về dữ liệu cũ hay xóa trắng? Đóng form khi đã đổi dữ liệu thì có hỏi lưu không? | Nút lưu tên "Cập nhật thông tin"; các nút khác giống Thêm (Làm lại, Quay lại, Tải lên); Làm lại giống Thêm (xóa trắng ô nhập, Loại hoa "Hoa chia buồn", Trạng thái "Hiển thị") | ✅ |
+| 57 | Lưu thành công: nội dung thông báo? Ở lại danh sách hay chuyển trang? Hoa vừa sửa nằm ở vị trí nào trong danh sách? `ngay_d` có đổi không? | Hiện popup: biểu tượng ✓, tiêu đề "Tuyệt vời!", nội dung "Thông tin hoa đã được cập nhật thành công!", nút "ĐÓNG CỬA SỔ". Đóng popup → về danh sách hoa; hoa vừa sửa giữ vị trí, `ngay_d` không đổi (QA hiểu từ trả lời "không") | ✅ |
+| 58 | Bấm "Lưu thay đổi" khi không sửa gì thì báo gì, có ghi CSDL không? | Có: vẫn ghi CSDL và hiện popup cập nhật thành công | ✅ |
+| 59 | Sửa hoa đã bị xóa (ở tab khác / bởi quản trị viên khác) thì thông báo gì? | QA đề xuất (BA đồng ý): mở `/quan-tri/hoa/sua/[id]` của hoa không tồn tại → không hiện form, báo "Không tìm thấy sản phẩm" (hoặc 404); đang sửa mà hoa bị xóa ở tab khác, bấm Cập nhật → báo lỗi, không tạo bản ghi mới, về danh sách | ✅ |
+| 60 | Sửa giá: đơn hàng cũ giữ `gia_ban` cũ? Giỏ hàng của thành viên đổi giá ngay hay chờ "Cập nhật giỏ hàng" (liên quan qa-log 01 #15)? | Giỏ hàng đổi giá ngay; đơn hàng cũ giữ `gia_ban` cũ (SRS CSDL `CT_DONDATHANG.gia_ban`) | ✅ |
+
+## C. Xóa sản phẩm hoa (SRS 4.3.4.3)
+
+| # | Câu hỏi | Trả lời | Trạng thái |
+|---|---|---|---|
+| 61 | "Chọn sản phẩm hoa rồi bấm Xóa": nút Xóa trên từng dòng, hay chọn nhiều (checkbox) để xóa hàng loạt? | Nút Xóa trên từng dòng | ✅ |
+| 62 | Hộp thoại xác nhận xóa: nội dung, tên nút hủy? Esc / bấm ra ngoài có đóng hộp thoại không? (srs-review #59) | Nội dung: "Bạn có thực sự muốn xóa sản phẩm này không?"; nút hủy: "Huỷ"; Esc / bấm ra ngoài không đóng hộp thoại | ✅ |
+| 63 | Xóa thành công: nội dung thông báo? Xóa hoa duy nhất ở trang cuối thì danh sách về trang nào? | Thông báo "Đã xoá thành công"; xóa hoa duy nhất ở trang cuối → vẫn ở trang đó, hiển thị trống hoặc gợi ý thêm hoa | ✅ |
+| 64 | Hoa đã có trong đơn hàng: vẫn cho xóa (SRS xóa `ct_don_dat_hang`) hay chặn như Xóa loại hoa / Xóa thành viên? Đơn hàng mất hết chi tiết thì còn hiển thị ở Quản lý đơn hàng không, tổng tiền thế nào? (srs-review #16, #58) | Vẫn cho xóa. Trong đơn hàng, hoa đã xóa vẫn hiển thị nhưng ẩn / làm mờ; hoa đã xóa nằm trong giỏ → khi thanh toán hiển thị thông báo yêu cầu xóa sản phẩm khỏi giỏ (srs-review #62; cách lưu CSDL: #74) | ✅ |
+| 65 | FC_26 "Không thể xóa sản phẩm này" xảy ra khi nào (hoa đã bị xóa trước, lỗi CSDL…)? QA tái hiện bằng cách nào? | Tạm bỏ qua (chưa viết TC cho FC_26) | ✅ |
+| 66 | Mở `/hoa/[id]` của hoa đã xóa → lỗi 404 như hoa Ẩn? Hoa đã xóa đang nằm trong giỏ thành viên thì xử lý thế nào (liên quan qa-log 01 #16)? | Giỏ hàng: như #64; mở `/hoa/[id]` của hoa đã xóa → 404 | ✅ |
+
+## D. Chung
+
+| # | Câu hỏi | Trả lời | Trạng thái |
+|---|---|---|---|
+| 67 | Màn hình danh sách `/quan-tri/hoa` (cột, sắp xếp, tìm kiếm, phân trang) có thuộc phạm vi test module 12 không? Nếu có, quy tắc là gì? (srs-review #60) | Có, thuộc phần hiển thị danh sách hoa của module 12. SRS không có quy tắc (chỉ có ảnh màn hình `scr_17_admin_hoa.png`) → QA đề xuất theo ảnh; điểm chưa rõ: #69 – #73 | ✅ |
+| 68 | Phạm vi chức năng bị ảnh hưởng khi Sửa / Xóa hoa – QA đề xuất: trang khách (`/`, `/hoa`, lọc theo loại), Tìm kiếm, Chi tiết sản phẩm, Giỏ hàng, Thanh toán, Quản lý đơn hàng, Quản lý loại hoa (xóa loại sau khi hết hoa), Thống kê tổng quan. Đúng / thiếu? | Đúng | ✅ |
+
+## E. Bổ sung sau câu trả lời BA (17/11)
+
+| # | Câu hỏi | Trả lời | Trạng thái |
+|---|---|---|---|
+| 69 | (#67) Ô "Tìm kiếm tên hoa": khớp một phần hay toàn bộ tên? Có phân biệt chữ hoa / thường, có dấu / không dấu? Tìm khi bấm "Áp dụng" hay cả khi nhấn Enter? Ô trống + "Áp dụng" → toàn bộ danh sách? Không có kết quả thì hiển thị gì? | – | ❓ |
+| 70 | (#67) "Lọc theo loại" gồm "Tất cả loại hoa" + toàn bộ loại trong `loai_hoa`? Tìm kiếm và lọc có áp dụng đồng thời khi bấm "Áp dụng" không? | – | ❓ |
+| 71 | (#67) Danh sách sắp xếp theo tiêu chí nào: `ma_hoa` giảm dần (hoa mới lên đầu – #44, hoa vừa sửa giữ vị trí – #57)? | – | ❓ |
+| 72 | (#67) Danh sách có phân trang không? Bao nhiêu dòng mỗi trang? | – | ❓ |
+| 73 | (#67) Danh sách quản trị có hiển thị hoa Ẩn không, cột Trạng thái của hoa Ẩn hiển thị thế nào? Giá hiển thị "450.000 đ" (ảnh màn hình) hay "450.000đ" (SRS Định dạng tiền tệ)? (srs-review #64) | – | ❓ |
+| 74 | (#64) Xóa hoa là xóa cứng (SRS: `DELETE` bảng `hoa` và `ct_don_dat_hang`) hay xóa mềm (để hoa vẫn hiển thị làm mờ trong đơn hàng)? Sau khi xóa, QA kiểm tra CSDL thế nào? (srs-review #62) | – | ❓ |

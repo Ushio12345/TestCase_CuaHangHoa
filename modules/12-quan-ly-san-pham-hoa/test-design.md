@@ -1,11 +1,68 @@
 # Quản lý sản phẩm hoa
 
-- Function
-  - Thêm hoa mới
+- Danh sách sản phẩm hoa (`/quan-tri/hoa`) – QA đề xuất theo ảnh màn hình (qa-log #67)
+  - Function
+    - Bấm "Hoa" ở sidebar → mở danh sách, bảng gồm toàn bộ hoa
+    - Hoa "Ẩn" có hiển thị trong danh sách [Cần xác nhận BA/PO]
+    - Sắp xếp theo ma_hoa giảm dần (hoa mới lên đầu – qa-log #44) [Cần xác nhận BA/PO]
+    - Tìm kiếm tên hoa
+      - Nhập đúng tên đầy đủ, bấm "Áp dụng" → chỉ hiển thị hoa có tên đó
+      - Nhập một phần tên → hiển thị các hoa có tên chứa từ khóa [Cần xác nhận BA/PO]
+      - Khác chữ hoa / thường → vẫn tìm thấy [Cần xác nhận BA/PO]
+      - Không có hoa khớp → hiển thị danh sách trống / thông báo [Cần xác nhận BA/PO]
+    - Lọc theo loại
+      - Chọn 1 loại, bấm "Áp dụng" → chỉ hiển thị hoa thuộc loại đó
+      - Chọn "Tất cả loại hoa" → hiển thị toàn bộ hoa
+      - Tìm kiếm và lọc cùng lúc → hoa thỏa cả 2 điều kiện [Cần xác nhận BA/PO]
+    - Phân trang (số dòng / trang) [Cần xác nhận BA/PO]
+  - Validation
+    - Ô Tìm kiếm tên hoa
+      - Để trống, bấm "Áp dụng" → hiển thị toàn bộ hoa [Cần xác nhận BA/PO]
+      - Nhập ký tự đặc biệt (' OR '1'='1) → không lỗi hệ thống, không trả về toàn bộ hoa [Cần xác nhận BA/PO]
+  - UI
+    - Giao diện mặc định
+      - Tiêu đề "Quản Lý Hoa", nút "Thêm hoa mới", mục "Hoa" ở sidebar được đánh dấu
+      - Bộ lọc mặc định: ô tìm kiếm trống, gợi ý "Nhập tên hoa để tìm...", Lọc theo loại "Tất cả loại hoa", nút "Áp dụng"
+      - Bảng 5 cột: Sản phẩm (ảnh, tên, "MÃ: #id"), Loại, Giá bán, Trạng thái, Thao tác (sửa, xóa)
+      - Giá bán dạng "450.000đ" (SRS) hay "450.000 đ" (ảnh) [Cần xác nhận BA/PO]
+      - Hoa không có ảnh / ảnh lỗi → ảnh mặc định (qa-log #17)
+    - Behavior
+      - Enter trong ô tìm kiếm → áp dụng tìm kiếm [Cần xác nhận BA/PO]
+      - Cuộn danh sách dài → sidebar giữ nguyên, cuộn mượt
+      - Spam click "Áp dụng" → không lỗi, kết quả đúng
+      - Zoom 50% – 200% → bảng không vỡ
+    - Responsive
+      - Tablet 768px
+      - Mobile 375px
+  - Phân quyền
+    - Guest truy cập /quan-tri/hoa → chuyển về /quan-tri/dang-nhap
+    - Member truy cập /quan-tri/hoa → chuyển về /quan-tri/dang-nhap
+- Thêm hoa mới
+  - Function
+    - Form nhập liệu (R = Tên hoa, Loại hoa, Giá bán, Trạng thái, Mô tả · O = Đường dẫn hình ảnh)
+      - Thành công với giá trị biên hợp lệ
+        - Bộ min: Tên hoa 5 ký tự, Giá bán 5.000, Mô tả 1 ký tự → lưu đúng giá trị
+        - Bộ max: Tên hoa 20 ký tự, Giá bán 7.000.000, Mô tả 250 ký tự, Đường dẫn 500 ký tự → lưu đúng giá trị
+      - Thành công khi nhập đầy đủ tất cả trường (R + O) → lưu, chuyển về danh sách hoa
+      - Thành công khi chỉ nhập các trường R (không nhập Đường dẫn) → lưu, hiển thị ảnh mặc định
+      - R + 1 trường O: chỉ có 1 trường O → trùng "nhập đầy đủ tất cả trường"
+      - Thất bại khi thiếu 1 trường R (các trường còn lại hợp lệ) → không lưu, ở lại form, chỉ báo lỗi trường thiếu
+        - Thiếu Tên hoa → FC_16
+        - Thiếu Loại hoa (DevTools) → FC_18
+        - Thiếu Giá bán → FC_20
+        - Thiếu Trạng thái (DevTools) → không báo lỗi, lưu trang_thai = 1 (SRS: để trống → mặc định 1)
+        - Thiếu Mô tả → FC_23
+      - Thất bại khi 1 trường không hợp lệ (các trường còn lại hợp lệ) → không lưu, ở lại form, chỉ báo lỗi trường đó
+        - Tên hoa 4 ký tự → FC_17
+        - Loại hoa không có trong loai_hoa (DevTools) → FC_19
+        - Giá bán 4.999 → FC_21
+        - Trạng thái = 5 (DevTools) → FC_22
+        - Mô tả: không nhập được giá trị sai (chặn ở 250 ký tự) → chỉ có case để trống
+        - Đường dẫn hình ảnh không phải link → "Đường dẫn ảnh không hợp lệ"
+      - Thất bại khi nhiều trường không hợp lệ → hiện lỗi của tất cả các trường
+      - Để trống toàn bộ form → hiện lỗi của tất cả trường bắt buộc
     - Thêm thành công
-      - Nhập đủ các trường hợp lệ, có đường dẫn ảnh → lưu, chuyển về danh sách hoa
       - Hoa vừa thêm hiển thị đầu tiên trong danh sách quản trị
-      - Không nhập đường dẫn ảnh → lưu, hiển thị ảnh mặc định
       - Trạng thái
         - Chọn "Hiển thị" → lưu trang_thai = 1
         - Chọn "Ẩn" → lưu trang_thai = 0
@@ -15,10 +72,6 @@
         - gia, mo_ta, hinh_anh đúng giá trị đã nhập
         - ngay_d = thời điểm thêm
       - Bấm Thêm mới nhiều lần liên tiếp → chỉ tạo 1 bản ghi trong bảng hoa
-    - Thêm thất bại
-      - 1 trường không hợp lệ → không lưu, ở lại form, hiện lỗi của trường đó
-      - Nhiều trường không hợp lệ → hiện lỗi của tất cả các trường
-      - Để trống toàn bộ form → hiện lỗi của tất cả trường bắt buộc
     - Tải lên ảnh
       - Nhập URL ảnh JPG / PNG, bấm Tải lên → kiểm tra hợp lệ, lấy được ảnh, tự điền ô Đường dẫn hình ảnh
       - Ô đã có đường dẫn, tải lên ảnh khác → hỏi có thay thế không
@@ -40,173 +93,308 @@
         - Chọn Có → lưu thông tin
         - Chọn Không → không lưu, về danh sách hoa
       - Phiên quản trị hết hạn rồi bấm Thêm mới → chuyển về /quan-tri/dang-nhap, dữ liệu đã nhập bị mất, không tạo bản ghi
-- Validation
-  - Tên hoa
-    - Để trống → FC_16 "Tên hoa không được để trống"
-    - Chỉ nhập khoảng trắng → FC_16
-    - = 4 ký tự (min − 1) → FC_17 "Tên hoa phải từ 5 đến 20 ký tự"
-    - = 5 ký tự (min) → hợp lệ
-    - = 6 ký tự (min + 1) → hợp lệ
-    - = 19 ký tự (max − 1) → hợp lệ
-    - = 20 ký tự (max) → hợp lệ
-    - Gõ ký tự thứ 21 (max + 1) → bị chặn, ô giữ 20 ký tự
-    - Paste chuỗi > 20 ký tự → tự cắt về 20 ký tự, hoặc báo lỗi và chặn gửi form
-    - Khoảng trắng đầu / cuối → tự cắt
-    - Độ dài tính sau khi cắt khoảng trắng ("  Hoa  " → 3 ký tự → FC_17)
-    - Ký tự đặc biệt
-      - . _ ; → chấp nhận
-      - Ký tự đặc biệt khác (@ # $ % & * …) → coi như để trống (FC_16) hoặc thông báo "Tên hoa không hợp lệ"
-    - Chữ tiếng Việt có dấu → chấp nhận
-    - Chữ số → chấp nhận
-    - Emoji → không chấp nhận
-    - Trùng tên với hoa đã có → cho phép lưu
-  - Loại hoa
-    - Danh sách gồm toàn bộ loại hoa trong bảng loai_hoa, sắp xếp theo ma_loai tăng dần (QA đề xuất – qa-log #25)
-    - Không chọn loại hoa (giá trị rỗng, sửa qua DevTools) → FC_18 "Vui lòng chọn loại hoa"
-    - Giá trị không hợp lệ (sửa qua DevTools) → FC_19 "Loại hoa không hợp lệ"
-  - Giá bán
-    - Để trống → FC_20 "Giá bán không được để trống"
-    - = 4.999 (min − 1) → FC_21 "Giá bán phải từ 5.000đ đến 7.000.000đ"
-    - = 5.000 (min) → hợp lệ
-    - = 5.001 (min + 1) → hợp lệ
-    - = 6.999.999 (max − 1) → hợp lệ
-    - = 7.000.000 (max) → hợp lệ
-    - = 7.000.001 (max + 1) → FC_21
-    - = 0 → FC_21
-    - Gõ dấu "-" (số âm) → không nhập được
-    - Gõ dấu "." (5000.5, 5.000) → không nhập được
-    - Gõ dấu "," (5,000) → không nhập được
-    - Gõ chữ, ký tự đặc biệt, chữ "e" → không nhập được
-    - Số 0 đứng đầu (05000) → tự bỏ, lưu 5000
-    - Khoảng trắng đầu / cuối → tự bỏ
-    - Paste giá trị hợp lệ → nhận
-    - Ô nhập giữ nguyên số, không tự định dạng tiền
-  - Trạng thái hiển thị
-    - Mặc định chọn "Hiển thị"
-    - Chọn "Ẩn" → hợp lệ
-    - Giá trị không hợp lệ (sửa qua DevTools) → FC_22 "Trạng thái không hợp lệ"
-    - Chỉ có 2 lựa chọn "Hiển thị" (1) / "Ẩn" (0) (QA đề xuất – qa-log #26)
-  - Mô tả
-    - Để trống → FC_23 "Mô tả không được để trống"
-    - Chỉ nhập khoảng trắng / xuống dòng → FC_23
-    - = 1 ký tự → hợp lệ
-    - = 249 ký tự (max − 1) → hợp lệ
-    - = 250 ký tự (max) → hợp lệ
-    - Gõ ký tự thứ 251 (max + 1) → bị chặn, ô giữ 250 ký tự
-    - Paste chuỗi > 250 ký tự → tự cắt về 250 ký tự, hoặc báo lỗi và chặn gửi form
-    - Ký tự xuống dòng được tính vào 250
-    - Ký tự đặc biệt → chấp nhận
-    - Emoji → chấp nhận
-    - Bộ đếm tăng / giảm đúng khi gõ và xóa
-  - Đường dẫn hình ảnh
-    - Để trống → hiển thị ảnh mặc định
-    - Link có ký tự : / ? & = % # _ - . → chấp nhận
-    - Link không có đuôi file ảnh → chấp nhận
-    - Chuỗi không phải link → "Đường dẫn ảnh không hợp lệ"
-    - Link ảnh không tải được → hiển thị ảnh mặc định
-    - Độ dài (tối đa 500 ký tự – SRS)
-      - = 499 ký tự (max − 1) → hợp lệ
-      - = 500 ký tự (max) → hợp lệ
+  - Validation
+    - Tên hoa
+      - Để trống → FC_16 "Tên hoa không được để trống"
+      - Chỉ nhập khoảng trắng → FC_16
+      - = 4 ký tự (min − 1) → FC_17 "Tên hoa phải từ 5 đến 20 ký tự"
+      - = 5 ký tự (min) → hợp lệ
+      - = 6 ký tự (min + 1) → hợp lệ
+      - = 19 ký tự (max − 1) → hợp lệ
+      - = 20 ký tự (max) → hợp lệ
+      - Gõ ký tự thứ 21 (max + 1) → bị chặn, ô giữ 20 ký tự
+      - Paste chuỗi > 20 ký tự → tự cắt về 20 ký tự, hoặc báo lỗi và chặn gửi form
+      - Khoảng trắng đầu / cuối → tự cắt
+      - Độ dài tính sau khi cắt khoảng trắng ("  Hoa  " → 3 ký tự → FC_17)
+      - Ký tự đặc biệt
+        - . _ ; - , : ( ) / ' (nháy đơn) → chấp nhận
+        - Ký tự đặc biệt khác (@ # $ % & * " …) → coi như để trống (FC_16) hoặc thông báo "Tên hoa không hợp lệ"
+      - Chữ tiếng Việt có dấu → chấp nhận
+      - Chữ số → chấp nhận
+      - Emoji → không chấp nhận
+      - Trùng tên với hoa đã có → cho phép lưu
+    - Loại hoa
+      - Danh sách gồm toàn bộ loại hoa trong bảng loai_hoa, sắp xếp theo ma_loai tăng dần (QA đề xuất – qa-log #25)
+      - Không chọn loại hoa (giá trị rỗng, sửa qua DevTools) → FC_18 "Vui lòng chọn loại hoa"
+      - Giá trị không hợp lệ (sửa qua DevTools) → FC_19 "Loại hoa không hợp lệ"
+    - Giá bán
+      - Để trống → FC_20 "Giá bán không được để trống"
+      - = 4.999 (min − 1) → FC_21 "Giá bán phải từ 5.000đ đến 7.000.000đ"
+      - = 5.000 (min) → hợp lệ
+      - = 5.001 (min + 1) → hợp lệ
+      - = 6.999.999 (max − 1) → hợp lệ
+      - = 7.000.000 (max) → hợp lệ
+      - = 7.000.001 (max + 1) → FC_21
+      - = 0 → FC_21
+      - Gõ dấu "-" (số âm) → không nhập được
+      - Gõ dấu "." (5000.5, 5.000) → không nhập được
+      - Gõ dấu "," (5,000) → không nhập được
+      - Gõ chữ, ký tự đặc biệt, chữ "e" → không nhập được
+      - Số 0 đứng đầu (05000) → tự bỏ, lưu 5000
+      - Khoảng trắng đầu / cuối → tự bỏ
+      - Paste giá trị hợp lệ → nhận
+      - Ô nhập giữ nguyên số, không tự định dạng tiền
+    - Trạng thái hiển thị
+      - Mặc định chọn "Hiển thị"
+      - Chọn "Ẩn" → hợp lệ
+      - Giá trị không hợp lệ (sửa qua DevTools) → FC_22 "Trạng thái không hợp lệ"
+      - Chỉ có 2 lựa chọn "Hiển thị" (1) / "Ẩn" (0) (QA đề xuất – qa-log #26)
+    - Mô tả
+      - Để trống → FC_23 "Mô tả không được để trống"
+      - Chỉ nhập khoảng trắng / xuống dòng → FC_23
+      - = 1 ký tự → hợp lệ
+      - = 249 ký tự (max − 1) → hợp lệ
+      - = 250 ký tự (max) → hợp lệ
+      - Gõ ký tự thứ 251 (max + 1) → bị chặn, ô giữ 250 ký tự
+      - Paste chuỗi > 250 ký tự → tự cắt về 250 ký tự, hoặc báo lỗi và chặn gửi form
+      - Ký tự xuống dòng được tính vào 250
+      - Ký tự đặc biệt → chấp nhận
+      - Emoji → chấp nhận
+      - Bộ đếm tăng / giảm đúng khi gõ và xóa
+    - Đường dẫn hình ảnh
+      - Để trống → hiển thị ảnh mặc định
+      - Link có ký tự : / ? & = % # _ - . → chấp nhận
+      - Link không có đuôi file ảnh → chấp nhận
+      - Chuỗi không phải link → "Đường dẫn ảnh không hợp lệ"
+      - Link ảnh không tải được → hiển thị ảnh mặc định
+      - Độ dài (tối đa 500 ký tự – SRS)
+        - = 499 ký tự (max − 1) → hợp lệ
+        - = 500 ký tự (max) → hợp lệ
+        - = 501 ký tự (max + 1) → "Đường dẫn ảnh vượt quá 500 ký tự"
+  - UI
+    - Giao diện mặc định
+      - Nhãn và dấu * theo SRS (Tên hoa, Loại hoa, Giá bán, Trạng thái, Mô tả)
+      - Texthint theo SRS
+        - Tên hoa: "Nhập tên hoa..."
+        - Giá bán: "150000"
+        - Mô tả: "Nhập mô tả..."
+      - Loại hoa mặc định chọn giá trị đầu tiên trong danh sách
+      - Trạng thái mặc định chọn "Hiển thị"
+      - Bộ đếm Mô tả hiển thị 0/250 (màn hình đang thiếu – srs-review #22)
+      - Nút chức năng
+        - Tên nút lưu "Thêm mới" (theo màn hình – qa-log #43)
+        - Nút Làm lại
+        - Nút Quay lại
+        - Nút Tải lên
+          - Ô Đường dẫn hình ảnh trống → nút bị vô hiệu hóa (chữ mờ)
+          - Nhập đường dẫn → nút bấm được
+          - Xóa hết đường dẫn → nút bị vô hiệu hóa lại
+      - Thông báo
+        - Thông báo lỗi hiển thị dưới từng trường, nội dung theo Danh sách thông báo
+        - Thông báo thêm thành công tự ẩn sau 5 giây
+        - Thông báo thêm thành công đóng được bằng nút tắt
+        - Nội dung thông báo thành công theo màn hình: đúng chính tả, đúng ý thêm thành công
+        - Tắt thông báo thành công → chuyển sang trang danh sách sản phẩm
+        - Popup hỏi lưu thông tin: nội dung theo màn hình, đúng chính tả, đúng ý
+        - Popup hỏi thay thế đường dẫn ảnh
+      - Layout
+        - Sidebar quản trị bên trái, mục "Quản lý sản phẩm hoa" được đánh dấu
+        - Form nhập liệu
+    - Behavior
+      - Tab / Shift+Tab
+        - Thứ tự focus theo bố cục form
+        - Có viền focus ở ô / nút đang focus
+        - Enter / Space kích hoạt nút đang focus
+      - Click nhiều lần
+        - Double / spam click Thêm mới → nút Thêm mới bị khóa khi đang xử lý, giao diện không treo / lỗi hiển thị
+        - Spam click Tải lên
+        - Spam click Làm lại
+      - Hover
+        - Con trỏ bàn tay ở các nút
+        - Nút Tải lên đang mờ không có hiệu ứng hover
+      - Kéo thả
+        - Kéo bôi chọn text trong ô nhập
+        - Kéo thả file ảnh vào form → không upload (chưa hỗ trợ upload file)
+      - Cuộn
+        - Cuộn trang mượt, không giật
+        - Gửi form có lỗi → cuộn đến ô lỗi đầu tiên
+      - Bàn phím
+        - Enter trong ô nhập 1 dòng → gửi form
+        - Enter trong ô Mô tả → xuống dòng
+        - Esc đóng popup hỏi lưu / popup hỏi thay thế đường dẫn
+        - Copy / paste vào các ô nhập (quy tắc paste từng trường: xem Validation)
+      - Trình duyệt
+        - F5 khi đang nhập → popup hỏi lưu, chọn Không → không lưu
+        - Đóng tab khi đang nhập → popup hỏi lưu, chọn Không → không lưu
+        - Back khi đang nhập
+        - F5 khi đang xử lý (sau khi bấm Thêm mới)
+        - Mở "Thêm hoa mới" trong tab mới
+      - Cửa sổ
+        - Thu / phóng cửa sổ → bố cục không vỡ
+        - Zoom 50% – 200% → bố cục không vỡ
+      - Chờ xử lý
+        - Có loading khi bấm Thêm mới
+        - Thao tác trong lúc loading không gây lỗi
+    - Responsive
+      - Tablet 768px
+      - Mobile 375px
+  - Phân quyền
+    - Admin
+      - Truy cập form Thêm hoa mới
+      - Thêm hoa thành công
+    - Guest
+      - Truy cập /quan-tri/hoa/them → chuyển về /quan-tri/dang-nhap
+      - Gọi trực tiếp chức năng thêm hoa → lỗi 401 (đối chiếu lỗi cố ý số 7)
+    - Member
+      - Truy cập /quan-tri/hoa/them → chuyển về /quan-tri/dang-nhap
+      - Gọi chức năng thêm hoa bằng mã xác thực Member → lỗi 401 (đối chiếu lỗi cố ý số 7)
+  - Ảnh hưởng
+    - Danh sách sản phẩm quản trị
+      - Hoa mới hiển thị đủ tên, loại, giá, ảnh, trạng thái
+    - Trang khách
+      - Hoa "Hiển thị" xuất hiện ở /hoa
+      - Hoa "Hiển thị" xuất hiện ở /hoa?loai=N đúng loại đã chọn
+      - Giá hiển thị dạng 150.000đ
+      - Hoa không có ảnh → hiển thị ảnh mặc định
+      - Hoa "Ẩn" không xuất hiện ở /hoa
+      - Hoa "Ẩn" không xuất hiện trong danh sách hoa ở trang chủ (/)
+      - Hoa "Ẩn" mở trang chi tiết → lỗi 404
+      - Hoa mới nằm ở trang 2 trở đi của /hoa (đối chiếu lỗi cố ý số 2)
+    - Tìm kiếm
+      - Tìm theo tên hoa mới ("Hiển thị") → có trong kết quả
+      - Tìm theo tên hoa "Ẩn" → không xuất hiện trong kết quả
+    - Chi tiết sản phẩm và Giỏ hàng
+      - Trang chi tiết hiển thị đúng thông tin hoa mới
+      - Thêm hoa mới vào giỏ → giá đúng
+    - Quản lý loại hoa
+      - Xóa loại hoa vừa được gán cho hoa mới → chặn, FC_29
+    - Thống kê tổng quan
+      - Thêm hoa "Hiển thị" → Tổng số hoa tăng 1
+      - Thêm hoa "Ẩn" → Tổng số hoa tăng 1
+    - Sửa sản phẩm hoa
+      - Mở sửa hoa vừa thêm → dữ liệu khớp với lúc thêm
+- Sửa sản phẩm hoa (`/quan-tri/hoa/sua/[ma_hoa]`)
+  - Function
+    - Mở màn hình Sửa
+      - Bấm biểu tượng sửa tại dòng hoa trong danh sách → mở /quan-tri/hoa/sua/[ma_hoa], form điền sẵn đúng dữ liệu hoa
+      - Nhập trực tiếp URL /quan-tri/hoa/sua/[ma_hoa] → mở form có dữ liệu
+      - URL của hoa không tồn tại → không hiện form, báo "Không tìm thấy sản phẩm" (hoặc 404) (qa-log #59)
+    - Form nhập liệu (R = Tên hoa, Loại hoa, Giá bán, Trạng thái, Mô tả · O = Đường dẫn hình ảnh)
+      - Thành công với giá trị biên hợp lệ
+        - Bộ min: Tên hoa 5 ký tự, Giá bán 5.000, Mô tả 1 ký tự → cập nhật đúng giá trị
+        - Bộ max: Tên hoa 20 ký tự, Giá bán 7.000.000, Mô tả 250 ký tự, Đường dẫn 500 ký tự → cập nhật đúng giá trị
+      - Thành công khi sửa đầy đủ tất cả trường (R + O) → popup "Tuyệt vời!", cập nhật đủ 6 cột
+      - Thành công khi chỉ có các trường R (xóa Đường dẫn) → cập nhật, hiển thị ảnh mặc định
+      - R + 1 trường O: chỉ có 1 trường O → trùng "sửa đầy đủ tất cả trường"
+      - Thất bại khi thiếu 1 trường R → không cập nhật, ở lại form, chỉ báo lỗi trường thiếu
+        - Thiếu Tên hoa → FC_16
+        - Thiếu Loại hoa (DevTools) → FC_18
+        - Thiếu Giá bán → FC_20
+        - Thiếu Trạng thái (DevTools) → không báo lỗi, lưu trang_thai = 1 (SRS: để trống → mặc định 1)
+        - Thiếu Mô tả → FC_23
+      - Thất bại khi 1 trường không hợp lệ → không cập nhật, ở lại form, chỉ báo lỗi trường đó
+        - Tên hoa 4 ký tự → FC_17
+        - Loại hoa không có trong loai_hoa (DevTools) → FC_19
+        - Giá bán 4.999 → FC_21
+        - Trạng thái = 5 (DevTools) → FC_22
+        - Đường dẫn hình ảnh không phải link → "Đường dẫn ảnh không hợp lệ"
+      - Thất bại khi nhiều trường không hợp lệ → hiện lỗi của tất cả các trường
+      - Xóa trắng toàn bộ ô nhập → hiện lỗi FC_16, FC_20, FC_23
+    - Cập nhật thành công
+      - Sửa riêng từng trường → chỉ cột đó thay đổi
+        - Tên hoa (có khoảng trắng đầu / cuối) → ten_hoa đã cắt khoảng trắng
+        - Loại hoa → ma_loai
+        - Giá bán → gia
+        - Trạng thái "Hiển thị" → "Ẩn" → trang_thai = 0
+        - Mô tả → mo_ta
+      - Không sửa gì, bấm "Cập nhật thông tin" → vẫn ghi CSDL, hiện popup thành công (qa-log #58)
+      - Bấm "ĐÓNG CỬA SỔ" → về danh sách hoa, hoa vừa sửa giữ vị trí, ngay_d không đổi (qa-log #57)
+    - Tải lên, Làm lại, Quay lại (giống Thêm – qa-log #55, #56)
+      - Ô đã có đường dẫn, Tải lên ảnh khác → hỏi thay thế, chọn Đồng ý → thay đường dẫn
+      - Làm lại → xóa trắng ô nhập, Loại hoa "Hoa chia buồn", Trạng thái "Hiển thị"; CSDL không đổi
+      - Quay lại khi chưa sửa → về danh sách hoa
+      - Quay lại khi đã sửa → popup hỏi lưu thông tin
+        - Chọn Có → lưu thông tin đã sửa
+        - Chọn Không → không lưu, về danh sách hoa
+    - Ngoại lệ
+      - Phiên quản trị hết hạn rồi bấm "Cập nhật thông tin" → chuyển về /quan-tri/dang-nhap, không cập nhật
+      - Hoa bị xóa ở tab khác rồi bấm "Cập nhật thông tin" → báo lỗi, không tạo bản ghi mới, về danh sách (qa-log #59)
+  - Validation (bộ đại diện – áp dụng quy tắc của Thêm, qa-log #55)
+    - Tên hoa
+      - Chỉ nhập khoảng trắng → FC_16
+      - Gõ ký tự thứ 21 (max + 1) → bị chặn, ô giữ 20 ký tự
+      - Ký tự đặc biệt không được phép (@ #) → coi như để trống (FC_16) hoặc "Tên hoa không hợp lệ"
+      - Ký tự đặc biệt được phép (. _ ; - , : ( ) / ') → cập nhật thành công
+    - Giá bán
+      - = 7.000.001 (max + 1) → FC_21
+      - Gõ chữ, dấu "-" "." "," → không nhập được
+      - Số 0 đứng đầu (05000) → tự bỏ, lưu 5000
+    - Mô tả
+      - Chỉ nhập khoảng trắng / xuống dòng → FC_23
+      - Gõ ký tự thứ 251 (max + 1) → bị chặn, ô giữ 250 ký tự
+    - Đường dẫn hình ảnh
       - = 501 ký tự (max + 1) → "Đường dẫn ảnh vượt quá 500 ký tự"
-- UI
-  - Giao diện mặc định
-    - Nhãn và dấu * theo SRS (Tên hoa, Loại hoa, Giá bán, Trạng thái, Mô tả)
-    - Texthint theo SRS
-      - Tên hoa: "Nhập tên hoa..."
-      - Giá bán: "150000"
-      - Mô tả: "Nhập mô tả..."
-    - Loại hoa mặc định chọn giá trị đầu tiên trong danh sách
-    - Trạng thái mặc định chọn "Hiển thị"
-    - Bộ đếm Mô tả hiển thị 0/250 (màn hình đang thiếu – srs-review #22)
-    - Nút chức năng
-      - Tên nút lưu "Thêm mới" (theo màn hình – qa-log #43)
-      - Nút Làm lại
-      - Nút Quay lại
-      - Nút Tải lên
-        - Ô Đường dẫn hình ảnh trống → nút bị vô hiệu hóa (chữ mờ)
-        - Nhập đường dẫn → nút bấm được
-        - Xóa hết đường dẫn → nút bị vô hiệu hóa lại
-    - Thông báo
-      - Thông báo lỗi hiển thị dưới từng trường, nội dung theo Danh sách thông báo
-      - Thông báo thêm thành công tự ẩn sau 5 giây
-      - Thông báo thêm thành công đóng được bằng nút tắt
-      - Nội dung thông báo thành công theo màn hình: đúng chính tả, đúng ý thêm thành công
-      - Tắt thông báo thành công → chuyển sang trang danh sách sản phẩm
-      - Popup hỏi lưu thông tin: nội dung theo màn hình, đúng chính tả, đúng ý
-      - Popup hỏi thay thế đường dẫn ảnh
-    - Layout
-      - Sidebar quản trị bên trái, mục "Quản lý sản phẩm hoa" được đánh dấu
-      - Form nhập liệu
-  - Behavior
-    - Tab / Shift+Tab
-      - Thứ tự focus theo bố cục form
-      - Có viền focus ở ô / nút đang focus
-      - Enter / Space kích hoạt nút đang focus
-    - Click nhiều lần
-      - Double / spam click Thêm mới → nút Thêm mới bị khóa khi đang xử lý, giao diện không treo / lỗi hiển thị
-      - Spam click Tải lên
-      - Spam click Làm lại
-    - Hover
-      - Con trỏ bàn tay ở các nút
-      - Nút Tải lên đang mờ không có hiệu ứng hover
-    - Kéo thả
-      - Kéo bôi chọn text trong ô nhập
-      - Kéo thả file ảnh vào form → không upload (chưa hỗ trợ upload file)
-    - Cuộn
-      - Cuộn trang mượt, không giật
-      - Gửi form có lỗi → cuộn đến ô lỗi đầu tiên
-    - Bàn phím
+  - UI
+    - Giao diện mặc định
+      - Form điền sẵn: Giá bán là số nguyên không định dạng, Trạng thái chọn đúng giá trị đang lưu
+      - Bộ đếm Mô tả hiển thị số ký tự hiện có / 250 (srs-review #22)
+      - Nút "Cập nhật thông tin", "Làm lại", "Quay lại", "Tải lên" (bấm được vì ô Đường dẫn có nội dung – qa-log #48)
+      - Popup thành công: biểu tượng ✓, "Tuyệt vời!", "Thông tin hoa đã được cập nhật thành công!", nút "ĐÓNG CỬA SỔ"
+      - Xóa trắng ô nhập → hiển thị texthint theo SRS
+    - Behavior
+      - Tab / Shift+Tab: thứ tự focus theo bố cục form, có viền focus
+      - Spam click "Cập nhật thông tin" → nút bị khóa khi đang xử lý, chỉ cập nhật 1 lần
       - Enter trong ô nhập 1 dòng → gửi form
-      - Enter trong ô Mô tả → xuống dòng
-      - Esc đóng popup hỏi lưu / popup hỏi thay thế đường dẫn
-      - Copy / paste vào các ô nhập (quy tắc paste từng trường: xem Validation)
-    - Trình duyệt
-      - F5 khi đang nhập → popup hỏi lưu, chọn Không → không lưu
-      - Đóng tab khi đang nhập → popup hỏi lưu, chọn Không → không lưu
-      - Back khi đang nhập
-      - F5 khi đang xử lý (sau khi bấm Thêm mới)
-      - Mở "Thêm hoa mới" trong tab mới
-    - Cửa sổ
-      - Thu / phóng cửa sổ → bố cục không vỡ
+      - F5 khi đã sửa dữ liệu → popup hỏi lưu, chọn Không → không lưu
       - Zoom 50% – 200% → bố cục không vỡ
-    - Chờ xử lý
-      - Có loading khi bấm Thêm mới
-      - Thao tác trong lúc loading không gây lỗi
-  - Responsive
-    - Tablet 768px
-    - Mobile 375px
-- Phân quyền
-  - Admin
-    - Truy cập form Thêm hoa mới
-    - Thêm hoa thành công
-  - Guest
-    - Truy cập /quan-tri/hoa/them → chuyển về /quan-tri/dang-nhap
-    - Gọi trực tiếp chức năng thêm hoa → lỗi 401 (đối chiếu lỗi cố ý số 7)
-  - Member
-    - Truy cập /quan-tri/hoa/them → chuyển về /quan-tri/dang-nhap
-    - Gọi chức năng thêm hoa bằng mã xác thực Member → lỗi 401 (đối chiếu lỗi cố ý số 7)
-- Ảnh hưởng
-  - Danh sách sản phẩm quản trị
-    - Hoa mới hiển thị đủ tên, loại, giá, ảnh, trạng thái
-  - Trang khách
-    - Hoa "Hiển thị" xuất hiện ở /hoa
-    - Hoa "Hiển thị" xuất hiện ở /hoa?loai=N đúng loại đã chọn
-    - Giá hiển thị dạng 150.000đ
-    - Hoa không có ảnh → hiển thị ảnh mặc định
-    - Hoa "Ẩn" không xuất hiện ở /hoa
-    - Hoa "Ẩn" không xuất hiện trong danh sách hoa ở trang chủ (/)
-    - Hoa "Ẩn" mở trang chi tiết → lỗi 404
-    - Hoa mới nằm ở trang 2 trở đi của /hoa (đối chiếu lỗi cố ý số 2)
-  - Tìm kiếm
-    - Tìm theo tên hoa mới ("Hiển thị") → có trong kết quả
-    - Tìm theo tên hoa "Ẩn" → không xuất hiện trong kết quả
-  - Chi tiết sản phẩm và Giỏ hàng
-    - Trang chi tiết hiển thị đúng thông tin hoa mới
-    - Thêm hoa mới vào giỏ → giá đúng
-  - Quản lý loại hoa
-    - Xóa loại hoa vừa được gán cho hoa mới → chặn, FC_29
-  - Thống kê tổng quan
-    - Thêm hoa "Hiển thị" → Tổng số hoa tăng 1
-    - Thêm hoa "Ẩn" → Tổng số hoa tăng 1
-  - Sửa sản phẩm hoa
-    - Mở sửa hoa vừa thêm → dữ liệu khớp với lúc thêm
+      - Có loading khi bấm "Cập nhật thông tin"
+    - Responsive
+      - Tablet 768px
+      - Mobile 375px
+  - Phân quyền
+    - Guest
+      - Truy cập /quan-tri/hoa/sua/[ma_hoa] → chuyển về /quan-tri/dang-nhap
+      - Gọi trực tiếp updateProduct → lỗi 401
+    - Member
+      - Truy cập /quan-tri/hoa/sua/[ma_hoa] → chuyển về /quan-tri/dang-nhap
+      - Gọi updateProduct bằng mã xác thực Member → lỗi 401
+  - Ảnh hưởng
+    - Trang khách
+      - /hoa hiển thị tên và giá mới (dạng 250.000đ)
+      - Đổi loại → hoa xuất hiện ở /hoa?loai=<loại mới>, không còn ở loại cũ
+      - Đổi "Hiển thị" → "Ẩn" → hoa không còn ở /hoa, trang chủ và kết quả Tìm kiếm
+      - Đổi "Ẩn" → "Hiển thị" → hoa xuất hiện lại ở /hoa
+      - Tìm kiếm tên mới → có; tên cũ → không
+      - Trang chi tiết hiển thị thông tin mới
+    - Giỏ hàng và đơn hàng
+      - Giỏ hàng thành viên có hoa vừa sửa giá → đổi giá ngay (qa-log #60)
+      - Đơn hàng cũ có hoa vừa sửa giá → giữ gia_ban cũ (qa-log #60)
+      - Hoa trong giỏ bị đổi sang "Ẩn" → ẩn khỏi giỏ, không tính tiền (qa-log 01 #14)
+    - Thống kê và Quản lý loại hoa
+      - Tổng số hoa không đổi sau khi sửa
+      - Chuyển hoa duy nhất của 1 loại sang loại khác → xóa được loại cũ
+- Xóa sản phẩm hoa
+  - Function
+    - Bấm Xóa tại dòng hoa → hộp thoại "Bạn có thực sự muốn xóa sản phẩm này không?", nút "Đồng ý xóa" / "Huỷ"
+    - Chọn "Đồng ý xóa" → thông báo "Đã xoá thành công", hoa không còn trong danh sách (cách lưu CSDL [Cần xác nhận BA/PO] – qa-log #74)
+    - Chọn "Huỷ" → đóng hộp thoại, hoa vẫn còn
+    - Esc / bấm ra ngoài hộp thoại → hộp thoại không đóng
+    - Hoa đã có trong đơn hàng → vẫn xóa được (qa-log #64)
+    - Xóa hoa duy nhất ở trang cuối → ở lại trang đó, hiển thị trống hoặc gợi ý thêm hoa [Cần xác nhận BA/PO] (phân trang – qa-log #72)
+    - FC_26 "Không thể xóa sản phẩm này": tạm bỏ qua (qa-log #65)
+  - UI
+    - Giao diện mặc định
+      - Mỗi dòng trong danh sách có biểu tượng xóa
+      - Hộp thoại xác nhận: nội dung "Bạn có thực sự muốn xóa sản phẩm này không?", nút "Đồng ý xóa", "Huỷ", đúng chính tả
+      - Thông báo "Đã xoá thành công" đúng chính tả
+    - Behavior
+      - Spam click "Đồng ý xóa" → xử lý 1 lần, không lỗi
+      - Tab đến nút trong hộp thoại, Enter kích hoạt nút đang focus
+      - Hover biểu tượng sửa / xóa → con trỏ bàn tay
+    - Responsive
+      - Hộp thoại xác nhận ở Mobile 375px
+  - Phân quyền
+    - Guest gọi trực tiếp deleteProduct → lỗi 401
+    - Member gọi deleteProduct bằng mã xác thực Member → lỗi 401
+  - Ảnh hưởng
+    - Trang khách và Tìm kiếm
+      - Hoa đã xóa không còn ở /hoa và trang chủ
+      - Hoa đã xóa không còn ở /hoa?loai=<loại của hoa>
+      - Tìm kiếm tên hoa đã xóa → không có trong kết quả
+      - Mở /hoa/[id] của hoa đã xóa → lỗi 404 (qa-log #66)
+    - Giỏ hàng và đơn hàng
+      - Giỏ thành viên có hoa đã xóa, bấm thanh toán → thông báo yêu cầu xóa sản phẩm khỏi giỏ (qa-log #64, #66)
+      - Quản lý đơn hàng: đơn có hoa đã xóa → hoa vẫn hiển thị nhưng làm mờ (qa-log #64)
+    - Thống kê và Quản lý loại hoa
+      - Tổng số hoa giảm 1
+      - Xóa hoa duy nhất của 1 loại → xóa được loại đó
