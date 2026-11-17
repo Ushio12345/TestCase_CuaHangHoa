@@ -8,10 +8,10 @@ Quản trị viên xem danh sách, thêm mới, sửa và xóa sản phẩm hoa.
 
 | Sheet | Chức năng con | SRS | Trạng thái |
 |---|---|---|---|
-| 12.1 Danh sách hoa | Danh sách sản phẩm hoa (`/quan-tri/hoa`) | Không có mục chức năng (chỉ ảnh màn hình) | 🟡 Test Design + Test Case (26 TC, QA đề xuất theo ảnh); còn ❓ qa-log #69 – #73 |
+| 12.1 Danh sách hoa | Danh sách sản phẩm hoa (`/quan-tri/hoa`) | Không có mục chức năng (chỉ ảnh màn hình) | ✅ Test Design + Test Case (29 TC), chưa thực thi |
 | 12.2 Thêm hoa | Thêm hoa mới (`/quan-tri/hoa/them`) | 4.3.4.1 | ✅ Test Design + Test Case (158 TC), chưa thực thi |
 | 12.3 Sửa hoa | Sửa sản phẩm hoa (`/quan-tri/hoa/sua/[ma_hoa]`) | 4.3.4.2 | ✅ Test Design + Test Case (71 TC), chưa thực thi |
-| 12.4 Xóa hoa | Xóa sản phẩm hoa | 4.3.4.3 | 🟡 Test Design + Test Case (23 TC); còn ❓ qa-log #72, #74 |
+| 12.4 Xóa hoa | Xóa sản phẩm hoa | 4.3.4.3 | 🟡 Test Design + Test Case (24 TC); còn ❓ qa-log #76 (hoa đã xóa trùng trạng thái Ẩn) |
 
 - **Tác nhân:** Quản trị viên (Khách vãng lai, Thành viên bị từ chối – lỗi 401)
 - **Chức năng liên quan:** Quản lý loại hoa, Xem trang chủ & lọc hoa, Tìm kiếm, Chi tiết sản phẩm, Giỏ hàng, Thống kê tổng quan
@@ -45,11 +45,12 @@ Quản trị viên xem danh sách, thêm mới, sửa và xóa sản phẩm hoa.
 | Sửa thành công | Popup "Tuyệt vời!" – "Thông tin hoa đã được cập nhật thành công!", nút "ĐÓNG CỬA SỔ" → về danh sách; hoa giữ vị trí, `ngay_d` không đổi; không sửa gì vẫn ghi CSDL và hiện popup |
 | Sửa – ngoại lệ | Hoa không tồn tại → "Không tìm thấy sản phẩm" (hoặc 404); hoa bị xóa khi đang sửa → báo lỗi, không tạo bản ghi mới |
 | Sửa – ảnh hưởng | Giỏ hàng đổi giá ngay; đơn hàng cũ giữ `gia_ban` cũ |
-| Xóa | Nút Xóa trên từng dòng; hộp thoại "Bạn có thực sự muốn xóa sản phẩm này không?" (Đồng ý xóa / Huỷ), Esc / bấm ra ngoài không đóng; thành công → "Đã xoá thành công" |
-| Xóa – ảnh hưởng | Hoa đã trong đơn hàng vẫn xóa được, hiển thị làm mờ trong đơn; trong giỏ → khi thanh toán yêu cầu xóa khỏi giỏ; `/hoa/[id]` → 404; FC_26 tạm bỏ qua |
-| Danh sách | Thuộc module 12; SRS không có quy tắc → QA đề xuất theo ảnh màn hình (tìm kiếm tên, lọc theo loại, bảng 5 cột) |
+| Xóa | Nút Xóa trên từng dòng; hộp thoại "Bạn có thực sự muốn xóa sản phẩm này không?" (Đồng ý xóa / Huỷ), Esc / bấm ra ngoài không đóng; thành công → "Đã xoá thành công"; xóa mềm: `trang_thai = 0`, không `DELETE` (hoa đã xóa vs hoa Ẩn: ❓ #76) |
+| Xóa – ảnh hưởng | Hoa đã trong đơn hàng vẫn xóa được, hiển thị làm mờ trong đơn; trong giỏ → khi thanh toán yêu cầu xóa khỏi giỏ; `/hoa/[id]` → 404; Xóa loại hoa không tính hoa đã xóa; FC_26 tạm bỏ qua |
+| Danh sách | Thuộc module 12 (SRS chỉ có ảnh màn hình); hiển thị cả hoa Ẩn (cột Trạng thái "Ẩn"); sắp xếp theo thời gian tạo (`ngay_d`), mới nhất lên đầu; 20 hoa / trang; giá dạng "450.000đ" |
+| Danh sách – tìm kiếm, lọc | Tìm theo một phần tên, không phân biệt chữ hoa / thường và có dấu / không dấu; bấm "Áp dụng" hoặc Enter; ô trống → toàn bộ; không có kết quả → danh sách rỗng. Lọc: "Tất cả loại hoa" + các loại trong `loai_hoa`; tìm và lọc áp dụng cùng lúc |
 
-Chi tiết câu hỏi và trả lời: [qa-log.md](qa-log.md) (74 câu: #1 – #68 ✅ · #69 – #74 ❓ – danh sách và cách lưu khi xóa).
+Chi tiết câu hỏi và trả lời: [qa-log.md](qa-log.md) (76 câu: #1 – #75 ✅ · #76 ❓ – hoa đã xóa và hoa Ẩn cùng `trang_thai = 0`).
 
 ## Tài liệu
 
@@ -58,23 +59,23 @@ Chi tiết câu hỏi và trả lời: [qa-log.md](qa-log.md) (74 câu: #1 – #
 | Test Design (mindmap) | [test-design.md](test-design.md) | – |
 | Test Case | Google Sheets: [12.1 Danh sách hoa](https://docs.google.com/spreadsheets/d/1KgZI0jVNESa4P1WYLJnznRT4CGR7Mzlww-tiGYN7k_E/edit?gid=1750116678#gid=1750116678) · [12.2 Thêm hoa](https://docs.google.com/spreadsheets/d/1KgZI0jVNESa4P1WYLJnznRT4CGR7Mzlww-tiGYN7k_E/edit?gid=1250044123#gid=1250044123) · [12.3 Sửa hoa](https://docs.google.com/spreadsheets/d/1KgZI0jVNESa4P1WYLJnznRT4CGR7Mzlww-tiGYN7k_E/edit?gid=1967646398#gid=1967646398) · [12.4 Xóa hoa](https://docs.google.com/spreadsheets/d/1KgZI0jVNESa4P1WYLJnznRT4CGR7Mzlww-tiGYN7k_E/edit?gid=1782277388#gid=1782277388) | [test-cases.xlsx](test-cases.xlsx) |
 
-> Test Design 295 node lá (13 node `[Cần xác nhận BA/PO]`), Test Case 278 TC: Thêm 158 · Sửa 71 · Xóa 23 · Danh sách 26. Mọi node lá có ≥ 1 TC (trừ node ghi chú: "R + 1 O trùng", "Mô tả không có giá trị sai", "FC_26 tạm bỏ qua").
+> Test Design 299 node lá (4 node `[Cần xác nhận BA/PO]`), Test Case 282 TC: Thêm 158 · Sửa 71 · Xóa 24 · Danh sách 29. Mọi node lá có ≥ 1 TC (trừ node ghi chú: "R + 1 O trùng", "Mô tả không có giá trị sai", "FC_26 tạm bỏ qua").
 
 ## Thống kê Test Case
 
 File [test-cases.xlsx](test-cases.xlsx): mỗi chức năng con 1 sheet, ID có tiền tố riêng (`DS_` · `THEM_` · `SUA_` · `XOA_`); sheet `Tổng hợp` gom cả 4 sheet.
 
-### 12.1 Danh sách hoa – Danh sách sản phẩm hoa (`DS_01…DS_26`)
+### 12.1 Danh sách hoa – Danh sách sản phẩm hoa (`DS_01…DS_29`)
 
 | Kịch bản chính | Số TC |
 |---|---|
-| FUNCTION – Xem, tìm kiếm và lọc danh sách sản phẩm hoa | 11 |
+| FUNCTION – Xem, tìm kiếm và lọc danh sách sản phẩm hoa | 14 |
 | VALIDATION – Kiểm tra validate ô Tìm kiếm tên hoa | 2 |
 | UI – Giao diện mặc định | 5 |
 | UI – Behavior | 4 |
 | UI – Responsive | 2 |
 | PHÂN QUYỀN – Khách vãng lai và Thành viên bị chặn khi xem danh sách sản phẩm hoa | 2 |
-| **Tổng** | **26** (HIGH 13 · MEDIUM 2 · LOW 11) |
+| **Tổng** | **29** (HIGH 16 · MEDIUM 2 · LOW 11) |
 
 ### 12.2 Thêm hoa – Thêm hoa mới (`THEM_01…THEM_158`)
 
@@ -125,7 +126,7 @@ File [test-cases.xlsx](test-cases.xlsx): mỗi chức năng con 1 sheet, ID có 
 | ẢNH HƯỞNG – Thống kê và Quản lý loại hoa sau khi sửa hoa | 2 |
 | **Tổng** | **71** (HIGH 48 · MEDIUM 10 · LOW 13) |
 
-### 12.4 Xóa hoa – Xóa sản phẩm hoa (`XOA_01…XOA_23`)
+### 12.4 Xóa hoa – Xóa sản phẩm hoa (`XOA_01…XOA_24`)
 
 | Kịch bản chính | Số TC |
 |---|---|
@@ -136,19 +137,19 @@ File [test-cases.xlsx](test-cases.xlsx): mỗi chức năng con 1 sheet, ID có 
 | PHÂN QUYỀN – Khách vãng lai và Thành viên bị chặn khi xóa sản phẩm hoa | 2 |
 | ẢNH HƯỞNG – Trang khách hàng và tìm kiếm sau khi xóa hoa | 4 |
 | ẢNH HƯỞNG – Giỏ hàng và đơn hàng sau khi xóa hoa | 2 |
-| ẢNH HƯỞNG – Thống kê và Quản lý loại hoa sau khi xóa hoa | 2 |
-| **Tổng** | **23** (HIGH 16 · MEDIUM 0 · LOW 7) |
+| ẢNH HƯỞNG – Thống kê và Quản lý loại hoa sau khi xóa hoa | 3 |
+| **Tổng** | **24** (HIGH 17 · MEDIUM 0 · LOW 7) |
 
-**Cả module: 278 TC** (HIGH 137 · MEDIUM 66 · LOW 75).
+**Cả module: 282 TC** (HIGH 141 · MEDIUM 66 · LOW 75).
 
 ## Kết quả thực thi
 
 | Lần chạy | Chức năng con | Ngày | Pass | Fail | Untested | Ghi chú |
 |---|---|---|---|---|---|---|
-| R1 | 12.1 Danh sách hoa | – | – | – | 26 | Chưa thực thi |
+| R1 | 12.1 Danh sách hoa | – | – | – | 29 | Chưa thực thi |
 | R1 | 12.2 Thêm hoa | – | – | – | 158 | Chưa thực thi |
 | R1 | 12.3 Sửa hoa | – | – | – | 71 | Chưa thực thi |
-| R1 | 12.4 Xóa hoa | – | – | – | 23 | Chưa thực thi |
+| R1 | 12.4 Xóa hoa | – | – | – | 24 | Chưa thực thi |
 
 ## Bug phát hiện
 

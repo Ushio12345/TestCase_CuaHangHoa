@@ -2,7 +2,7 @@
 
 > Dự án thực hành kiểm thử phần mềm thủ công trên hệ thống bán hoa trực tuyến **Floral Charm**: phân tích SRS, đặt câu hỏi làm rõ yêu cầu, thiết kế Test Design (mindmap), viết Test Case, thực thi và báo cáo lỗi.
 
-![Status](https://img.shields.io/badge/status-in%20progress-yellow) ![Type](https://img.shields.io/badge/testing-manual-blue) ![Modules](https://img.shields.io/badge/modules-1%2F15%20done-green) ![Test Cases](https://img.shields.io/badge/test%20cases-387-blue)
+![Status](https://img.shields.io/badge/status-in%20progress-yellow) ![Type](https://img.shields.io/badge/testing-manual-blue) ![Modules](https://img.shields.io/badge/modules-1%2F15%20done-green) ![Test Cases](https://img.shields.io/badge/test%20cases-391-blue)
 
 ---
 
@@ -56,7 +56,7 @@
 | 09  | Đăng nhập quản trị                                                                                 | –                                                         | –                                                                                                                               | –     | ⬜         |
 | 10  | Thống kê tổng quan                                                                                 | –                                                         | –                                                                                                                               | –     | ⬜         |
 | 11  | Quản lý loại hoa                                                                                   | –                                                         | –                                                                                                                               | –     | ⬜         |
-| 12  | [Quản lý sản phẩm hoa](modules/12-quan-ly-san-pham-hoa/README.md) (`/quan-tri/hoa`) – Danh sách · Thêm · Sửa · Xóa | [Mindmap](modules/12-quan-ly-san-pham-hoa/test-design.md) | [12.1](https://docs.google.com/spreadsheets/d/1KgZI0jVNESa4P1WYLJnznRT4CGR7Mzlww-tiGYN7k_E/edit?gid=1750116678#gid=1750116678) · [12.2](https://docs.google.com/spreadsheets/d/1KgZI0jVNESa4P1WYLJnznRT4CGR7Mzlww-tiGYN7k_E/edit?gid=1250044123#gid=1250044123) · [12.3](https://docs.google.com/spreadsheets/d/1KgZI0jVNESa4P1WYLJnznRT4CGR7Mzlww-tiGYN7k_E/edit?gid=1967646398#gid=1967646398) · [12.4](https://docs.google.com/spreadsheets/d/1KgZI0jVNESa4P1WYLJnznRT4CGR7Mzlww-tiGYN7k_E/edit?gid=1782277388#gid=1782277388) | 278   | 🟡         |
+| 12  | [Quản lý sản phẩm hoa](modules/12-quan-ly-san-pham-hoa/README.md) (`/quan-tri/hoa`) – Danh sách · Thêm · Sửa · Xóa | [Mindmap](modules/12-quan-ly-san-pham-hoa/test-design.md) | [12.1](https://docs.google.com/spreadsheets/d/1KgZI0jVNESa4P1WYLJnznRT4CGR7Mzlww-tiGYN7k_E/edit?gid=1750116678#gid=1750116678) · [12.2](https://docs.google.com/spreadsheets/d/1KgZI0jVNESa4P1WYLJnznRT4CGR7Mzlww-tiGYN7k_E/edit?gid=1250044123#gid=1250044123) · [12.3](https://docs.google.com/spreadsheets/d/1KgZI0jVNESa4P1WYLJnznRT4CGR7Mzlww-tiGYN7k_E/edit?gid=1967646398#gid=1967646398) · [12.4](https://docs.google.com/spreadsheets/d/1KgZI0jVNESa4P1WYLJnznRT4CGR7Mzlww-tiGYN7k_E/edit?gid=1782277388#gid=1782277388) | 282   | 🟡         |
 | 13  | Quản lý đơn đặt hàng                                                                               | –                                                         | –                                                                                                                               | –     | ⬜         |
 | 14  | Quản lý thành viên                                                                                 | –                                                         | –                                                                                                                               | –     | ⬜         |
 | 15  | Quản lý tin tức                                                                                    | –                                                         | –                                                                                                                               | –     | ⬜         |
@@ -121,10 +121,10 @@ floral-charm-qa/
 | Chỉ số            | Giá trị                                                             |
 | ----------------- | ------------------------------------------------------------------- |
 | Module            | 1 hoàn thành · 1 đang làm / 15                                      |
-| Tổng số Test Case | 387 (01: 109 · 12: 278)                                             |
-| Theo Priority     | HIGH 203 · MEDIUM 86 · LOW 98 (01: 66 / 20 / 23 · 12: 137 / 66 / 75) |
-| Câu hỏi Q&A       | 100 (01: 26 – 18 ✅ · 8 ❓ · 12: 74 – 68 ✅ · 6 ❓)                |
-| Điểm SRS review   | 64 ([SRS Review](docs/srs-review.md))                               |
+| Tổng số Test Case | 391 (01: 109 · 12: 282)                                             |
+| Theo Priority     | HIGH 207 · MEDIUM 86 · LOW 98 (01: 66 / 20 / 23 · 12: 141 / 66 / 75) |
+| Câu hỏi Q&A       | 102 (01: 26 – 18 ✅ · 8 ❓ · 12: 76 – 75 ✅ · 1 ❓)                |
+| Điểm SRS review   | 65 ([SRS Review](docs/srs-review.md))                               |
 | Đã thực thi       | –                                                                   |
 | Pass / Fail       | – / –                                                               |
 | Số bug phát hiện  | –                                                                   |
