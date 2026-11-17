@@ -53,10 +53,10 @@ Chi tiết câu hỏi và trả lời: [qa-log.md](qa-log.md) (74 câu: #1 – #
 
 ## Tài liệu
 
-| Tài liệu | File |
-|---|---|
-| Test Design (mindmap) | [test-design.md](test-design.md) |
-| Test Case | [test-cases.xlsx](test-cases.xlsx) |
+| Tài liệu | Xem online | File |
+|---|---|---|
+| Test Design (mindmap) | [test-design.md](test-design.md) | – |
+| Test Case | Google Sheets: [12.1 Danh sách hoa](https://docs.google.com/spreadsheets/d/1KgZI0jVNESa4P1WYLJnznRT4CGR7Mzlww-tiGYN7k_E/edit?gid=1750116678#gid=1750116678) · [12.2 Thêm hoa](https://docs.google.com/spreadsheets/d/1KgZI0jVNESa4P1WYLJnznRT4CGR7Mzlww-tiGYN7k_E/edit?gid=1250044123#gid=1250044123) · [12.3 Sửa hoa](https://docs.google.com/spreadsheets/d/1KgZI0jVNESa4P1WYLJnznRT4CGR7Mzlww-tiGYN7k_E/edit?gid=1967646398#gid=1967646398) · [12.4 Xóa hoa](https://docs.google.com/spreadsheets/d/1KgZI0jVNESa4P1WYLJnznRT4CGR7Mzlww-tiGYN7k_E/edit?gid=1782277388#gid=1782277388) | [test-cases.xlsx](test-cases.xlsx) |
 
 > Test Design 295 node lá (13 node `[Cần xác nhận BA/PO]`), Test Case 278 TC: Thêm 158 · Sửa 71 · Xóa 23 · Danh sách 26. Mọi node lá có ≥ 1 TC (trừ node ghi chú: "R + 1 O trùng", "Mô tả không có giá trị sai", "FC_26 tạm bỏ qua").
 

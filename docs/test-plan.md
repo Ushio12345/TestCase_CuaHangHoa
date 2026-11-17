@@ -48,4 +48,4 @@ Khách vãng lai · Thành viên (tài khoản test) · Quản trị viên (tài
 
 ## 8. Sản phẩm bàn giao
 
-Test Design (XMind) · Test Case (Excel) · Q&A log · Bug list · Báo cáo kết quả trong README từng chức năng
+Test Design (Markdown; XMind cho module 01) · Test Case (Excel) · Q&A log · Bug list · Báo cáo kết quả trong README từng chức năng
