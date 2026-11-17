@@ -4,13 +4,14 @@
 
 ## Mô tả chức năng
 
-Quản trị viên thêm mới, sửa và xóa sản phẩm hoa.
+Quản trị viên xem danh sách, thêm mới, sửa và xóa sản phẩm hoa.
 
-| Chức năng con | SRS | Trạng thái |
-|---|---|---|
-| Thêm hoa mới (`/quan-tri/hoa/them`) | 4.3.4.1 | ✅ Test Design + Test Case (147 TC), chưa thực thi |
-| Sửa sản phẩm hoa | 4.3.4.2 | ⬜ Chưa làm |
-| Xóa sản phẩm hoa | 4.3.4.3 | ⬜ Chưa làm |
+| Sheet | Chức năng con | SRS | Trạng thái |
+|---|---|---|---|
+| 12.1 Danh sách hoa | Danh sách sản phẩm hoa (`/quan-tri/hoa`) | Không có mục chức năng (chỉ ảnh màn hình) | 🟡 Test Design + Test Case (26 TC, QA đề xuất theo ảnh); còn ❓ qa-log #69 – #73 |
+| 12.2 Thêm hoa | Thêm hoa mới (`/quan-tri/hoa/them`) | 4.3.4.1 | ✅ Test Design + Test Case (158 TC), chưa thực thi |
+| 12.3 Sửa hoa | Sửa sản phẩm hoa (`/quan-tri/hoa/sua/[ma_hoa]`) | 4.3.4.2 | ✅ Test Design + Test Case (71 TC), chưa thực thi |
+| 12.4 Xóa hoa | Xóa sản phẩm hoa | 4.3.4.3 | 🟡 Test Design + Test Case (23 TC); còn ❓ qa-log #72, #74 |
 
 - **Tác nhân:** Quản trị viên (Khách vãng lai, Thành viên bị từ chối – lỗi 401)
 - **Chức năng liên quan:** Quản lý loại hoa, Xem trang chủ & lọc hoa, Tìm kiếm, Chi tiết sản phẩm, Giỏ hàng, Thống kê tổng quan
@@ -19,7 +20,7 @@ Quản trị viên thêm mới, sửa và xóa sản phẩm hoa.
 
 | Trường / Hành động | Quy tắc |
 |---|---|
-| Tên hoa | 5 – 20 ký tự (tính sau khi cắt khoảng trắng), chặn gõ quá 20; nhận chữ có dấu, chữ số và `.` `_` `;`; ký tự đặc biệt khác → coi như trống (FC_16) hoặc "Tên hoa không hợp lệ"; không nhận emoji; cắt khoảng trắng đầu/cuối; cho phép trùng tên |
+| Tên hoa | 5 – 20 ký tự (tính sau khi cắt khoảng trắng), chặn gõ quá 20; nhận chữ có dấu, chữ số và `.` `_` `;` `-` `,` `:` `(` `)` `/` `'`; ký tự đặc biệt khác → coi như trống (FC_16) hoặc "Tên hoa không hợp lệ"; không nhận emoji; cắt khoảng trắng đầu/cuối; cho phép trùng tên |
 | Giá bán | Chỉ nhập được số (không `,` `.`), 5.000 – 7.000.000 (gồm 2 mốc); bỏ số 0 đứng đầu và khoảng trắng; không định dạng trong ô nhập |
 | Mô tả | Tối đa 250 ký tự (tính cả xuống dòng), chặn gõ quá 250, có bộ đếm; nhận ký tự đặc biệt và emoji |
 | Đường dẫn hình ảnh | Chỉ cần là link, tối đa 500 ký tự (SRS), quá 500 → "Đường dẫn ảnh vượt quá 500 ký tự"; không phải link → "Đường dẫn ảnh không hợp lệ"; trống / ảnh lỗi → ảnh mặc định |
@@ -35,52 +36,119 @@ Quản trị viên thêm mới, sửa và xóa sản phẩm hoa.
 | Texthint | Theo SRS |
 | Ảnh hưởng | Hoa Ẩn không xuất hiện trong Tìm kiếm và danh sách hoa ở trang chủ; Thống kê đếm cả hoa Ẩn |
 
-Chi tiết câu hỏi và trả lời: [qa-log.md](qa-log.md) (53 câu, đã confirm hết).
+## Quy tắc nghiệp vụ chính – Sửa / Xóa / Danh sách (đã confirm)
+
+| Hành động | Quy tắc |
+|---|---|
+| Sửa – màn hình | Trang riêng `/quan-tri/hoa/sua/[ma_hoa]`, đủ các trường như Thêm; mọi quy tắc của Thêm áp dụng cho Sửa |
+| Sửa – nút | Nút lưu "Cập nhật thông tin"; Làm lại, Quay lại, Tải lên giống Thêm |
+| Sửa thành công | Popup "Tuyệt vời!" – "Thông tin hoa đã được cập nhật thành công!", nút "ĐÓNG CỬA SỔ" → về danh sách; hoa giữ vị trí, `ngay_d` không đổi; không sửa gì vẫn ghi CSDL và hiện popup |
+| Sửa – ngoại lệ | Hoa không tồn tại → "Không tìm thấy sản phẩm" (hoặc 404); hoa bị xóa khi đang sửa → báo lỗi, không tạo bản ghi mới |
+| Sửa – ảnh hưởng | Giỏ hàng đổi giá ngay; đơn hàng cũ giữ `gia_ban` cũ |
+| Xóa | Nút Xóa trên từng dòng; hộp thoại "Bạn có thực sự muốn xóa sản phẩm này không?" (Đồng ý xóa / Huỷ), Esc / bấm ra ngoài không đóng; thành công → "Đã xoá thành công" |
+| Xóa – ảnh hưởng | Hoa đã trong đơn hàng vẫn xóa được, hiển thị làm mờ trong đơn; trong giỏ → khi thanh toán yêu cầu xóa khỏi giỏ; `/hoa/[id]` → 404; FC_26 tạm bỏ qua |
+| Danh sách | Thuộc module 12; SRS không có quy tắc → QA đề xuất theo ảnh màn hình (tìm kiếm tên, lọc theo loại, bảng 5 cột) |
+
+Chi tiết câu hỏi và trả lời: [qa-log.md](qa-log.md) (74 câu: #1 – #68 ✅ · #69 – #74 ❓ – danh sách và cách lưu khi xóa).
 
 ## Tài liệu
 
-| Tài liệu | Xem online | File |
-|---|---|---|
-| Test Design (mindmap) | [test-design.md](test-design.md) | [test-design.xmind](test-design.xmind) |
-| Test Case | – | [test-cases.xlsx](test-cases.xlsx) |
+| Tài liệu | File |
+|---|---|
+| Test Design (mindmap) | [test-design.md](test-design.md) |
+| Test Case | [test-cases.xlsx](test-cases.xlsx) |
 
-> Đã xong chức năng con **Thêm hoa mới**: Test Design 160 node lá, Test Case 147 TC (mọi node lá có ≥ 1 TC). Sửa / Xóa sản phẩm hoa: chưa làm.
+> Test Design 295 node lá (13 node `[Cần xác nhận BA/PO]`), Test Case 278 TC: Thêm 158 · Sửa 71 · Xóa 23 · Danh sách 26. Mọi node lá có ≥ 1 TC (trừ node ghi chú: "R + 1 O trùng", "Mô tả không có giá trị sai", "FC_26 tạm bỏ qua").
 
-## Thống kê Test Case – Thêm hoa mới
+## Thống kê Test Case
+
+File [test-cases.xlsx](test-cases.xlsx): mỗi chức năng con 1 sheet, ID có tiền tố riêng (`DS_` · `THEM_` · `SUA_` · `XOA_`); sheet `Tổng hợp` gom cả 4 sheet.
+
+### 12.1 Danh sách hoa – Danh sách sản phẩm hoa (`DS_01…DS_26`)
 
 | Kịch bản chính | Số TC |
 |---|---|
-| 01. FUNCTION – Thêm hoa mới thành công khi nhập dữ liệu hợp lệ | 9 |
-| 02. FUNCTION – Thêm hoa mới thất bại khi dữ liệu không hợp lệ | 3 |
-| 03. FUNCTION – Kiểm tra đường dẫn ảnh bằng nút Tải lên | 6 |
-| 04. FUNCTION – Làm lại form Thêm hoa mới | 3 |
-| 05. FUNCTION – Điều hướng vào và ra màn hình Thêm hoa mới | 6 |
-| 06. VALIDATION – Kiểm tra validate trường Tên hoa | 17 |
-| 07. VALIDATION – Kiểm tra validate trường Loại hoa | 3 |
-| 08. VALIDATION – Kiểm tra validate trường Giá bán | 14 |
-| 09. VALIDATION – Kiểm tra validate trường Trạng thái hiển thị | 2 |
-| 10. VALIDATION – Kiểm tra validate trường Mô tả | 11 |
-| 11. VALIDATION – Kiểm tra validate trường Đường dẫn hình ảnh | 7 |
-| 12. UI – Giao diện mặc định | 17 |
-| 13. UI – Behavior | 25 |
-| 14. UI – Responsive | 2 |
-| 15. PHÂN QUYỀN – Quản trị viên được truy cập và thêm hoa mới | 1 |
-| 16. PHÂN QUYỀN – Khách vãng lai bị chặn khi thêm hoa mới | 2 |
-| 17. PHÂN QUYỀN – Thành viên bị chặn khi thêm hoa mới | 2 |
-| 18. ẢNH HƯỞNG – Danh sách sản phẩm hoa quản trị sau khi thêm mới | 1 |
-| 19. ẢNH HƯỞNG – Trang khách hàng sau khi thêm mới hoa | 8 |
-| 20. ẢNH HƯỞNG – Tìm kiếm sau khi thêm mới hoa | 2 |
-| 21. ẢNH HƯỞNG – Chi tiết sản phẩm và giỏ hàng với hoa vừa thêm | 2 |
-| 22. ẢNH HƯỞNG – Quản lý loại hoa sau khi thêm mới hoa | 1 |
-| 23. ẢNH HƯỞNG – Thống kê tổng quan sau khi thêm mới hoa | 2 |
-| 24. ẢNH HƯỞNG – Sửa sản phẩm hoa sau khi thêm mới | 1 |
-| **Tổng** | **147** (HIGH 49 · MEDIUM 54 · LOW 44) |
+| FUNCTION – Xem, tìm kiếm và lọc danh sách sản phẩm hoa | 11 |
+| VALIDATION – Kiểm tra validate ô Tìm kiếm tên hoa | 2 |
+| UI – Giao diện mặc định | 5 |
+| UI – Behavior | 4 |
+| UI – Responsive | 2 |
+| PHÂN QUYỀN – Khách vãng lai và Thành viên bị chặn khi xem danh sách sản phẩm hoa | 2 |
+| **Tổng** | **26** (HIGH 13 · MEDIUM 2 · LOW 11) |
+
+### 12.2 Thêm hoa – Thêm hoa mới (`THEM_01…THEM_158`)
+
+| Kịch bản chính | Số TC |
+|---|---|
+| FUNCTION – Thêm hoa mới thành công khi nhập dữ liệu hợp lệ | 11 |
+| FUNCTION – Thêm hoa mới thất bại khi thiếu trường bắt buộc hoặc có trường không hợp lệ | 12 |
+| FUNCTION – Kiểm tra đường dẫn ảnh bằng nút Tải lên | 6 |
+| FUNCTION – Làm lại form Thêm hoa mới | 3 |
+| FUNCTION – Điều hướng vào và ra màn hình Thêm hoa mới | 6 |
+| VALIDATION – Kiểm tra validate trường Tên hoa | 17 |
+| VALIDATION – Kiểm tra validate trường Loại hoa | 3 |
+| VALIDATION – Kiểm tra validate trường Giá bán | 14 |
+| VALIDATION – Kiểm tra validate trường Trạng thái hiển thị | 2 |
+| VALIDATION – Kiểm tra validate trường Mô tả | 11 |
+| VALIDATION – Kiểm tra validate trường Đường dẫn hình ảnh | 7 |
+| UI – Giao diện mặc định | 17 |
+| UI – Behavior | 25 |
+| UI – Responsive | 2 |
+| PHÂN QUYỀN – Quản trị viên được truy cập và thêm hoa mới | 1 |
+| PHÂN QUYỀN – Khách vãng lai bị chặn khi thêm hoa mới | 2 |
+| PHÂN QUYỀN – Thành viên bị chặn khi thêm hoa mới | 2 |
+| ẢNH HƯỞNG – Danh sách sản phẩm hoa quản trị sau khi thêm mới | 1 |
+| ẢNH HƯỞNG – Trang khách hàng sau khi thêm mới hoa | 8 |
+| ẢNH HƯỞNG – Tìm kiếm sau khi thêm mới hoa | 2 |
+| ẢNH HƯỞNG – Chi tiết sản phẩm và giỏ hàng với hoa vừa thêm | 2 |
+| ẢNH HƯỞNG – Quản lý loại hoa sau khi thêm mới hoa | 1 |
+| ẢNH HƯỞNG – Thống kê tổng quan sau khi thêm mới hoa | 2 |
+| ẢNH HƯỞNG – Sửa sản phẩm hoa sau khi thêm mới | 1 |
+| **Tổng** | **158** (HIGH 60 · MEDIUM 54 · LOW 44) |
+
+### 12.3 Sửa hoa – Sửa sản phẩm hoa (`SUA_01…SUA_71`)
+
+| Kịch bản chính | Số TC |
+|---|---|
+| FUNCTION – Mở màn hình Sửa sản phẩm hoa | 3 |
+| FUNCTION – Cập nhật hoa thành công khi nhập dữ liệu hợp lệ | 11 |
+| FUNCTION – Cập nhật hoa thất bại khi thiếu trường bắt buộc hoặc có trường không hợp lệ | 12 |
+| FUNCTION – Tải lên, Làm lại và Quay lại trên màn hình Sửa sản phẩm hoa | 5 |
+| FUNCTION – Ngoại lệ khi cập nhật sản phẩm hoa | 2 |
+| VALIDATION – Kiểm tra validate các trường khi sửa sản phẩm hoa | 10 |
+| UI – Giao diện mặc định | 5 |
+| UI – Behavior | 6 |
+| UI – Responsive | 2 |
+| PHÂN QUYỀN – Khách vãng lai và Thành viên bị chặn khi sửa sản phẩm hoa | 4 |
+| ẢNH HƯỞNG – Trang khách hàng và tìm kiếm sau khi sửa hoa | 6 |
+| ẢNH HƯỞNG – Giỏ hàng và đơn hàng sau khi sửa hoa | 3 |
+| ẢNH HƯỞNG – Thống kê và Quản lý loại hoa sau khi sửa hoa | 2 |
+| **Tổng** | **71** (HIGH 48 · MEDIUM 10 · LOW 13) |
+
+### 12.4 Xóa hoa – Xóa sản phẩm hoa (`XOA_01…XOA_23`)
+
+| Kịch bản chính | Số TC |
+|---|---|
+| FUNCTION – Xóa sản phẩm hoa | 6 |
+| UI – Giao diện mặc định | 3 |
+| UI – Behavior | 3 |
+| UI – Responsive | 1 |
+| PHÂN QUYỀN – Khách vãng lai và Thành viên bị chặn khi xóa sản phẩm hoa | 2 |
+| ẢNH HƯỞNG – Trang khách hàng và tìm kiếm sau khi xóa hoa | 4 |
+| ẢNH HƯỞNG – Giỏ hàng và đơn hàng sau khi xóa hoa | 2 |
+| ẢNH HƯỞNG – Thống kê và Quản lý loại hoa sau khi xóa hoa | 2 |
+| **Tổng** | **23** (HIGH 16 · MEDIUM 0 · LOW 7) |
+
+**Cả module: 278 TC** (HIGH 137 · MEDIUM 66 · LOW 75).
 
 ## Kết quả thực thi
 
-| Lần chạy | Ngày | Pass | Fail | Untested | Ghi chú |
-|---|---|---|---|---|---|
-| R1 | – | – | – | – | Chưa thực thi |
+| Lần chạy | Chức năng con | Ngày | Pass | Fail | Untested | Ghi chú |
+|---|---|---|---|---|---|---|
+| R1 | 12.1 Danh sách hoa | – | – | – | 26 | Chưa thực thi |
+| R1 | 12.2 Thêm hoa | – | – | – | 158 | Chưa thực thi |
+| R1 | 12.3 Sửa hoa | – | – | – | 71 | Chưa thực thi |
+| R1 | 12.4 Xóa hoa | – | – | – | 23 | Chưa thực thi |
 
 ## Bug phát hiện
 

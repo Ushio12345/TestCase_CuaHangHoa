@@ -2,7 +2,7 @@
 
 > Dự án thực hành kiểm thử phần mềm thủ công trên hệ thống bán hoa trực tuyến **Floral Charm**: phân tích SRS, đặt câu hỏi làm rõ yêu cầu, thiết kế Test Design (mindmap), viết Test Case, thực thi và báo cáo lỗi.
 
-![Status](https://img.shields.io/badge/status-in%20progress-yellow) ![Type](https://img.shields.io/badge/testing-manual-blue) ![Modules](https://img.shields.io/badge/modules-1%2F15%20done-green) ![Test Cases](https://img.shields.io/badge/test%20cases-256-blue)
+![Status](https://img.shields.io/badge/status-in%20progress-yellow) ![Type](https://img.shields.io/badge/testing-manual-blue) ![Modules](https://img.shields.io/badge/modules-1%2F15%20done-green) ![Test Cases](https://img.shields.io/badge/test%20cases-387-blue)
 
 ---
 
@@ -56,7 +56,7 @@
 | 09  | Đăng nhập quản trị                                                                                 | –                                                         | –                                                                                                                               | –     | ⬜         |
 | 10  | Thống kê tổng quan                                                                                 | –                                                         | –                                                                                                                               | –     | ⬜         |
 | 11  | Quản lý loại hoa                                                                                   | –                                                         | –                                                                                                                               | –     | ⬜         |
-| 12  | [Quản lý sản phẩm hoa](modules/12-quan-ly-san-pham-hoa/README.md) (`/quan-tri/hoa`) – Thêm hoa mới | [Mindmap](modules/12-quan-ly-san-pham-hoa/test-design.md) | [Excel](https://docs.google.com/spreadsheets/d/1KgZI0jVNESa4P1WYLJnznRT4CGR7Mzlww-tiGYN7k_E/edit?gid=1191588559#gid=1191588559) | 147   | 🟡         |
+| 12  | [Quản lý sản phẩm hoa](modules/12-quan-ly-san-pham-hoa/README.md) (`/quan-tri/hoa`) – Danh sách · Thêm · Sửa · Xóa | [Mindmap](modules/12-quan-ly-san-pham-hoa/test-design.md) | [Excel](https://docs.google.com/spreadsheets/d/1KgZI0jVNESa4P1WYLJnznRT4CGR7Mzlww-tiGYN7k_E/edit?gid=1191588559#gid=1191588559) | 278   | 🟡         |
 | 13  | Quản lý đơn đặt hàng                                                                               | –                                                         | –                                                                                                                               | –     | ⬜         |
 | 14  | Quản lý thành viên                                                                                 | –                                                         | –                                                                                                                               | –     | ⬜         |
 | 15  | Quản lý tin tức                                                                                    | –                                                         | –                                                                                                                               | –     | ⬜         |
@@ -98,7 +98,7 @@ floral-charm-qa/
 │   ├── 01-gio-hang/
 │   │   ├── README.md           # Tóm tắt chức năng, quy tắc đã confirm, kết quả
 │   │   ├── qa-log.md           # Câu hỏi & câu trả lời BA/PO
-│   │   ├── test-design.xmind   # File gốc
+│   │   ├── test-design.xmind   # File gốc (riêng 01 còn giữ XMind)
 │   │   ├── test-design.png     # Ảnh xem nhanh trên GitHub
 │   │   ├── test-design.md      # Outline dạng text
 │   │   └── test-cases.xlsx     # Bản tải về (bản xem online: Google Sheets)
@@ -106,7 +106,6 @@ floral-charm-qa/
 │   │   ├── README.md
 │   │   ├── qa-log.md
 │   │   ├── test-design.md      # Mindmap dạng text (module mới chỉ dùng file này)
-│   │   ├── test-design.xmind   # Riêng 01 và 12 còn giữ file XMind
 │   │   └── test-cases.xlsx
 │   └── ...
 ├── bug-reports/
@@ -122,10 +121,10 @@ floral-charm-qa/
 | Chỉ số            | Giá trị                                                             |
 | ----------------- | ------------------------------------------------------------------- |
 | Module            | 1 hoàn thành · 1 đang làm / 15                                      |
-| Tổng số Test Case | 256 (01: 109 · 12: 147)                                             |
-| Theo Priority     | HIGH 115 · MEDIUM 74 · LOW 67 (01: 66 / 20 / 23 · 12: 49 / 54 / 44) |
-| Câu hỏi Q&A       | 79 (01: 26 – 18 ✅ · 8 ❓ · 12: 53 ✅)                              |
-| Điểm SRS review   | 53 ([SRS Review](docs/srs-review.md))                               |
+| Tổng số Test Case | 387 (01: 109 · 12: 278)                                             |
+| Theo Priority     | HIGH 203 · MEDIUM 86 · LOW 98 (01: 66 / 20 / 23 · 12: 137 / 66 / 75) |
+| Câu hỏi Q&A       | 100 (01: 26 – 18 ✅ · 8 ❓ · 12: 74 – 68 ✅ · 6 ❓)                |
+| Điểm SRS review   | 64 ([SRS Review](docs/srs-review.md))                               |
 | Đã thực thi       | –                                                                   |
 | Pass / Fail       | – / –                                                               |
 | Số bug phát hiện  | –                                                                   |
