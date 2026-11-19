@@ -41,7 +41,7 @@ Câu hỏi làm rõ yêu cầu gửi BA/PO trong quá trình phân tích SRS và
 |---|---|---|---|
 | 15 | Ký tự trong đường dẫn (`: / ? & = % # _ - .`) có bị chặn không? | Không chặn | ✅ |
 | 16 | Có kiểm tra định dạng đường dẫn, đuôi file ảnh không? | Không, chỉ cần là link | ✅ |
-| 17 | Để trống hoặc ảnh không tải được thì hiển thị gì (trang quản lý và trang khách)? | Hiển thị ảnh mặc định | ✅ |
+| 17 | Để trống hoặc ảnh không tải được thì hiển thị gì (trang quản lý và trang khách)? | **Cập nhật 19/11:** hiển thị alt = tên hoa (thay câu trả lời cũ "Hiển thị ảnh mặc định"; qa-log 02 #25) | ✅ |
 | 18 | Nút Tải lên (không có trong SRS) hoạt động thế nào? | Nhập URL, bấm Tải lên → kiểm tra có lấy được ảnh không | ✅ |
 | 19 | Tải lên thành công có tự điền vào ô Đường dẫn hình ảnh không? | Có | ✅ |
 | 20 | Ô đã có đường dẫn mà tải lên ảnh khác thì lấy giá trị nào? | Hỏi có muốn thay thế đường dẫn không | ✅ |
@@ -133,9 +133,16 @@ Câu hỏi làm rõ yêu cầu gửi BA/PO trong quá trình phân tích SRS và
 
 | # | Câu hỏi | Trả lời | Trạng thái |
 |---|---|---|---|
-| 69 | (#67) Ô "Tìm kiếm tên hoa": khớp một phần hay toàn bộ tên? Có phân biệt chữ hoa / thường, có dấu / không dấu? Tìm khi bấm "Áp dụng" hay cả khi nhấn Enter? Ô trống + "Áp dụng" → toàn bộ danh sách? Không có kết quả thì hiển thị gì? | – | ❓ |
-| 70 | (#67) "Lọc theo loại" gồm "Tất cả loại hoa" + toàn bộ loại trong `loai_hoa`? Tìm kiếm và lọc có áp dụng đồng thời khi bấm "Áp dụng" không? | – | ❓ |
-| 71 | (#67) Danh sách sắp xếp theo tiêu chí nào: `ma_hoa` giảm dần (hoa mới lên đầu – #44, hoa vừa sửa giữ vị trí – #57)? | – | ❓ |
-| 72 | (#67) Danh sách có phân trang không? Bao nhiêu dòng mỗi trang? | – | ❓ |
-| 73 | (#67) Danh sách quản trị có hiển thị hoa Ẩn không, cột Trạng thái của hoa Ẩn hiển thị thế nào? Giá hiển thị "450.000 đ" (ảnh màn hình) hay "450.000đ" (SRS Định dạng tiền tệ)? (srs-review #64) | – | ❓ |
-| 74 | (#64) Xóa hoa là xóa cứng (SRS: `DELETE` bảng `hoa` và `ct_don_dat_hang`) hay xóa mềm (để hoa vẫn hiển thị làm mờ trong đơn hàng)? Sau khi xóa, QA kiểm tra CSDL thế nào? (srs-review #62) | – | ❓ |
+| 69 | (#67) Ô "Tìm kiếm tên hoa": khớp một phần hay toàn bộ tên? Có phân biệt chữ hoa / thường, có dấu / không dấu? Tìm khi bấm "Áp dụng" hay cả khi nhấn Enter? Ô trống + "Áp dụng" → toàn bộ danh sách? Không có kết quả thì hiển thị gì? | Khớp một phần tên; không phân biệt chữ hoa / thường và có dấu / không dấu; tìm khi bấm "Áp dụng" hoặc nhấn Enter; ô trống → toàn bộ danh sách; không có kết quả → danh sách rỗng | ✅ |
+| 70 | (#67) "Lọc theo loại" gồm "Tất cả loại hoa" + toàn bộ loại trong `loai_hoa`? Tìm kiếm và lọc có áp dụng đồng thời khi bấm "Áp dụng" không? | Có: "Tất cả loại hoa" + toàn bộ loại trong `loai_hoa`; tìm kiếm và lọc áp dụng đồng thời | ✅ |
+| 71 | (#67) Danh sách sắp xếp theo tiêu chí nào: `ma_hoa` giảm dần (hoa mới lên đầu – #44, hoa vừa sửa giữ vị trí – #57)? | Theo thời gian tạo (`ngay_d`), mới nhất lên đầu (QA hiểu chiều giảm dần theo #44); hoa vừa sửa giữ vị trí vì `ngay_d` không đổi (#57) | ✅ |
+| 72 | (#67) Danh sách có phân trang không? Bao nhiêu dòng mỗi trang? | Có phân trang, 20 sản phẩm / trang | ✅ |
+| 73 | (#67) Danh sách quản trị có hiển thị hoa Ẩn không, cột Trạng thái của hoa Ẩn hiển thị thế nào? Giá hiển thị "450.000 đ" (ảnh màn hình) hay "450.000đ" (SRS Định dạng tiền tệ)? (srs-review #64) | Có hiển thị hoa Ẩn, cột Trạng thái hiển thị "Ẩn"; giá theo SRS: "450.000đ" (ảnh "450.000 đ" là sai lệch) | ✅ |
+| 74 | (#64) Xóa hoa là xóa cứng (SRS: `DELETE` bảng `hoa` và `ct_don_dat_hang`) hay xóa mềm (để hoa vẫn hiển thị làm mờ trong đơn hàng)? Sau khi xóa, QA kiểm tra CSDL thế nào? (srs-review #62) | Xóa mềm: cập nhật trạng thái hoa thành Ẩn (`trang_thai = 0`), không `DELETE` bảng `hoa` / `ct_don_dat_hang`. QA kiểm tra: `SELECT trang_thai FROM hoa WHERE ma_hoa = …` = 0, `ct_don_dat_hang` vẫn còn dòng của hoa (phân biệt với hoa Ẩn: #76) | ✅ |
+
+## F. Bổ sung sau trả lời #69 – #74 (17/11)
+
+| # | Câu hỏi | Trả lời | Trạng thái |
+|---|---|---|---|
+| 75 | (#74) Sau khi xóa (mềm) hoa duy nhất của một loại, bản ghi hoa vẫn còn trong bảng `hoa` → Xóa loại hoa có bị chặn "loại còn sản phẩm" (FC_29) không? | Hoa đã xóa không tính khi kiểm tra loại còn sản phẩm | ✅ |
+| 76 | (#63, #73, #74, #75) Hoa đã xóa và hoa Ẩn cùng `trang_thai = 0` → hệ thống không phân biệt được: (1) danh sách quản trị hiển thị hoa Ẩn (#73) → hoa vừa xóa còn trong danh sách với trạng thái "Ẩn", hay biến mất (#63)? (2) Xóa loại hoa: hoa Ẩn chưa xóa có được tính là "loại còn sản phẩm" không (#75)? (3) Thống kê: Tổng số hoa có giảm 1 sau khi xóa không (Thêm hoa Ẩn làm Tổng số hoa tăng 1)? Cần giá trị / cột riêng cho "Đã xóa"? (srs-review #65) | – | ❓ |

@@ -1,0 +1,139 @@
+# Xem trang chủ & lọc hoa
+
+- Trang chủ (`/`)
+  - Function
+    - Truy cập `/` → hiển thị banner, Danh mục, "Thiết Kế Mới Nhất", khung bên phải (ô đăng nhập / thông tin tài khoản), Hoa đặc biệt (qa-log #1)
+    - Thiết Kế Mới Nhất (qa-log #2, #17)
+      - Có ≥ 5 hoa đang hiển thị → hiển thị đúng 4 hoa có `ngay_d` mới nhất, mới nhất trước
+      - Hai hoa trùng `ngay_d` → sắp theo tên A → Z (qa-log #27)
+      - Hoa Ẩn / đã xóa (`trang_thai = 0`) có `ngay_d` mới nhất → không xuất hiện, lấy hoa hiển thị kế tiếp (qa-log 12 #45, #74)
+      - Bấm "Xem toàn bộ sưu tập" → chuyển sang `/hoa`
+      - Bấm ảnh / tên thẻ hoa → `/hoa/[ma_hoa]` của hoa đó (qa-log #6)
+      - Bấm "Thêm vào giỏ" trên thẻ → badge giỏ hàng cập nhật (qa-log #6)
+    - Bấm "Khám phá ngay" ở banner → chuyển sang `/hoa` (qa-log #18)
+    - Danh mục (qa-log #3)
+      - Mặc định chọn "Tất cả các loại hoa"
+      - Bấm một loại hoa → chuyển sang `/hoa`
+    - Hoa đặc biệt – danh sách đang fix cứng, không kiểm tra lấy đúng danh sách (qa-log #19)
+      - Hiển thị ảnh, tên, giá của từng hoa
+      - Bấm một hoa → `/hoa/[ma_hoa]` của hoa đó
+  - Validation (hiển thị dữ liệu – không có ô nhập)
+    - Giá hoa = 5.000 (min) → "5.000đ"; giá = 7.000.000 (max) → "7.000.000đ" (SRS Định dạng tiền tệ, qa-log #10)
+    - Tên hoa 20 ký tự (max) dài hơn độ rộng thẻ → cắt 1 dòng "…", hover → tooltip tên đầy đủ (qa-log #7, #21)
+  - UI
+    - Giao diện mặc định
+      - Header: logo, menu (TRANG CHỦ … LIÊN HỆ), icon giỏ hàng, icon tài khoản; menu "TRANG CHỦ" đang chọn
+      - Banner: nhãn "XU HƯỚNG MÙA XUÂN 2026", tiêu đề "Đánh thức Giác quan", mô tả, nút "KHÁM PHÁ NGAY"
+      - Danh mục: "Tất cả các loại hoa" tô sáng + toàn bộ loại hoa theo thứ tự thêm (qa-log #9, #28)
+      - Thẻ hoa: ảnh, tên loại, tên hoa, giá dạng "150.000đ" (qa-log #10)
+      - Hoa không có ảnh / ảnh lỗi → hiển thị alt = tên hoa (qa-log #14, #25)
+      - Khung bên phải: chưa đăng nhập → ô đăng nhập (Tên đăng nhập, Mật khẩu, nút "ĐĂNG NHẬP") (qa-log #26)
+    - Behavior
+      - Tab / Shift+Tab: focus lần lượt menu → nút banner → Danh mục → thẻ hoa; Enter trên nút / link đang focus → thực hiện như bấm
+      - Click nhiều lần: spam "Thêm vào giỏ" trên thẻ → không lỗi trang, badge cập nhật (số lượng theo quy tắc giỏ hàng module 01)
+      - Hover: thẻ hoa, nút, mục Danh mục đổi màu / con trỏ bàn tay; tên bị cắt → tooltip
+      - Kéo thả: kéo ảnh / tên thẻ hoa → không làm hỏng giao diện
+      - Cuộn: cuộn trang mượt, header giữ nguyên vị trí theo thiết kế
+      - Bàn phím: Ctrl + C tên hoa / giá → dán ra được nội dung đúng
+      - Trình duyệt: F5 → tải lại giữ nguyên dữ liệu; Back / Forward giữa `/` và `/hoa` đúng trang; mở thẻ hoa ở tab mới → `/hoa/[ma_hoa]`
+      - Cửa sổ: zoom 50 % – 200 %, thu nhỏ cửa sổ → layout không vỡ
+      - Chờ xử lý: mạng chậm (DevTools Slow 3G) → trang tải xong không lỗi, không hiện dữ liệu sai
+    - Responsive
+      - Tablet 768px → layout không vỡ, không cuộn ngang, đủ các khối
+      - Mobile 375px → layout không vỡ, không cuộn ngang, đủ các khối
+  - Phân quyền
+    - Khách vãng lai → xem được trang chủ, khung bên phải hiển thị ô đăng nhập
+    - Thành viên đã đăng nhập → xem được trang chủ, khung bên phải hiển thị avatar, "Chào, <tên>!", "THÀNH VIÊN THÂN THIẾT", "Quản lý tài khoản", "Đăng xuất" (qa-log #15, #26)
+    - Quản trị viên (đã đăng nhập trang quản trị) → xem được trang chủ, khung bên phải hiển thị ô đăng nhập (qa-log #30)
+    - Cả 3 tác nhân: hoa Ẩn không xuất hiện ở trang chủ (qa-log 12 #45)
+  - Ảnh hưởng
+    - Admin thêm hoa mới "Hiển thị" → hoa xuất hiện đầu "Thiết Kế Mới Nhất", hoa thứ 4 cũ bị đẩy ra
+    - Admin thêm hoa mới "Ẩn" → "Thiết Kế Mới Nhất" không đổi
+    - Admin ẩn / xóa một hoa đang ở "Thiết Kế Mới Nhất" → hoa biến mất, hoa kế tiếp được đưa vào
+    - Admin sửa giá / tên / ảnh một hoa ở "Thiết Kế Mới Nhất" → thẻ hiển thị giá trị mới
+    - Admin thêm loại hoa mới → loại xuất hiện cuối Danh mục (qa-log #28)
+    - Admin đổi tên loại hoa → Danh mục và tên loại trên thẻ hiển thị tên mới
+- Danh sách & lọc hoa (`/hoa`, `/hoa?loai=N`)
+  - Function
+    - Xem tất cả (`/hoa`, "Tất cả các loại hoa")
+      - Hiển thị mọi hoa `trang_thai = 1`, kể cả hoa có `ma_loai` NULL (qa-log #13)
+      - Hoa Ẩn / đã xóa không xuất hiện (SRS bước 3, qa-log 12 #45, #74)
+      - Dòng đếm "N sản phẩm tinh hoa được tìm thấy": N = tổng số hoa hiển thị (qa-log #8)
+      - Không có hoa nào đang hiển thị → FC_36 "Chưa có sản phẩm nào thuộc loại này" (qa-log #23)
+    - Lọc theo loại (SRS bước 2 – 4)
+      - Chọn loại có hoa → chỉ hiển thị hoa thuộc loại đó, `trang_thai = 1`; URL `/hoa?loai=N`; loại được tô sáng (qa-log #22)
+      - Loại có cả hoa Hiển thị và hoa Ẩn → chỉ hiển thị hoa Hiển thị, N không tính hoa Ẩn
+      - Loại có 1 hoa → hiển thị 1 thẻ, N = 1
+      - Loại chưa có hoa → FC_36 thay lưới, ẩn dòng đếm, ẩn phân trang, vẫn hiện ô Sắp xếp (qa-log #9, #11)
+      - Loại chỉ có hoa Ẩn → FC_36
+      - Đổi từ loại A sang loại B → lưới, dòng đếm, URL, mục tô sáng cập nhật theo loại B
+      - Chọn lại "Tất cả các loại hoa" → hiển thị toàn bộ hoa
+      - Truy cập trực tiếp `/hoa?loai=N` (N hợp lệ) → lọc đúng loại N
+    - Sắp xếp (qa-log #5, #20, #27)
+      - Mặc định "Mới nhất" → `ngay_d` giảm dần
+      - "Giá tăng dần" → giá nhỏ đến lớn
+      - "Giá giảm dần" → giá lớn đến nhỏ
+      - Trùng `ngay_d` / cùng giá → sắp theo tên A → Z
+      - Đang chọn "Giá tăng dần" rồi đổi loại hoa → giữ "Giá tăng dần"
+      - Đang chọn "Giá giảm dần" rồi chuyển trang 2 → giữ "Giá giảm dần", trang 2 tiếp nối thứ tự
+    - Phân trang 8 hoa / trang, dạng `< 1 2 3 >` (qa-log #4, #24, #29) – đối chiếu lỗi cố ý số 2
+      - 8 hoa (max 1 trang) → 1 trang, hiển thị "1"
+      - 9 hoa (max + 1) → 2 trang: trang 1 có 8, trang 2 có 1
+      - Bấm trang "2" → hiển thị hoa 9 – 16, URL có tham số trang 2
+      - Ở trang 1 → nút `<` disable
+      - Ở trang cuối → nút `>` disable
+      - Bấm `>` từ trang 1 → sang trang 2; bấm `<` từ trang 2 → về trang 1
+    - Thẻ sản phẩm (qa-log #6)
+      - Bấm ảnh / tên → `/hoa/[ma_hoa]` của hoa đó
+      - Bấm icon giỏ / nút "Thêm vào giỏ" → badge giỏ hàng cập nhật
+    - F5 tại `/hoa?loai=N` → vẫn lọc loại N, loại N tô sáng
+  - Validation
+    - Tham số `loai` không hợp lệ (qa-log #12; mã hợp lệ: Function "Truy cập trực tiếp", mã loại đã xóa: Ảnh hưởng)
+      - Mã không tồn tại (99999) → FC_36
+      - `loai=0` → FC_36
+      - `loai=-1` → FC_36
+      - `loai=abc` → FC_36
+      - `loai=` (rỗng) → FC_36
+      - `loai=' OR '1'='1` → FC_36, không lỗi hệ thống, không trả về toàn bộ hoa
+    - Hiển thị giá: 5.000 (min) → "5.000đ"; 7.000.000 (max) → "7.000.000đ" (qa-log #10)
+    - Tên hoa 20 ký tự (max) → cắt 1 dòng "…", hover → tooltip tên đầy đủ (qa-log #7, #21)
+  - UI
+    - Giao diện mặc định
+      - Tiêu đề "Bộ Sưu Tập Hoa", dòng đếm, ô "SẮP XẾP" mặc định "Mới nhất" (3 tùy chọn)
+      - Danh mục: "Tất cả các loại hoa" + toàn bộ loại theo thứ tự thêm, loại đang chọn tô sáng (qa-log #9, #22, #28)
+      - Thẻ: ảnh, icon giỏ, tên loại, tên hoa, giá "150.000đ", nút "THÊM VÀO GIỎ" (qa-log #6, #10)
+      - Ảnh lỗi / không có ảnh → alt = tên hoa (qa-log #14, #25)
+      - Phân trang `< 1 2 3 >`, trang hiện tại được đánh dấu (qa-log #24)
+      - Khung FC_36: chỉ khung thông báo, không dòng đếm, không phân trang, vẫn có ô Sắp xếp (qa-log #11)
+    - Behavior
+      - Tab / Shift+Tab: focus Danh mục → Sắp xếp → thẻ hoa → phân trang; Enter / Space trên mục đang focus → thực hiện
+      - Click nhiều lần: spam một loại trong Danh mục / số trang → không lỗi, kết quả đúng loại / trang
+      - Hover: mục Danh mục, thẻ, nút, số trang đổi màu / con trỏ bàn tay; nút `<` / `>` disable không có hiệu ứng hover
+      - Kéo thả: kéo ảnh / tên thẻ → không làm hỏng giao diện
+      - Cuộn: danh sách dài cuộn mượt, Danh mục và header giữ nguyên theo thiết kế
+      - Bàn phím: mở ô Sắp xếp bằng bàn phím, chọn bằng phím mũi tên + Enter → sắp xếp đúng
+      - Trình duyệt: Back sau khi đổi loại → về loại trước (URL trước); mở thẻ ở tab mới → `/hoa/[ma_hoa]`
+      - Cửa sổ: zoom 50 % – 200 % → lưới, Danh mục không vỡ
+      - Chờ xử lý: mạng chậm, bấm liên tiếp nhiều loại → kết quả cuối cùng khớp loại được chọn cuối
+    - Responsive
+      - Tablet 768px → lưới, Danh mục, phân trang không vỡ, không cuộn ngang
+      - Mobile 375px → lưới, Danh mục, phân trang không vỡ, không cuộn ngang
+  - Phân quyền
+    - Khách vãng lai → xem và lọc được; khung bên phải là ô đăng nhập
+    - Thành viên → xem và lọc được; khung bên phải là thông tin tài khoản (qa-log #26)
+    - Quản trị viên (đã đăng nhập trang quản trị) → xem và lọc được; khung bên phải là ô đăng nhập (qa-log #30)
+    - Cả 3 tác nhân: hoa Ẩn không xuất hiện, kể cả khi lọc đúng loại của hoa Ẩn (qa-log 12 #45)
+  - Ảnh hưởng
+    - Quản lý sản phẩm hoa (qa-log #16)
+      - Thêm hoa "Hiển thị" vào loại A → xuất hiện đầu lưới loại A khi "Mới nhất", N tăng 1
+      - Thêm hoa "Ẩn" → không xuất hiện, N không đổi
+      - Sửa giá → thẻ hiển thị giá mới, vị trí theo "Giá tăng / giảm dần" thay đổi
+      - Sửa tên → thẻ hiển thị tên mới
+      - Sửa loại A → B → hoa biến mất khỏi loại A, xuất hiện ở loại B
+      - Ẩn hoa → biến mất khỏi lưới, N giảm 1; hiện lại → xuất hiện lại
+      - Xóa hoa (xóa mềm) → biến mất, N giảm 1; loại chỉ còn hoa đó → FC_36
+      - Xóa hoa đang mở ở `/hoa` (tab khác) rồi bấm thẻ → `/hoa/[ma_hoa]` trả 404 (qa-log 12 #66)
+    - Quản lý loại hoa (qa-log #16)
+      - Thêm loại mới → xuất hiện cuối Danh mục, chọn → FC_36 (qa-log #9, #28)
+      - Đổi tên loại → Danh mục và tên loại trên thẻ đổi theo
+      - Xóa loại (không còn hoa) → biến mất khỏi Danh mục; URL `/hoa?loai=<mã cũ>` → FC_36 (qa-log #12)

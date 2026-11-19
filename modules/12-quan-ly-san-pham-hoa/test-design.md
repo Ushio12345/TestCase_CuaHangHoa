@@ -3,31 +3,35 @@
 - Danh sách sản phẩm hoa (`/quan-tri/hoa`) – QA đề xuất theo ảnh màn hình (qa-log #67)
   - Function
     - Bấm "Hoa" ở sidebar → mở danh sách, bảng gồm toàn bộ hoa
-    - Hoa "Ẩn" có hiển thị trong danh sách [Cần xác nhận BA/PO]
-    - Sắp xếp theo ma_hoa giảm dần (hoa mới lên đầu – qa-log #44) [Cần xác nhận BA/PO]
-    - Tìm kiếm tên hoa
+    - Hoa "Ẩn" vẫn hiển thị trong danh sách, cột Trạng thái "Ẩn" (qa-log #73)
+    - Sắp xếp theo thời gian tạo (ngay_d) giảm dần – hoa mới lên đầu (qa-log #44, #71)
+    - Tìm kiếm tên hoa (qa-log #69)
       - Nhập đúng tên đầy đủ, bấm "Áp dụng" → chỉ hiển thị hoa có tên đó
-      - Nhập một phần tên → hiển thị các hoa có tên chứa từ khóa [Cần xác nhận BA/PO]
-      - Khác chữ hoa / thường → vẫn tìm thấy [Cần xác nhận BA/PO]
-      - Không có hoa khớp → hiển thị danh sách trống / thông báo [Cần xác nhận BA/PO]
-    - Lọc theo loại
+      - Nhập một phần tên → hiển thị các hoa có tên chứa từ khóa
+      - Khác chữ hoa / thường → vẫn tìm thấy
+      - Nhập không dấu ("hoa hong do") → vẫn tìm thấy "Hoa Hồng Đỏ"
+      - Không có hoa khớp → danh sách rỗng
+    - Lọc theo loại (qa-log #70)
+      - Danh sách lựa chọn = "Tất cả loại hoa" + toàn bộ loại trong loai_hoa
       - Chọn 1 loại, bấm "Áp dụng" → chỉ hiển thị hoa thuộc loại đó
       - Chọn "Tất cả loại hoa" → hiển thị toàn bộ hoa
-      - Tìm kiếm và lọc cùng lúc → hoa thỏa cả 2 điều kiện [Cần xác nhận BA/PO]
-    - Phân trang (số dòng / trang) [Cần xác nhận BA/PO]
+      - Tìm kiếm và lọc cùng lúc → hoa thỏa cả 2 điều kiện
+    - Phân trang 20 hoa / trang (qa-log #72)
+      - Đúng 20 hoa (max) → 1 trang, không có trang 2
+      - 21 hoa (max + 1) → trang 1: 20 hoa, trang 2: 1 hoa
   - Validation
     - Ô Tìm kiếm tên hoa
-      - Để trống, bấm "Áp dụng" → hiển thị toàn bộ hoa [Cần xác nhận BA/PO]
-      - Nhập ký tự đặc biệt (' OR '1'='1) → không lỗi hệ thống, không trả về toàn bộ hoa [Cần xác nhận BA/PO]
+      - Để trống, bấm "Áp dụng" → hiển thị toàn bộ hoa (qa-log #69)
+      - Nhập ký tự đặc biệt (' OR '1'='1) → không lỗi hệ thống, không trả về toàn bộ hoa, danh sách rỗng (qa-log #69)
   - UI
     - Giao diện mặc định
       - Tiêu đề "Quản Lý Hoa", nút "Thêm hoa mới", mục "Hoa" ở sidebar được đánh dấu
       - Bộ lọc mặc định: ô tìm kiếm trống, gợi ý "Nhập tên hoa để tìm...", Lọc theo loại "Tất cả loại hoa", nút "Áp dụng"
       - Bảng 5 cột: Sản phẩm (ảnh, tên, "MÃ: #id"), Loại, Giá bán, Trạng thái, Thao tác (sửa, xóa)
-      - Giá bán dạng "450.000đ" (SRS) hay "450.000 đ" (ảnh) [Cần xác nhận BA/PO]
-      - Hoa không có ảnh / ảnh lỗi → ảnh mặc định (qa-log #17)
+      - Giá bán dạng "450.000đ" theo SRS (qa-log #73)
+      - Hoa không có ảnh / ảnh lỗi → hiển thị alt = tên hoa (qa-log #17, 02 #25)
     - Behavior
-      - Enter trong ô tìm kiếm → áp dụng tìm kiếm [Cần xác nhận BA/PO]
+      - Enter trong ô tìm kiếm → áp dụng tìm kiếm như bấm "Áp dụng" (qa-log #69)
       - Cuộn danh sách dài → sidebar giữ nguyên, cuộn mượt
       - Spam click "Áp dụng" → không lỗi, kết quả đúng
       - Zoom 50% – 200% → bảng không vỡ
@@ -44,7 +48,7 @@
         - Bộ min: Tên hoa 5 ký tự, Giá bán 5.000, Mô tả 1 ký tự → lưu đúng giá trị
         - Bộ max: Tên hoa 20 ký tự, Giá bán 7.000.000, Mô tả 250 ký tự, Đường dẫn 500 ký tự → lưu đúng giá trị
       - Thành công khi nhập đầy đủ tất cả trường (R + O) → lưu, chuyển về danh sách hoa
-      - Thành công khi chỉ nhập các trường R (không nhập Đường dẫn) → lưu, hiển thị ảnh mặc định
+      - Thành công khi chỉ nhập các trường R (không nhập Đường dẫn) → lưu, hiển thị alt = tên hoa (qa-log #17, 02 #25)
       - R + 1 trường O: chỉ có 1 trường O → trùng "nhập đầy đủ tất cả trường"
       - Thất bại khi thiếu 1 trường R (các trường còn lại hợp lệ) → không lưu, ở lại form, chỉ báo lỗi trường thiếu
         - Thiếu Tên hoa → FC_16
@@ -152,11 +156,11 @@
       - Emoji → chấp nhận
       - Bộ đếm tăng / giảm đúng khi gõ và xóa
     - Đường dẫn hình ảnh
-      - Để trống → hiển thị ảnh mặc định
+      - Để trống → hiển thị alt = tên hoa (qa-log #17, 02 #25)
       - Link có ký tự : / ? & = % # _ - . → chấp nhận
       - Link không có đuôi file ảnh → chấp nhận
       - Chuỗi không phải link → "Đường dẫn ảnh không hợp lệ"
-      - Link ảnh không tải được → hiển thị ảnh mặc định
+      - Link ảnh không tải được → hiển thị alt = tên hoa (qa-log #17, 02 #25)
       - Độ dài (tối đa 500 ký tự – SRS)
         - = 499 ký tự (max − 1) → hợp lệ
         - = 500 ký tự (max) → hợp lệ
@@ -245,7 +249,7 @@
       - Hoa "Hiển thị" xuất hiện ở /hoa
       - Hoa "Hiển thị" xuất hiện ở /hoa?loai=N đúng loại đã chọn
       - Giá hiển thị dạng 150.000đ
-      - Hoa không có ảnh → hiển thị ảnh mặc định
+      - Hoa không có ảnh → hiển thị alt = tên hoa (qa-log #17, 02 #25)
       - Hoa "Ẩn" không xuất hiện ở /hoa
       - Hoa "Ẩn" không xuất hiện trong danh sách hoa ở trang chủ (/)
       - Hoa "Ẩn" mở trang chi tiết → lỗi 404
@@ -274,7 +278,7 @@
         - Bộ min: Tên hoa 5 ký tự, Giá bán 5.000, Mô tả 1 ký tự → cập nhật đúng giá trị
         - Bộ max: Tên hoa 20 ký tự, Giá bán 7.000.000, Mô tả 250 ký tự, Đường dẫn 500 ký tự → cập nhật đúng giá trị
       - Thành công khi sửa đầy đủ tất cả trường (R + O) → popup "Tuyệt vời!", cập nhật đủ 6 cột
-      - Thành công khi chỉ có các trường R (xóa Đường dẫn) → cập nhật, hiển thị ảnh mặc định
+      - Thành công khi chỉ có các trường R (xóa Đường dẫn) → cập nhật, hiển thị alt = tên hoa (qa-log #17, 02 #25)
       - R + 1 trường O: chỉ có 1 trường O → trùng "sửa đầy đủ tất cả trường"
       - Thất bại khi thiếu 1 trường R → không cập nhật, ở lại form, chỉ báo lỗi trường thiếu
         - Thiếu Tên hoa → FC_16
@@ -366,11 +370,12 @@
 - Xóa sản phẩm hoa
   - Function
     - Bấm Xóa tại dòng hoa → hộp thoại "Bạn có thực sự muốn xóa sản phẩm này không?", nút "Đồng ý xóa" / "Huỷ"
-    - Chọn "Đồng ý xóa" → thông báo "Đã xoá thành công", hoa không còn trong danh sách (cách lưu CSDL [Cần xác nhận BA/PO] – qa-log #74)
+    - Chọn "Đồng ý xóa" → thông báo "Đã xoá thành công"; CSDL: xóa mềm, trang_thai = 0 (qa-log #74)
+      - Hoa đã xóa còn hay không còn trong danh sách quản trị [Cần xác nhận BA/PO] (qa-log #76)
     - Chọn "Huỷ" → đóng hộp thoại, hoa vẫn còn
     - Esc / bấm ra ngoài hộp thoại → hộp thoại không đóng
-    - Hoa đã có trong đơn hàng → vẫn xóa được (qa-log #64)
-    - Xóa hoa duy nhất ở trang cuối → ở lại trang đó, hiển thị trống hoặc gợi ý thêm hoa [Cần xác nhận BA/PO] (phân trang – qa-log #72)
+    - Hoa đã có trong đơn hàng → vẫn xóa được, ct_don_dat_hang giữ nguyên (qa-log #64, #74)
+    - Xóa hoa duy nhất ở trang 2 (21 hoa, 20 hoa / trang – qa-log #72) → ở lại trang đó, hiển thị trống hoặc gợi ý thêm hoa (qa-log #63) [Cần xác nhận BA/PO] (qa-log #76)
     - FC_26 "Không thể xóa sản phẩm này": tạm bỏ qua (qa-log #65)
   - UI
     - Giao diện mặc định
@@ -394,7 +399,8 @@
       - Mở /hoa/[id] của hoa đã xóa → lỗi 404 (qa-log #66)
     - Giỏ hàng và đơn hàng
       - Giỏ thành viên có hoa đã xóa, bấm thanh toán → thông báo yêu cầu xóa sản phẩm khỏi giỏ (qa-log #64, #66)
-      - Quản lý đơn hàng: đơn có hoa đã xóa → hoa vẫn hiển thị nhưng làm mờ (qa-log #64)
+      - Quản lý đơn hàng: đơn có hoa đã xóa → hoa vẫn hiển thị nhưng làm mờ (qa-log #64, #74)
     - Thống kê và Quản lý loại hoa
-      - Tổng số hoa giảm 1
-      - Xóa hoa duy nhất của 1 loại → xóa được loại đó
+      - Tổng số hoa giảm 1 [Cần xác nhận BA/PO] (qa-log #76)
+      - Xóa hoa duy nhất của 1 loại → xóa được loại đó (qa-log #75)
+      - Loại chỉ còn hoa Ẩn (chưa xóa) → chặn, FC_29 [Cần xác nhận BA/PO] (qa-log #76)
