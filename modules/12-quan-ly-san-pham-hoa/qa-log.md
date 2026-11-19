@@ -41,7 +41,7 @@ Câu hỏi làm rõ yêu cầu gửi BA/PO trong quá trình phân tích SRS và
 |---|---|---|---|
 | 15 | Ký tự trong đường dẫn (`: / ? & = % # _ - .`) có bị chặn không? | Không chặn | ✅ |
 | 16 | Có kiểm tra định dạng đường dẫn, đuôi file ảnh không? | Không, chỉ cần là link | ✅ |
-| 17 | Để trống hoặc ảnh không tải được thì hiển thị gì (trang quản lý và trang khách)? | Hiển thị ảnh mặc định | ✅ |
+| 17 | Để trống hoặc ảnh không tải được thì hiển thị gì (trang quản lý và trang khách)? | **Cập nhật 19/11:** hiển thị alt = tên hoa (thay câu trả lời cũ "Hiển thị ảnh mặc định"; qa-log 02 #25) | ✅ |
 | 18 | Nút Tải lên (không có trong SRS) hoạt động thế nào? | Nhập URL, bấm Tải lên → kiểm tra có lấy được ảnh không | ✅ |
 | 19 | Tải lên thành công có tự điền vào ô Đường dẫn hình ảnh không? | Có | ✅ |
 | 20 | Ô đã có đường dẫn mà tải lên ảnh khác thì lấy giá trị nào? | Hỏi có muốn thay thế đường dẫn không | ✅ |

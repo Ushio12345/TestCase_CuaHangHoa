@@ -23,7 +23,7 @@ Quản trị viên xem danh sách, thêm mới, sửa và xóa sản phẩm hoa.
 | Tên hoa | 5 – 20 ký tự (tính sau khi cắt khoảng trắng), chặn gõ quá 20; nhận chữ có dấu, chữ số và `.` `_` `;` `-` `,` `:` `(` `)` `/` `'`; ký tự đặc biệt khác → coi như trống (FC_16) hoặc "Tên hoa không hợp lệ"; không nhận emoji; cắt khoảng trắng đầu/cuối; cho phép trùng tên |
 | Giá bán | Chỉ nhập được số (không `,` `.`), 5.000 – 7.000.000 (gồm 2 mốc); bỏ số 0 đứng đầu và khoảng trắng; không định dạng trong ô nhập |
 | Mô tả | Tối đa 250 ký tự (tính cả xuống dòng), chặn gõ quá 250, có bộ đếm; nhận ký tự đặc biệt và emoji |
-| Đường dẫn hình ảnh | Chỉ cần là link, tối đa 500 ký tự (SRS), quá 500 → "Đường dẫn ảnh vượt quá 500 ký tự"; không phải link → "Đường dẫn ảnh không hợp lệ"; trống / ảnh lỗi → ảnh mặc định |
+| Đường dẫn hình ảnh | Chỉ cần là link, tối đa 500 ký tự (SRS), quá 500 → "Đường dẫn ảnh vượt quá 500 ký tự"; không phải link → "Đường dẫn ảnh không hợp lệ"; trống / ảnh lỗi → hiển thị alt = tên hoa (cập nhật 19/11, qa-log 02 #25) |
 | Nút Tải lên | Chỉ bấm được khi ô đường dẫn có nội dung; chỉ kiểm tra đường dẫn hợp lệ (chưa có upload file), tự điền đường dẫn, hỏi trước khi thay đường dẫn cũ |
 | Để trống | Mã theo bảng trường: Tên hoa FC_16, Giá FC_20, Mô tả FC_23 (chỉ khoảng trắng cũng tính là trống) |
 | Loại hoa, Trạng thái | Bắt buộc; Loại hoa mặc định là giá trị đầu tiên trong danh sách |

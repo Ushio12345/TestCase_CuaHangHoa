@@ -2,7 +2,7 @@
 
 > Dự án thực hành kiểm thử phần mềm thủ công trên hệ thống bán hoa trực tuyến **Floral Charm**: phân tích SRS, đặt câu hỏi làm rõ yêu cầu, thiết kế Test Design (mindmap), viết Test Case, thực thi và báo cáo lỗi.
 
-![Status](https://img.shields.io/badge/status-in%20progress-yellow) ![Type](https://img.shields.io/badge/testing-manual-blue) ![Modules](https://img.shields.io/badge/modules-1%2F15%20done-green) ![Test Cases](https://img.shields.io/badge/test%20cases-391-blue)
+![Status](https://img.shields.io/badge/status-in%20progress-yellow) ![Type](https://img.shields.io/badge/testing-manual-blue) ![Modules](https://img.shields.io/badge/modules-2%2F15%20done-green) ![Test Cases](https://img.shields.io/badge/test%20cases-498-blue)
 
 ---
 
@@ -41,7 +41,7 @@
 | #   | Chức năng                                               | Test Design                                   | Test Case                                                                                                                             | Số TC | Trạng thái |
 | --- | ------------------------------------------------------- | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ----- | ---------- |
 | 01  | [Giỏ hàng](modules/01-gio-hang/README.md) (`/gio-hang`) | [Mindmap](modules/01-gio-hang/test-design.md) | [Google Sheets](https://docs.google.com/spreadsheets/d/1KgZI0jVNESa4P1WYLJnznRT4CGR7Mzlww-tiGYN7k_E/edit?gid=746828903#gid=746828903) | 109   | ✅         |
-| 02  | Xem trang chủ & lọc hoa (`/`, `/hoa`)                   | –                                             | –                                                                                                                                     | –     | ⬜         |
+| 02  | [Xem trang chủ & lọc hoa](modules/02-xem-trang-chu-loc-hoa/README.md) – Trang chủ (`/`) · Danh sách & lọc hoa (`/hoa`) | [Mindmap](modules/02-xem-trang-chu-loc-hoa/test-design.md) | [Excel](modules/02-xem-trang-chu-loc-hoa/test-cases.xlsx) (02.1 · 02.2) | 107   | ✅         |
 | 03  | Tìm kiếm sản phẩm (`/tim-kiem`)                         | –                                             | –                                                                                                                                     | –     | ⬜         |
 | 04  | Chi tiết sản phẩm & thêm vào giỏ (`/hoa/[id]`)          | –                                             | –                                                                                                                                     | –     | ⬜         |
 | 05  | Đăng ký tài khoản (`/dang-ky`)                          | –                                             | –                                                                                                                                     | –     | ⬜         |
@@ -102,6 +102,11 @@ floral-charm-qa/
 │   │   ├── test-design.png     # Ảnh xem nhanh trên GitHub
 │   │   ├── test-design.md      # Outline dạng text
 │   │   └── test-cases.xlsx     # Bản tải về (bản xem online: Google Sheets)
+│   ├── 02-xem-trang-chu-loc-hoa/
+│   │   ├── README.md
+│   │   ├── qa-log.md
+│   │   ├── test-design.md
+│   │   └── test-cases.xlsx
 │   ├── 12-quan-ly-san-pham-hoa/
 │   │   ├── README.md
 │   │   ├── qa-log.md
@@ -120,11 +125,11 @@ floral-charm-qa/
 
 | Chỉ số            | Giá trị                                                             |
 | ----------------- | ------------------------------------------------------------------- |
-| Module            | 1 hoàn thành · 1 đang làm / 15                                      |
-| Tổng số Test Case | 391 (01: 109 · 12: 282)                                             |
-| Theo Priority     | HIGH 207 · MEDIUM 86 · LOW 98 (01: 66 / 20 / 23 · 12: 141 / 66 / 75) |
-| Câu hỏi Q&A       | 102 (01: 26 – 18 ✅ · 8 ❓ · 12: 76 – 75 ✅ · 1 ❓)                |
-| Điểm SRS review   | 65 ([SRS Review](docs/srs-review.md))                               |
+| Module            | 2 hoàn thành · 1 đang làm / 15                                      |
+| Tổng số Test Case | 498 (01: 109 · 02: 107 · 12: 282)                                   |
+| Theo Priority     | HIGH 272 · MEDIUM 96 · LOW 130 (01: 66 / 20 / 23 · 02: 65 / 10 / 32 · 12: 141 / 66 / 75) |
+| Câu hỏi Q&A       | 132 (01: 26 – 18 ✅ · 8 ❓ · 02: 30 – 30 ✅ · 12: 76 – 75 ✅ · 1 ❓) |
+| Điểm SRS review   | 73 ([SRS Review](docs/srs-review.md))                               |
 | Đã thực thi       | –                                                                   |
 | Pass / Fail       | – / –                                                               |
 | Số bug phát hiện  | –                                                                   |

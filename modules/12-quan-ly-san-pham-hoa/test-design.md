@@ -29,7 +29,7 @@
       - Bộ lọc mặc định: ô tìm kiếm trống, gợi ý "Nhập tên hoa để tìm...", Lọc theo loại "Tất cả loại hoa", nút "Áp dụng"
       - Bảng 5 cột: Sản phẩm (ảnh, tên, "MÃ: #id"), Loại, Giá bán, Trạng thái, Thao tác (sửa, xóa)
       - Giá bán dạng "450.000đ" theo SRS (qa-log #73)
-      - Hoa không có ảnh / ảnh lỗi → ảnh mặc định (qa-log #17)
+      - Hoa không có ảnh / ảnh lỗi → hiển thị alt = tên hoa (qa-log #17, 02 #25)
     - Behavior
       - Enter trong ô tìm kiếm → áp dụng tìm kiếm như bấm "Áp dụng" (qa-log #69)
       - Cuộn danh sách dài → sidebar giữ nguyên, cuộn mượt
@@ -48,7 +48,7 @@
         - Bộ min: Tên hoa 5 ký tự, Giá bán 5.000, Mô tả 1 ký tự → lưu đúng giá trị
         - Bộ max: Tên hoa 20 ký tự, Giá bán 7.000.000, Mô tả 250 ký tự, Đường dẫn 500 ký tự → lưu đúng giá trị
       - Thành công khi nhập đầy đủ tất cả trường (R + O) → lưu, chuyển về danh sách hoa
-      - Thành công khi chỉ nhập các trường R (không nhập Đường dẫn) → lưu, hiển thị ảnh mặc định
+      - Thành công khi chỉ nhập các trường R (không nhập Đường dẫn) → lưu, hiển thị alt = tên hoa (qa-log #17, 02 #25)
       - R + 1 trường O: chỉ có 1 trường O → trùng "nhập đầy đủ tất cả trường"
       - Thất bại khi thiếu 1 trường R (các trường còn lại hợp lệ) → không lưu, ở lại form, chỉ báo lỗi trường thiếu
         - Thiếu Tên hoa → FC_16
@@ -156,11 +156,11 @@
       - Emoji → chấp nhận
       - Bộ đếm tăng / giảm đúng khi gõ và xóa
     - Đường dẫn hình ảnh
-      - Để trống → hiển thị ảnh mặc định
+      - Để trống → hiển thị alt = tên hoa (qa-log #17, 02 #25)
       - Link có ký tự : / ? & = % # _ - . → chấp nhận
       - Link không có đuôi file ảnh → chấp nhận
       - Chuỗi không phải link → "Đường dẫn ảnh không hợp lệ"
-      - Link ảnh không tải được → hiển thị ảnh mặc định
+      - Link ảnh không tải được → hiển thị alt = tên hoa (qa-log #17, 02 #25)
       - Độ dài (tối đa 500 ký tự – SRS)
         - = 499 ký tự (max − 1) → hợp lệ
         - = 500 ký tự (max) → hợp lệ
@@ -249,7 +249,7 @@
       - Hoa "Hiển thị" xuất hiện ở /hoa
       - Hoa "Hiển thị" xuất hiện ở /hoa?loai=N đúng loại đã chọn
       - Giá hiển thị dạng 150.000đ
-      - Hoa không có ảnh → hiển thị ảnh mặc định
+      - Hoa không có ảnh → hiển thị alt = tên hoa (qa-log #17, 02 #25)
       - Hoa "Ẩn" không xuất hiện ở /hoa
       - Hoa "Ẩn" không xuất hiện trong danh sách hoa ở trang chủ (/)
       - Hoa "Ẩn" mở trang chi tiết → lỗi 404
@@ -278,7 +278,7 @@
         - Bộ min: Tên hoa 5 ký tự, Giá bán 5.000, Mô tả 1 ký tự → cập nhật đúng giá trị
         - Bộ max: Tên hoa 20 ký tự, Giá bán 7.000.000, Mô tả 250 ký tự, Đường dẫn 500 ký tự → cập nhật đúng giá trị
       - Thành công khi sửa đầy đủ tất cả trường (R + O) → popup "Tuyệt vời!", cập nhật đủ 6 cột
-      - Thành công khi chỉ có các trường R (xóa Đường dẫn) → cập nhật, hiển thị ảnh mặc định
+      - Thành công khi chỉ có các trường R (xóa Đường dẫn) → cập nhật, hiển thị alt = tên hoa (qa-log #17, 02 #25)
       - R + 1 trường O: chỉ có 1 trường O → trùng "sửa đầy đủ tất cả trường"
       - Thất bại khi thiếu 1 trường R → không cập nhật, ở lại form, chỉ báo lỗi trường thiếu
         - Thiếu Tên hoa → FC_16
