@@ -75,7 +75,7 @@ Câu hỏi làm rõ yêu cầu gửi BA/PO trong quá trình phân tích SRS và
 | # | Câu hỏi | Trả lời | Trạng thái |
 |---|---|---|---|
 | 35 | Để trống Tên hoa / Giá / Mô tả hiện mã nào: bảng trường (FC_16 / FC_20 / FC_23) hay Phụ lục (FC_17 / FC_21 / FC_24)? (srs-review #4, #23, #24) | Hiện mã lỗi theo bảng trường của từng trường: Tên hoa FC_16, Giá FC_20, Mô tả FC_23 | ✅ |
-| 36 | Paste chuỗi dài hơn giới hạn (Tên hoa > 20, Mô tả > 250 ký tự) thì cắt bớt hay không nhận cả chuỗi? | Một trong hai cách đều được: tự cắt về đúng giới hạn, hoặc báo lỗi và chặn gửi form | ✅ |
+| 36 | Paste chuỗi dài hơn giới hạn (Tên hoa > 20, Mô tả > 250 ký tự) thì cắt bớt hay không nhận cả chuỗi? | Một trong hai cách đều được: tự cắt về đúng giới hạn, hoặc báo lỗi và chặn gửi form → BA chốt lại 25/11 (#78): tự cắt về đúng giới hạn | ✅ |
 | 37 | Mô tả chỉ có khoảng trắng / xuống dòng (Mô tả không được cắt khoảng trắng – #2) có tính là để trống không? | Có, tính là để trống | ✅ |
 | 38 | Độ dài Tên hoa (5 – 20) tính trước hay sau khi cắt khoảng trắng đầu/cuối? | Tính sau khi cắt khoảng trắng | ✅ |
 | 39 | Bấm Thêm mới nhiều lần liên tiếp (nút không bị vô hiệu hóa – #32) thì tạo 1 hay nhiều bản ghi? | Chỉ tạo 1 bản ghi; chặn bấm liên tục (khác #32: xem #50) | ✅ |
@@ -146,3 +146,22 @@ Câu hỏi làm rõ yêu cầu gửi BA/PO trong quá trình phân tích SRS và
 |---|---|---|---|
 | 75 | (#74) Sau khi xóa (mềm) hoa duy nhất của một loại, bản ghi hoa vẫn còn trong bảng `hoa` → Xóa loại hoa có bị chặn "loại còn sản phẩm" (FC_29) không? | Hoa đã xóa không tính khi kiểm tra loại còn sản phẩm | ✅ |
 | 76 | (#63, #73, #74, #75) Hoa đã xóa và hoa Ẩn cùng `trang_thai = 0` → hệ thống không phân biệt được: (1) danh sách quản trị hiển thị hoa Ẩn (#73) → hoa vừa xóa còn trong danh sách với trạng thái "Ẩn", hay biến mất (#63)? (2) Xóa loại hoa: hoa Ẩn chưa xóa có được tính là "loại còn sản phẩm" không (#75)? (3) Thống kê: Tổng số hoa có giảm 1 sau khi xóa không (Thêm hoa Ẩn làm Tổng số hoa tăng 1)? Cần giá trị / cột riêng cho "Đã xóa"? (srs-review #65) | – | ❓ |
+
+## G. Trả lời BA 25/11 – Thêm và Sửa (áp dụng cho cả 2 chức năng)
+
+BA trả lời 15 câu (đánh số riêng 1 – 15). Câu khớp với câu đã chốt: 3 (#17), 11 (#55), 12 (#58) – không ghi thêm. Câu mâu thuẫn với câu đã chốt → ❓ (giữ quy tắc cũ trong TC, gắn `[Cần xác nhận BA/PO]`).
+
+| # | Câu hỏi | Trả lời | Trạng thái |
+|---|---|---|---|
+| 77 | (BA 4) Mô tả có bắt buộc khi sửa không? | Có, vẫn bắt buộc (FC_23) | ✅ |
+| 78 | (BA 5, #36) Paste vượt 20 ký tự (Tên hoa) / 250 ký tự (Mô tả): tự cắt hay báo lỗi? | Tự động cắt về đúng giới hạn | ✅ |
+| 79 | (BA 13) Có cho sửa hoa đang Ẩn không? | Có, sửa bình thường; đổi Ẩn → Hiển thị thì hoa hiển thị lại trong giỏ hàng và danh sách trang chủ | ✅ |
+| 80 | (BA 14) Đang sửa dở bấm Quay lại: về thẳng `/quan-tri/hoa` hay hỏi xác nhận? | Popup hỏi có muốn thoát hay không (QA hiểu: đồng ý → về danh sách, không lưu; không → ở lại form) | ✅ |
+| 81 | (BA 10) Sửa giá / ẩn hoa: hoa trong giỏ hàng và đơn hàng cũ xử lý thế nào? | Ẩn hoa → ẩn khỏi giỏ hàng, không hiển thị ở danh sách trang chủ (khớp 01 #14, #45). Sửa giá: BA không trả lời → giữ #60 | ✅ |
+| 82 | (BA 1 vs #23, #51) BA: Tải lên có 2 chức năng – dán link ảnh và upload file JPG / PNG; đã chốt: chưa có upload file, nhận mọi link ảnh (cả GIF / WEBP). Upload file: chọn file từ máy hay kéo thả; file khác JPG / PNG, dung lượng tối đa, thông báo lỗi? Link GIF / WEBP còn được chấp nhận không? | – | ❓ |
+| 83 | (BA 2 vs #18, #22, #23) BA: ô URL không kiểm tra định dạng `http(s)://` hay link chết; đã chốt: chuỗi không phải link / link không lấy được ảnh → "Đường dẫn ảnh không hợp lệ", Tải lên kiểm tra đường dẫn. Bỏ thông báo này? Tải lên còn kiểm tra gì? | – | ❓ |
+| 84 | (BA 6 vs #1, #4, #12, #15) BA: cấm hết ký tự đặc biệt, emoji ở `ten_hoa`, `mo_ta`, `hinh_anh`; đã chốt: Tên hoa nhận `. _ ; - , : ( ) / '`, Mô tả nhận ký tự đặc biệt và emoji, link nhận `: / ? & = % # _ - .`. Link ảnh bắt buộc có `:` `/` `.` → `hinh_anh` cấm ký tự đặc biệt là không nhập được link. Danh sách ký tự được phép từng trường? Nhập ký tự cấm: chặn gõ hay báo lỗi (mã, nội dung)? | – | ❓ |
+| 85 | (BA 7 vs #2, #37) BA: trim khoảng trắng đầu / cuối, giữ khoảng trắng giữa; đã chốt: chỉ Tên hoa được cắt, Mô tả không cắt. Áp dụng cho trường nào (Tên hoa, Mô tả, Đường dẫn hình ảnh)? Mô tả chỉ có khoảng trắng / xuống dòng vẫn là FC_23? | – | ❓ |
+| 86 | (BA 8 vs #11) BA: dán `150.000` → chấp nhận; chữ, số âm, dấu phẩy → báo lỗi; đã chốt: chỉ nhập được số, không gõ được `-` `.` `,` chữ. `150.000` lưu `gia` = 150000? Gõ `.` (`5000.5`) thì sao? Báo lỗi mã nào (FC_21?) và vẫn chặn gõ hay cho gõ rồi báo lỗi? | – | ❓ |
+| 87 | (BA 9 vs #59, #74) BA: hoa đang sửa bị quản trị viên khác xóa → lưu bình thường, ai lưu cuối thì lấy kết quả; đã chốt: báo lỗi, không tạo bản ghi mới. Sau khi lưu, hoa đã xóa (`trang_thai = 0`) có hiện lại không (trang_thai theo form hay giữ 0)? Mở `/quan-tri/hoa/sua/[id]` với id không có trong bảng `hoa` thì hiển thị gì? | – | ❓ |
+| 88 | (BA 15 vs #57) BA: popup "lưu sản phẩm hoa … thành công"; đã chốt (ảnh BA gửi 17/11): biểu tượng ✓, "Tuyệt vời!", "Thông tin hoa đã được cập nhật thành công!", nút "ĐÓNG CỬA SỔ". Nội dung chính xác theo bên nào ("…" là tên hoa?)? Đóng popup vẫn về danh sách hoa? | – | ❓ |
