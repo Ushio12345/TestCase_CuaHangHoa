@@ -9,8 +9,8 @@ Quản trị viên xem danh sách, thêm mới, sửa và xóa sản phẩm hoa.
 | Sheet | Chức năng con | SRS | Trạng thái |
 |---|---|---|---|
 | 12.1 Danh sách hoa | Danh sách sản phẩm hoa (`/quan-tri/hoa`) | Không có mục chức năng (chỉ ảnh màn hình) | ✅ Test Design + Test Case (29 TC), chưa thực thi |
-| 12.2 Thêm hoa | Thêm hoa mới (`/quan-tri/hoa/them`) | 4.3.4.1 | 🟡 Test Design + Test Case (159 TC); còn ❓ qa-log #82 – #86 (trả lời BA 25/11 lệch câu đã chốt) |
-| 12.3 Sửa hoa | Sửa sản phẩm hoa (`/quan-tri/hoa/sua/[ma_hoa]`) | 4.3.4.2 | 🟡 Test Design + Test Case (73 TC); còn ❓ qa-log #82 – #88 |
+| 12.2 Thêm hoa | Thêm hoa mới (`/quan-tri/hoa/them`) | 4.3.4.1 | 🟡 Test Design + Test Case (176 TC); còn ❓ qa-log #82 – #86 (trả lời BA 25/11 lệch câu đã chốt), #89 – #96 (hình ảnh) |
+| 12.3 Sửa hoa | Sửa sản phẩm hoa (`/quan-tri/hoa/sua/[ma_hoa]`) | 4.3.4.2 | 🟡 Test Design + Test Case (77 TC); còn ❓ qa-log #82 – #88, #89 – #96 (hình ảnh) |
 | 12.4 Xóa hoa | Xóa sản phẩm hoa | 4.3.4.3 | 🟡 Test Design + Test Case (24 TC); còn ❓ qa-log #76 (hoa đã xóa trùng trạng thái Ẩn) |
 
 - **Tác nhân:** Quản trị viên (Khách vãng lai, Thành viên bị từ chối – lỗi 401)
@@ -31,6 +31,7 @@ Quản trị viên xem danh sách, thêm mới, sửa và xóa sản phẩm hoa.
 | Quay lại / tải lại trang / đóng tab khi đang nhập | Popup hỏi lưu thông tin (Sửa – Quay lại: popup hỏi có muốn thoát, #80) |
 | Paste vượt giới hạn | Tên hoa > 20, Mô tả > 250 ký tự → tự cắt về đúng giới hạn (BA chốt lại 25/11, #78) |
 | Chờ BA xác nhận (25/11) | Upload file JPG / PNG (#82), kiểm tra link (#83), ký tự đặc biệt / emoji (#84), cắt khoảng trắng Mô tả / Đường dẫn (#85), giá dạng `150.000` (#86) – TC vẫn theo quy tắc đã chốt, gắn `[Cần xác nhận BA/PO]` |
+| Hình ảnh – chờ BA xác nhận (26/11) | Checklist trường hình ảnh: định dạng link / file (#89), dung lượng (#90), kích thước pixel (#91), file đổi đuôi (#92), link lỗi / không phải ảnh / quá thời gian chờ (#93), ảnh xem trước (#94), giá trị lưu `hinh_anh` khi upload (#95), nội dung thông báo lỗi (#96) – TC đã viết, gắn `[Cần xác nhận BA/PO]` |
 | Thêm thành công | Chuyển về danh sách hoa, hoa mới hiển thị đầu tiên; thông báo tự ẩn sau 5 giây hoặc bấm tắt; bấm liên tục chỉ tạo 1 bản ghi |
 | Phiên quản trị hết hạn | Chuyển về trang đăng nhập, mất dữ liệu đã nhập |
 | Nút lưu | Tên theo màn hình: "Thêm mới" |
@@ -53,7 +54,7 @@ Quản trị viên xem danh sách, thêm mới, sửa và xóa sản phẩm hoa.
 | Danh sách | Thuộc module 12 (SRS chỉ có ảnh màn hình); hiển thị cả hoa Ẩn (cột Trạng thái "Ẩn"); sắp xếp theo thời gian tạo (`ngay_d`), mới nhất lên đầu; 20 hoa / trang; giá dạng "450.000đ" |
 | Danh sách – tìm kiếm, lọc | Tìm theo một phần tên, không phân biệt chữ hoa / thường và có dấu / không dấu; bấm "Áp dụng" hoặc Enter; ô trống → toàn bộ; không có kết quả → danh sách rỗng. Lọc: "Tất cả loại hoa" + các loại trong `loai_hoa`; tìm và lọc áp dụng cùng lúc |
 
-Chi tiết câu hỏi và trả lời: [qa-log.md](qa-log.md) (88 câu: 80 ✅ · 8 ❓ – #76 hoa đã xóa và hoa Ẩn cùng `trang_thai = 0`; #82 – #88 trả lời BA 25/11 lệch câu đã chốt).
+Chi tiết câu hỏi và trả lời: [qa-log.md](qa-log.md) (96 câu: 80 ✅ · 16 ❓ – #76 hoa đã xóa và hoa Ẩn cùng `trang_thai = 0`; #82 – #88 trả lời BA 25/11 lệch câu đã chốt; #89 – #96 hình ảnh).
 
 ## Tài liệu
 
@@ -62,7 +63,7 @@ Chi tiết câu hỏi và trả lời: [qa-log.md](qa-log.md) (88 câu: 80 ✅ �
 | Test Design (mindmap) | [test-design.md](test-design.md) | – |
 | Test Case | Google Sheets: [12.1 Danh sách hoa](https://docs.google.com/spreadsheets/d/1KgZI0jVNESa4P1WYLJnznRT4CGR7Mzlww-tiGYN7k_E/edit?gid=1750116678#gid=1750116678) · [12.2 Thêm hoa](https://docs.google.com/spreadsheets/d/1KgZI0jVNESa4P1WYLJnznRT4CGR7Mzlww-tiGYN7k_E/edit?gid=1250044123#gid=1250044123) · [12.3 Sửa hoa](https://docs.google.com/spreadsheets/d/1KgZI0jVNESa4P1WYLJnznRT4CGR7Mzlww-tiGYN7k_E/edit?gid=1967646398#gid=1967646398) · [12.4 Xóa hoa](https://docs.google.com/spreadsheets/d/1KgZI0jVNESa4P1WYLJnznRT4CGR7Mzlww-tiGYN7k_E/edit?gid=1782277388#gid=1782277388) | [test-cases.xlsx](test-cases.xlsx) |
 
-> Test Design 302 node lá (29 node `[Cần xác nhận BA/PO]`), Test Case 285 TC: Thêm 159 · Sửa 73 · Xóa 24 · Danh sách 29 (26 TC gắn `[Cần xác nhận BA/PO]`). Mọi node lá có ≥ 1 TC (trừ node ghi chú: "R + 1 O trùng", "Mô tả không có giá trị sai", "FC_26 tạm bỏ qua").
+> Test Design 322 node lá (43 node `[Cần xác nhận BA/PO]`), Test Case 306 TC: Thêm 176 · Sửa 77 · Xóa 24 · Danh sách 29 (44 TC gắn `[Cần xác nhận BA/PO]`). Ô Test Case xuống dòng theo `1.` / `-` / `+` (không nối bằng `;`). Mọi node lá có ≥ 1 TC (trừ node ghi chú: "R + 1 O trùng", "Mô tả không có giá trị sai", "FC_26 tạm bỏ qua").
 
 ## Thống kê Test Case
 
@@ -80,13 +81,14 @@ File [test-cases.xlsx](test-cases.xlsx): mỗi chức năng con 1 sheet, ID có 
 | PHÂN QUYỀN – Khách vãng lai và Thành viên bị chặn khi xem danh sách sản phẩm hoa | 2 |
 | **Tổng** | **29** (HIGH 16 · MEDIUM 2 · LOW 11) |
 
-### 12.2 Thêm hoa – Thêm hoa mới (`THEM_01…THEM_159`)
+### 12.2 Thêm hoa – Thêm hoa mới (`THEM_01…THEM_176`)
 
 | Kịch bản chính | Số TC |
 |---|---|
 | FUNCTION – Thêm hoa mới thành công khi nhập dữ liệu hợp lệ | 11 |
 | FUNCTION – Thêm hoa mới thất bại khi thiếu trường bắt buộc hoặc có trường không hợp lệ | 12 |
-| FUNCTION – Kiểm tra đường dẫn ảnh bằng nút Tải lên | 6 |
+| FUNCTION – Kiểm tra đường dẫn ảnh bằng nút Tải lên | 12 |
+| FUNCTION – Kiểm tra tải file ảnh từ máy bằng nút Tải lên | 11 |
 | FUNCTION – Làm lại form Thêm hoa mới | 3 |
 | FUNCTION – Điều hướng vào và ra màn hình Thêm hoa mới | 6 |
 | VALIDATION – Kiểm tra validate trường Tên hoa | 17 |
@@ -108,16 +110,16 @@ File [test-cases.xlsx](test-cases.xlsx): mỗi chức năng con 1 sheet, ID có 
 | ẢNH HƯỞNG – Quản lý loại hoa sau khi thêm mới hoa | 1 |
 | ẢNH HƯỞNG – Thống kê tổng quan sau khi thêm mới hoa | 2 |
 | ẢNH HƯỞNG – Sửa sản phẩm hoa sau khi thêm mới | 1 |
-| **Tổng** | **159** (HIGH 60 · MEDIUM 55 · LOW 44) |
+| **Tổng** | **176** (HIGH 77 · MEDIUM 55 · LOW 44) |
 
-### 12.3 Sửa hoa – Sửa sản phẩm hoa (`SUA_01…SUA_73`)
+### 12.3 Sửa hoa – Sửa sản phẩm hoa (`SUA_01…SUA_77`)
 
 | Kịch bản chính | Số TC |
 |---|---|
 | FUNCTION – Mở màn hình Sửa sản phẩm hoa | 3 |
 | FUNCTION – Cập nhật hoa thành công khi nhập dữ liệu hợp lệ | 12 |
 | FUNCTION – Cập nhật hoa thất bại khi thiếu trường bắt buộc hoặc có trường không hợp lệ | 12 |
-| FUNCTION – Tải lên, Làm lại và Quay lại trên màn hình Sửa sản phẩm hoa | 5 |
+| FUNCTION – Tải lên, Làm lại và Quay lại trên màn hình Sửa sản phẩm hoa | 9 |
 | FUNCTION – Ngoại lệ khi cập nhật sản phẩm hoa | 2 |
 | VALIDATION – Kiểm tra validate các trường khi sửa sản phẩm hoa | 10 |
 | UI – Giao diện mặc định | 5 |
@@ -127,7 +129,7 @@ File [test-cases.xlsx](test-cases.xlsx): mỗi chức năng con 1 sheet, ID có 
 | ẢNH HƯỞNG – Trang khách hàng và tìm kiếm sau khi sửa hoa | 6 |
 | ẢNH HƯỞNG – Giỏ hàng và đơn hàng sau khi sửa hoa | 4 |
 | ẢNH HƯỞNG – Thống kê và Quản lý loại hoa sau khi sửa hoa | 2 |
-| **Tổng** | **73** (HIGH 50 · MEDIUM 10 · LOW 13) |
+| **Tổng** | **77** (HIGH 54 · MEDIUM 10 · LOW 13) |
 
 ### 12.4 Xóa hoa – Xóa sản phẩm hoa (`XOA_01…XOA_24`)
 
@@ -143,15 +145,15 @@ File [test-cases.xlsx](test-cases.xlsx): mỗi chức năng con 1 sheet, ID có 
 | ẢNH HƯỞNG – Thống kê và Quản lý loại hoa sau khi xóa hoa | 3 |
 | **Tổng** | **24** (HIGH 17 · MEDIUM 0 · LOW 7) |
 
-**Cả module: 285 TC** (HIGH 143 · MEDIUM 67 · LOW 75).
+**Cả module: 306 TC** (HIGH 164 · MEDIUM 67 · LOW 75).
 
 ## Kết quả thực thi
 
 | Lần chạy | Chức năng con | Ngày | Pass | Fail | Untested | Ghi chú |
 |---|---|---|---|---|---|---|
 | R1 | 12.1 Danh sách hoa | – | – | – | 29 | Chưa thực thi |
-| R1 | 12.2 Thêm hoa | – | – | – | 159 | Chưa thực thi |
-| R1 | 12.3 Sửa hoa | – | – | – | 73 | Chưa thực thi |
+| R1 | 12.2 Thêm hoa | – | – | – | 176 | Chưa thực thi |
+| R1 | 12.3 Sửa hoa | – | – | – | 77 | Chưa thực thi |
 | R1 | 12.4 Xóa hoa | – | – | – | 24 | Chưa thực thi |
 
 ## Bug phát hiện

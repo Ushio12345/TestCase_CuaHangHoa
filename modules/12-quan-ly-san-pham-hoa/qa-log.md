@@ -165,3 +165,18 @@ BA trả lời 15 câu (đánh số riêng 1 – 15). Câu khớp với câu đ�
 | 86 | (BA 8 vs #11) BA: dán `150.000` → chấp nhận; chữ, số âm, dấu phẩy → báo lỗi; đã chốt: chỉ nhập được số, không gõ được `-` `.` `,` chữ. `150.000` lưu `gia` = 150000? Gõ `.` (`5000.5`) thì sao? Báo lỗi mã nào (FC_21?) và vẫn chặn gõ hay cho gõ rồi báo lỗi? | – | ❓ |
 | 87 | (BA 9 vs #59, #74) BA: hoa đang sửa bị quản trị viên khác xóa → lưu bình thường, ai lưu cuối thì lấy kết quả; đã chốt: báo lỗi, không tạo bản ghi mới. Sau khi lưu, hoa đã xóa (`trang_thai = 0`) có hiện lại không (trang_thai theo form hay giữ 0)? Mở `/quan-tri/hoa/sua/[id]` với id không có trong bảng `hoa` thì hiển thị gì? | – | ❓ |
 | 88 | (BA 15 vs #57) BA: popup "lưu sản phẩm hoa … thành công"; đã chốt (ảnh BA gửi 17/11): biểu tượng ✓, "Tuyệt vời!", "Thông tin hoa đã được cập nhật thành công!", nút "ĐÓNG CỬA SỔ". Nội dung chính xác theo bên nào ("…" là tên hoa?)? Đóng popup vẫn về danh sách hoa? | – | ❓ |
+
+## H. Hình ảnh – checklist trường hình ảnh (26/11, áp dụng cho Thêm và Sửa)
+
+SRS chỉ có `hoa.hinh_anh VARCHAR(500)` (Đường dẫn hình ảnh), không quy định định dạng, dung lượng, kích thước, link lỗi (srs-review #75). TC liên quan gắn `[Cần xác nhận BA/PO]`.
+
+| # | Câu hỏi | Trả lời | Trạng thái |
+|---|---|---|---|
+| 89 | (#51, #82) Định dạng được chấp nhận: link nhận mọi ảnh hợp lệ (#51) → link `.svg`, `.bmp` cũng chấp nhận? Upload file (BA 25/11: JPG / PNG) → `.jpeg` có được không; `.gif`, `.webp`, `.svg`, `.bmp`, `.pdf`, `.txt` bị từ chối? Nút Tải lên chỉ bấm được khi ô Đường dẫn có nội dung (#48) → upload file bấm vào đâu? | – | ❓ |
+| 90 | (#82) Upload file: dung lượng tối đa (MAX) là bao nhiêu? File 0 byte và file > MAX xử lý thế nào? | – | ❓ |
+| 91 | Ảnh có giới hạn kích thước pixel (tối thiểu / tối đa) không? Nếu có: giá trị và thông báo lỗi? | – | ❓ |
+| 92 | (#82) File đổi đuôi (`.txt` đổi thành `.jpg`): hệ thống kiểm tra nội dung file hay chỉ đuôi file? | – | ❓ |
+| 93 | (#22, #83) Link 404, link trỏ tới file không phải ảnh (`.pdf`, `.txt`), link phản hồi chậm: khi bấm Tải lên và khi bấm Thêm mới / Cập nhật thông tin mà không bấm Tải lên → báo lỗi gì, hay lưu rồi hiển thị alt = tên hoa? Thời gian chờ tối đa? | – | ❓ |
+| 94 | Form Thêm / Sửa có hiển thị ảnh xem trước (sau khi Tải lên, và ảnh đang có khi mở form Sửa) không? | – | ❓ |
+| 95 | (#82) Upload file thì `hinh_anh` (VARCHAR(500)) lưu gì: URL file trên server, tên file hay đường dẫn tương đối? File lưu ở đâu? | – | ❓ |
+| 96 | (#82) Nội dung và vị trí chính xác từng thông báo lỗi ảnh: sai định dạng, file đổi đuôi, file 0 byte, quá dung lượng, sai kích thước pixel, link lỗi / quá thời gian chờ? | – | ❓ |

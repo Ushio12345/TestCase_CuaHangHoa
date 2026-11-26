@@ -84,6 +84,25 @@
       - URL không lấy được ảnh, bấm Tải lên → "Đường dẫn ảnh không hợp lệ" [Cần xác nhận BA/PO] (qa-log #83)
       - URL trỏ tới ảnh không phải JPG / PNG (.gif, .webp) → chấp nhận [Cần xác nhận BA/PO] (qa-log #82)
       - Không có chức năng chọn file từ máy (chỉ kiểm tra đường dẫn) [Cần xác nhận BA/PO] (qa-log #82)
+      - URL ảnh JPEG / PNG → kiểm tra hợp lệ, lấy được ảnh, tự điền ô Đường dẫn hình ảnh (qa-log #18, #19, #51)
+      - URL ảnh SVG / BMP → chấp nhận [Cần xác nhận BA/PO] (qa-log #89)
+      - URL trỏ tới file không phải ảnh (.pdf, .txt) → "Đường dẫn ảnh không hợp lệ" [Cần xác nhận BA/PO] (qa-log #83, #93)
+      - URL ảnh phản hồi chậm (quá thời gian chờ) → trang không treo, kết quả [Cần xác nhận BA/PO] (qa-log #93)
+      - Tải lên thành công → form hiển thị ảnh xem trước [Cần xác nhận BA/PO] (qa-log #94)
+    - Tải file ảnh từ máy (BA 25/11: upload file JPG / PNG) [Cần xác nhận BA/PO] (qa-log #82)
+      - Định dạng hợp lệ
+        - File .jpg → chấp nhận
+        - File .jpeg → chấp nhận [Cần xác nhận BA/PO] (qa-log #89)
+        - File .png → chấp nhận
+      - Định dạng không hợp lệ (.gif, .webp, .svg, .bmp, .pdf, .txt) → không nhận, báo lỗi định dạng [Cần xác nhận BA/PO] (qa-log #89, #96)
+      - File đổi đuôi (.txt → .jpg) → không nhận, báo lỗi [Cần xác nhận BA/PO] (qa-log #92)
+      - Dung lượng (MAX chưa xác định) [Cần xác nhận BA/PO] (qa-log #90)
+        - 0 byte → không nhận, báo lỗi
+        - MAX − 1 → chấp nhận
+        - MAX → chấp nhận
+        - MAX + 1 → không nhận, báo lỗi dung lượng
+      - Kích thước pixel ngoài giới hạn → có giới hạn: báo lỗi / không giới hạn: chấp nhận [Cần xác nhận BA/PO] (qa-log #91)
+      - Thêm mới với file đã tải → hoa hiển thị ảnh của file, hinh_anh lưu giá trị của file [Cần xác nhận BA/PO] (qa-log #95)
     - Làm lại
       - Loại hoa về "Hoa chia buồn"
       - Trạng thái về "Hiển thị"
@@ -312,6 +331,11 @@
       - Quay lại khi đã sửa → popup hỏi có muốn thoát không (qa-log #80)
         - Đồng ý thoát → về danh sách hoa, không lưu
         - Không thoát → ở lại form, giữ dữ liệu đang sửa (chưa lưu)
+    - Hình ảnh (bộ đại diện – checklist trường hình ảnh)
+      - Đổi ảnh bằng file JPG tải lên từ máy → cập nhật hinh_anh theo file [Cần xác nhận BA/PO] (qa-log #82, #95)
+      - Đổi sang link không tải được ảnh → cập nhật, danh sách hiển thị alt = tên hoa (qa-log #17, #55)
+      - Đổi sang link trỏ tới file không phải ảnh (.pdf), bấm Tải lên → "Đường dẫn ảnh không hợp lệ" [Cần xác nhận BA/PO] (qa-log #83, #93)
+      - Mở form Sửa hoa có ảnh → hiển thị ảnh xem trước [Cần xác nhận BA/PO] (qa-log #94)
     - Ngoại lệ
       - Phiên quản trị hết hạn rồi bấm "Cập nhật thông tin" → chuyển về /quan-tri/dang-nhap, không cập nhật
       - Hoa bị xóa ở tab khác rồi bấm "Cập nhật thông tin" → báo lỗi, không tạo bản ghi mới, về danh sách (qa-log #59) [Cần xác nhận BA/PO] (qa-log #87)
