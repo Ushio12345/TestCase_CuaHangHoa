@@ -62,7 +62,7 @@
         - Giá bán 4.999 → FC_21
         - Trạng thái = 5 (DevTools) → FC_22
         - Mô tả: không nhập được giá trị sai (chặn ở 250 ký tự) → chỉ có case để trống
-        - Đường dẫn hình ảnh không phải link → "Đường dẫn ảnh không hợp lệ"
+        - Đường dẫn hình ảnh không phải link → "Đường dẫn ảnh không hợp lệ" [Cần xác nhận BA/PO] (qa-log #83)
       - Thất bại khi nhiều trường không hợp lệ → hiện lỗi của tất cả các trường
       - Để trống toàn bộ form → hiện lỗi của tất cả trường bắt buộc
     - Thêm thành công
@@ -73,7 +73,7 @@
       - Chọn loại hoa khác giá trị mặc định → lưu đúng ma_loai
       - Dữ liệu lưu trong bảng hoa
         - ten_hoa đã cắt khoảng trắng đầu / cuối
-        - gia, mo_ta, hinh_anh đúng giá trị đã nhập
+        - gia, mo_ta, hinh_anh đúng giá trị đã nhập [Cần xác nhận BA/PO] (qa-log #85)
         - ngay_d = thời điểm thêm
       - Bấm Thêm mới nhiều lần liên tiếp → chỉ tạo 1 bản ghi trong bảng hoa
     - Tải lên ảnh
@@ -81,9 +81,28 @@
       - Ô đã có đường dẫn, tải lên ảnh khác → hỏi có thay thế không
         - Chọn Đồng ý → thay bằng đường dẫn mới
         - Chọn Không → giữ đường dẫn cũ
-      - URL không lấy được ảnh, bấm Tải lên → "Đường dẫn ảnh không hợp lệ"
-      - URL trỏ tới ảnh không phải JPG / PNG (.gif, .webp) → chấp nhận
-      - Không có chức năng chọn file từ máy (chỉ kiểm tra đường dẫn)
+      - URL không lấy được ảnh, bấm Tải lên → "Đường dẫn ảnh không hợp lệ" [Cần xác nhận BA/PO] (qa-log #83)
+      - URL trỏ tới ảnh không phải JPG / PNG (.gif, .webp) → chấp nhận [Cần xác nhận BA/PO] (qa-log #82)
+      - Không có chức năng chọn file từ máy (chỉ kiểm tra đường dẫn) [Cần xác nhận BA/PO] (qa-log #82)
+      - URL ảnh JPEG / PNG → kiểm tra hợp lệ, lấy được ảnh, tự điền ô Đường dẫn hình ảnh (qa-log #18, #19, #51)
+      - URL ảnh SVG / BMP → chấp nhận [Cần xác nhận BA/PO] (qa-log #89)
+      - URL trỏ tới file không phải ảnh (.pdf, .txt) → "Đường dẫn ảnh không hợp lệ" [Cần xác nhận BA/PO] (qa-log #83, #93)
+      - URL ảnh phản hồi chậm (quá thời gian chờ) → trang không treo, kết quả [Cần xác nhận BA/PO] (qa-log #93)
+      - Tải lên thành công → form hiển thị ảnh xem trước [Cần xác nhận BA/PO] (qa-log #94)
+    - Tải file ảnh từ máy (BA 25/11: upload file JPG / PNG) [Cần xác nhận BA/PO] (qa-log #82)
+      - Định dạng hợp lệ
+        - File .jpg → chấp nhận
+        - File .jpeg → chấp nhận [Cần xác nhận BA/PO] (qa-log #89)
+        - File .png → chấp nhận
+      - Định dạng không hợp lệ (.gif, .webp, .svg, .bmp, .pdf, .txt) → không nhận, báo lỗi định dạng [Cần xác nhận BA/PO] (qa-log #89, #96)
+      - File đổi đuôi (.txt → .jpg) → không nhận, báo lỗi [Cần xác nhận BA/PO] (qa-log #92)
+      - Dung lượng (MAX chưa xác định) [Cần xác nhận BA/PO] (qa-log #90)
+        - 0 byte → không nhận, báo lỗi
+        - MAX − 1 → chấp nhận
+        - MAX → chấp nhận
+        - MAX + 1 → không nhận, báo lỗi dung lượng
+      - Kích thước pixel ngoài giới hạn → có giới hạn: báo lỗi / không giới hạn: chấp nhận [Cần xác nhận BA/PO] (qa-log #91)
+      - Thêm mới với file đã tải → hoa hiển thị ảnh của file, hinh_anh lưu giá trị của file [Cần xác nhận BA/PO] (qa-log #95)
     - Làm lại
       - Loại hoa về "Hoa chia buồn"
       - Trạng thái về "Hiển thị"
@@ -107,12 +126,12 @@
       - = 19 ký tự (max − 1) → hợp lệ
       - = 20 ký tự (max) → hợp lệ
       - Gõ ký tự thứ 21 (max + 1) → bị chặn, ô giữ 20 ký tự
-      - Paste chuỗi > 20 ký tự → tự cắt về 20 ký tự, hoặc báo lỗi và chặn gửi form
+      - Paste chuỗi > 20 ký tự → tự cắt về 20 ký tự (qa-log #36, #78)
       - Khoảng trắng đầu / cuối → tự cắt
       - Độ dài tính sau khi cắt khoảng trắng ("  Hoa  " → 3 ký tự → FC_17)
       - Ký tự đặc biệt
-        - . _ ; - , : ( ) / ' (nháy đơn) → chấp nhận
-        - Ký tự đặc biệt khác (@ # $ % & * " …) → coi như để trống (FC_16) hoặc thông báo "Tên hoa không hợp lệ"
+        - . _ ; - , : ( ) / ' (nháy đơn) → chấp nhận [Cần xác nhận BA/PO] (qa-log #84)
+        - Ký tự đặc biệt khác (@ # $ % & * " …) → coi như để trống (FC_16) hoặc thông báo "Tên hoa không hợp lệ" [Cần xác nhận BA/PO] (qa-log #84)
       - Chữ tiếng Việt có dấu → chấp nhận
       - Chữ số → chấp nhận
       - Emoji → không chấp nhận
@@ -130,10 +149,10 @@
       - = 7.000.000 (max) → hợp lệ
       - = 7.000.001 (max + 1) → FC_21
       - = 0 → FC_21
-      - Gõ dấu "-" (số âm) → không nhập được
-      - Gõ dấu "." (5000.5, 5.000) → không nhập được
-      - Gõ dấu "," (5,000) → không nhập được
-      - Gõ chữ, ký tự đặc biệt, chữ "e" → không nhập được
+      - Gõ dấu "-" (số âm) → không nhập được [Cần xác nhận BA/PO] (qa-log #86)
+      - Gõ dấu "." (5000.5, 5.000) → không nhập được [Cần xác nhận BA/PO] (qa-log #86)
+      - Gõ dấu "," (5,000) → không nhập được [Cần xác nhận BA/PO] (qa-log #86)
+      - Gõ chữ, ký tự đặc biệt, chữ "e" → không nhập được [Cần xác nhận BA/PO] (qa-log #86)
       - Số 0 đứng đầu (05000) → tự bỏ, lưu 5000
       - Khoảng trắng đầu / cuối → tự bỏ
       - Paste giá trị hợp lệ → nhận
@@ -150,16 +169,17 @@
       - = 249 ký tự (max − 1) → hợp lệ
       - = 250 ký tự (max) → hợp lệ
       - Gõ ký tự thứ 251 (max + 1) → bị chặn, ô giữ 250 ký tự
-      - Paste chuỗi > 250 ký tự → tự cắt về 250 ký tự, hoặc báo lỗi và chặn gửi form
+      - Paste chuỗi > 250 ký tự → tự cắt về 250 ký tự (qa-log #36, #78)
       - Ký tự xuống dòng được tính vào 250
-      - Ký tự đặc biệt → chấp nhận
-      - Emoji → chấp nhận
+      - Ký tự đặc biệt → chấp nhận [Cần xác nhận BA/PO] (qa-log #84)
+      - Emoji → chấp nhận [Cần xác nhận BA/PO] (qa-log #84)
+      - Khoảng trắng đầu / cuối (Mô tả, Đường dẫn hình ảnh) → tự cắt, giữ khoảng trắng giữa (BA 25/11) [Cần xác nhận BA/PO] (qa-log #85)
       - Bộ đếm tăng / giảm đúng khi gõ và xóa
     - Đường dẫn hình ảnh
       - Để trống → hiển thị alt = tên hoa (qa-log #17, 02 #25)
-      - Link có ký tự : / ? & = % # _ - . → chấp nhận
+      - Link có ký tự : / ? & = % # _ - . → chấp nhận [Cần xác nhận BA/PO] (qa-log #84)
       - Link không có đuôi file ảnh → chấp nhận
-      - Chuỗi không phải link → "Đường dẫn ảnh không hợp lệ"
+      - Chuỗi không phải link → "Đường dẫn ảnh không hợp lệ" [Cần xác nhận BA/PO] (qa-log #83)
       - Link ảnh không tải được → hiển thị alt = tên hoa (qa-log #17, 02 #25)
       - Độ dài (tối đa 500 ký tự – SRS)
         - = 499 ký tự (max − 1) → hợp lệ
@@ -208,7 +228,7 @@
         - Nút Tải lên đang mờ không có hiệu ứng hover
       - Kéo thả
         - Kéo bôi chọn text trong ô nhập
-        - Kéo thả file ảnh vào form → không upload (chưa hỗ trợ upload file)
+        - Kéo thả file ảnh vào form → không upload (chưa hỗ trợ upload file) [Cần xác nhận BA/PO] (qa-log #82)
       - Cuộn
         - Cuộn trang mượt, không giật
         - Gửi form có lỗi → cuộn đến ô lỗi đầu tiên
@@ -272,12 +292,12 @@
     - Mở màn hình Sửa
       - Bấm biểu tượng sửa tại dòng hoa trong danh sách → mở /quan-tri/hoa/sua/[ma_hoa], form điền sẵn đúng dữ liệu hoa
       - Nhập trực tiếp URL /quan-tri/hoa/sua/[ma_hoa] → mở form có dữ liệu
-      - URL của hoa không tồn tại → không hiện form, báo "Không tìm thấy sản phẩm" (hoặc 404) (qa-log #59)
+      - URL của hoa không tồn tại → không hiện form, báo "Không tìm thấy sản phẩm" (hoặc 404) (qa-log #59) [Cần xác nhận BA/PO] (qa-log #87)
     - Form nhập liệu (R = Tên hoa, Loại hoa, Giá bán, Trạng thái, Mô tả · O = Đường dẫn hình ảnh)
       - Thành công với giá trị biên hợp lệ
         - Bộ min: Tên hoa 5 ký tự, Giá bán 5.000, Mô tả 1 ký tự → cập nhật đúng giá trị
         - Bộ max: Tên hoa 20 ký tự, Giá bán 7.000.000, Mô tả 250 ký tự, Đường dẫn 500 ký tự → cập nhật đúng giá trị
-      - Thành công khi sửa đầy đủ tất cả trường (R + O) → popup "Tuyệt vời!", cập nhật đủ 6 cột
+      - Thành công khi sửa đầy đủ tất cả trường (R + O) → popup cập nhật thành công, cập nhật đủ 6 cột
       - Thành công khi chỉ có các trường R (xóa Đường dẫn) → cập nhật, hiển thị alt = tên hoa (qa-log #17, 02 #25)
       - R + 1 trường O: chỉ có 1 trường O → trùng "sửa đầy đủ tất cả trường"
       - Thất bại khi thiếu 1 trường R → không cập nhật, ở lại form, chỉ báo lỗi trường thiếu
@@ -291,7 +311,7 @@
         - Loại hoa không có trong loai_hoa (DevTools) → FC_19
         - Giá bán 4.999 → FC_21
         - Trạng thái = 5 (DevTools) → FC_22
-        - Đường dẫn hình ảnh không phải link → "Đường dẫn ảnh không hợp lệ"
+        - Đường dẫn hình ảnh không phải link → "Đường dẫn ảnh không hợp lệ" [Cần xác nhận BA/PO] (qa-log #83)
       - Thất bại khi nhiều trường không hợp lệ → hiện lỗi của tất cả các trường
       - Xóa trắng toàn bộ ô nhập → hiện lỗi FC_16, FC_20, FC_23
     - Cập nhật thành công
@@ -301,27 +321,33 @@
         - Giá bán → gia
         - Trạng thái "Hiển thị" → "Ẩn" → trang_thai = 0
         - Mô tả → mo_ta
+        - Sửa hoa đang Ẩn → cập nhật bình thường (qa-log #79)
       - Không sửa gì, bấm "Cập nhật thông tin" → vẫn ghi CSDL, hiện popup thành công (qa-log #58)
-      - Bấm "ĐÓNG CỬA SỔ" → về danh sách hoa, hoa vừa sửa giữ vị trí, ngay_d không đổi (qa-log #57)
+      - Bấm "ĐÓNG CỬA SỔ" → về danh sách hoa, hoa vừa sửa giữ vị trí, ngay_d không đổi (qa-log #57) [Cần xác nhận BA/PO] (qa-log #88)
     - Tải lên, Làm lại, Quay lại (giống Thêm – qa-log #55, #56)
       - Ô đã có đường dẫn, Tải lên ảnh khác → hỏi thay thế, chọn Đồng ý → thay đường dẫn
       - Làm lại → xóa trắng ô nhập, Loại hoa "Hoa chia buồn", Trạng thái "Hiển thị"; CSDL không đổi
       - Quay lại khi chưa sửa → về danh sách hoa
-      - Quay lại khi đã sửa → popup hỏi lưu thông tin
-        - Chọn Có → lưu thông tin đã sửa
-        - Chọn Không → không lưu, về danh sách hoa
+      - Quay lại khi đã sửa → popup hỏi có muốn thoát không (qa-log #80)
+        - Đồng ý thoát → về danh sách hoa, không lưu
+        - Không thoát → ở lại form, giữ dữ liệu đang sửa (chưa lưu)
+    - Hình ảnh (bộ đại diện – checklist trường hình ảnh)
+      - Đổi ảnh bằng file JPG tải lên từ máy → cập nhật hinh_anh theo file [Cần xác nhận BA/PO] (qa-log #82, #95)
+      - Đổi sang link không tải được ảnh → cập nhật, danh sách hiển thị alt = tên hoa (qa-log #17, #55)
+      - Đổi sang link trỏ tới file không phải ảnh (.pdf), bấm Tải lên → "Đường dẫn ảnh không hợp lệ" [Cần xác nhận BA/PO] (qa-log #83, #93)
+      - Mở form Sửa hoa có ảnh → hiển thị ảnh xem trước [Cần xác nhận BA/PO] (qa-log #94)
     - Ngoại lệ
       - Phiên quản trị hết hạn rồi bấm "Cập nhật thông tin" → chuyển về /quan-tri/dang-nhap, không cập nhật
-      - Hoa bị xóa ở tab khác rồi bấm "Cập nhật thông tin" → báo lỗi, không tạo bản ghi mới, về danh sách (qa-log #59)
+      - Hoa bị xóa ở tab khác rồi bấm "Cập nhật thông tin" → báo lỗi, không tạo bản ghi mới, về danh sách (qa-log #59) [Cần xác nhận BA/PO] (qa-log #87)
   - Validation (bộ đại diện – áp dụng quy tắc của Thêm, qa-log #55)
     - Tên hoa
       - Chỉ nhập khoảng trắng → FC_16
       - Gõ ký tự thứ 21 (max + 1) → bị chặn, ô giữ 20 ký tự
-      - Ký tự đặc biệt không được phép (@ #) → coi như để trống (FC_16) hoặc "Tên hoa không hợp lệ"
-      - Ký tự đặc biệt được phép (. _ ; - , : ( ) / ') → cập nhật thành công
+      - Ký tự đặc biệt không được phép (@ #) → coi như để trống (FC_16) hoặc "Tên hoa không hợp lệ" [Cần xác nhận BA/PO] (qa-log #84)
+      - Ký tự đặc biệt được phép (. _ ; - , : ( ) / ') → cập nhật thành công [Cần xác nhận BA/PO] (qa-log #84)
     - Giá bán
       - = 7.000.001 (max + 1) → FC_21
-      - Gõ chữ, dấu "-" "." "," → không nhập được
+      - Gõ chữ, dấu "-" "." "," → không nhập được [Cần xác nhận BA/PO] (qa-log #86)
       - Số 0 đứng đầu (05000) → tự bỏ, lưu 5000
     - Mô tả
       - Chỉ nhập khoảng trắng / xuống dòng → FC_23
@@ -333,7 +359,7 @@
       - Form điền sẵn: Giá bán là số nguyên không định dạng, Trạng thái chọn đúng giá trị đang lưu
       - Bộ đếm Mô tả hiển thị số ký tự hiện có / 250 (srs-review #22)
       - Nút "Cập nhật thông tin", "Làm lại", "Quay lại", "Tải lên" (bấm được vì ô Đường dẫn có nội dung – qa-log #48)
-      - Popup thành công: biểu tượng ✓, "Tuyệt vời!", "Thông tin hoa đã được cập nhật thành công!", nút "ĐÓNG CỬA SỔ"
+      - Popup thành công: biểu tượng ✓, "Tuyệt vời!", "Thông tin hoa đã được cập nhật thành công!", nút "ĐÓNG CỬA SỔ" [Cần xác nhận BA/PO] (qa-log #88)
       - Xóa trắng ô nhập → hiển thị texthint theo SRS
     - Behavior
       - Tab / Shift+Tab: thứ tự focus theo bố cục form, có viền focus
@@ -357,13 +383,14 @@
       - /hoa hiển thị tên và giá mới (dạng 250.000đ)
       - Đổi loại → hoa xuất hiện ở /hoa?loai=<loại mới>, không còn ở loại cũ
       - Đổi "Hiển thị" → "Ẩn" → hoa không còn ở /hoa, trang chủ và kết quả Tìm kiếm
-      - Đổi "Ẩn" → "Hiển thị" → hoa xuất hiện lại ở /hoa
+      - Đổi "Ẩn" → "Hiển thị" → hoa xuất hiện lại ở /hoa và trang chủ (qa-log #79)
       - Tìm kiếm tên mới → có; tên cũ → không
       - Trang chi tiết hiển thị thông tin mới
     - Giỏ hàng và đơn hàng
       - Giỏ hàng thành viên có hoa vừa sửa giá → đổi giá ngay (qa-log #60)
       - Đơn hàng cũ có hoa vừa sửa giá → giữ gia_ban cũ (qa-log #60)
       - Hoa trong giỏ bị đổi sang "Ẩn" → ẩn khỏi giỏ, không tính tiền (qa-log 01 #14)
+      - Hoa trong giỏ đang Ẩn đổi sang "Hiển thị" → hiển thị lại trong giỏ (qa-log #79)
     - Thống kê và Quản lý loại hoa
       - Tổng số hoa không đổi sau khi sửa
       - Chuyển hoa duy nhất của 1 loại sang loại khác → xóa được loại cũ
